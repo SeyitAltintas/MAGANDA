@@ -36,3 +36,8 @@ yarn-error.log*
 # AI/Agent specifics
 .gemini/
 .agent/
+
+assets/video/
+*.mp4
+*.mov
+*.avi
