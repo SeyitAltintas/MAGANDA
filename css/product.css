@@ -616,42 +616,6 @@
   font-weight: 700;
 }
 
-/* ─── RESPONSIVE ──────────────────────── */
-@media (max-width: 900px) {
-  .product-page {
-    grid-template-columns: 1fr;
-  }
-
-  .pp-visual {
-    position: relative;
-    top: 0;
-    height: 55vw;
-    min-height: 280px;
-    max-height: 420px;
-  }
-
-  .pp-info {
-    padding: 32px 20px 60px;
-    min-height: auto;
-  }
-
-  .pp-related__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .pp-name { font-size: 28px; }
-  .pp-price { font-size: 24px; }
-  .pp-size-btn { width: 48px; height: 44px; }
-  .pp-tabs__nav { grid-template-columns: repeat(2, 1fr); }
-  .pp-tabs__btn:nth-child(2) { border-right: 0; }
-  .pp-tabs__btn:nth-child(-n+2) { border-bottom: 1px solid var(--border-color); }
-  .pp-delivery { align-items: flex-start; flex-direction: column; }
-  .pp-delivery__date { text-align: left; }
-  .pp-related__head { display: block; }
-  .pp-related__grid { grid-template-columns: 1fr; }
-}
 
 /* reduced-motion uyumu */
 @media (prefers-reduced-motion: reduce) {

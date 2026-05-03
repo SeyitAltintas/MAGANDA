@@ -71,12 +71,12 @@
   function initNavbar() {
     var navbar = document.getElementById('navbar');
     if (!navbar) return;
-    
+
     // Sayfa zaten force-scrolled ise en başta scrolled olarak ayarla
     var isForceScrolled = document.body.classList.contains('force-scrolled-nav');
     var scrolled = isForceScrolled || window.scrollY > 50;
     if (scrolled) navbar.classList.add('navbar--scrolled');
-    
+
     window.addEventListener('scroll', function () {
       var shouldBeScrolled = isForceScrolled || window.scrollY > 50;
       if (shouldBeScrolled !== scrolled) {
@@ -86,28 +86,7 @@
     }, { passive: true });
   }
 
-  /* ─── HAMBURGER MENU ─────────────────── */
-  function initMobileMenu() {
-    var hamburger = document.getElementById('hamburger');
-    var menu = document.getElementById('mobileMenu');
-    if (!hamburger || !menu) return;
-
-    hamburger.addEventListener('click', function () {
-      hamburger.classList.toggle('navbar__hamburger--active');
-      menu.classList.toggle('mobile-menu--active');
-      document.body.style.overflow = menu.classList.contains('mobile-menu--active') ? 'hidden' : '';
-    });
-
-    menu.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        hamburger.classList.remove('navbar__hamburger--active');
-        menu.classList.remove('mobile-menu--active');
-        document.body.style.overflow = '';
-      });
-    });
-  }
-
-  /* ─── SMOOTH SCROLL ──────────────────── */
+  /* --- SMOOTH SCROLL ──────────────────── */
   function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
       anchor.addEventListener('click', function (e) {
@@ -174,7 +153,7 @@
   function initParallax() {
     var bgTexts = document.querySelectorAll('.bg-text-parallax');
     var ticking = false;
-    
+
     if (!bgTexts.length) return;
 
     window.addEventListener('scroll', function () {
@@ -190,7 +169,7 @@
 })();
 (function () {
           var scrollY = window.scrollY;
-          
+
           // Background Text Parallax
           bgTexts.forEach(function(text) {
             var parent = text.parentElement;
@@ -198,7 +177,7 @@
             // Sadece ekrandaysa hesapla
             if (rect.top < window.innerHeight && rect.bottom > 0) {
               // Y ekseninde ters yöne kaydırma efekti (-50% base'den başlatıp scrolla göre hareket)
-              var moveY = -50 + (rect.top * 0.05); 
+              var moveY = -50 + (rect.top * 0.05);
               text.style.transform = 'translate(-50%, ' + moveY + '%)';
             }
           });
@@ -224,7 +203,7 @@
     var cartOverlay = document.getElementById('cartOverlay');
     var cartDrawer = document.getElementById('cartDrawer');
     var cartOpenBtn = document.getElementById('cartOpenBtn');
-    var mobileCartOpenBtn = document.getElementById('mobileCartOpenBtn');
+
     var cartCloseBtn = document.getElementById('cartCloseBtn');
 
     if (!cartOverlay || !cartDrawer) return;
@@ -243,7 +222,7 @@
     }
 
     if (cartOpenBtn) cartOpenBtn.addEventListener('click', openCart);
-    if (mobileCartOpenBtn) mobileCartOpenBtn.addEventListener('click', openCart);
+
     if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCart);
     cartOverlay.addEventListener('click', closeCart);
 
@@ -782,7 +761,7 @@
           addBtn.classList.remove('pp-add-btn--success');
         }, 1800);
       });
-      
+
       // TÜKENDİ durumu kontrolü (Ürün zaten bitmişse buton tıklanamaz)
       if (badge && badge.toUpperCase() === 'TÜKENDİ') {
         addBtn.disabled = true;
@@ -885,20 +864,8 @@
             '</svg>' +
             '<span class="navbar__cart-badge" id="cartCount">0</span>' +
           '</button>' +
-          '<button class="navbar__hamburger" id="hamburger" aria-label="Menü">' +
-            '<span></span><span></span><span></span>' +
-          '</button>' +
         '</div>' +
-      '</nav>' +
-      '<div class="mobile-menu" id="mobileMenu">' +
-        '<a href="index.html" class="mobile-menu__link">ANA SAYFA</a>' +
-        '<a href="araba.html" class="mobile-menu__link">ARABA</a>' +
-        '<a href="motor.html" class="mobile-menu__link">MOTOSİKLET</a>' +
-        '<a href="drop.html" class="mobile-menu__link">DROP ÜRÜNLER</a>' +
-        '<a href="hakkimizda.html" class="mobile-menu__link">HAKKIMIZDA</a>' +
-        '<a href="iletisim.html" class="mobile-menu__link">BİZE ULAŞIN</a>' +
-        '<button class="mobile-menu__cta" id="mobileCartOpenBtn">SEPETE GİT</button>' +
-      '</div>';
+      '</nav>';
 
     var noise = document.querySelector('.noise-overlay');
     if (noise) {
@@ -1037,7 +1004,7 @@
     initTheme();
     initCinematicHero();
     initNavbar();
-    initMobileMenu();
+
     initCart();
     initSmoothScroll();
     initScrollAnimations();
@@ -1047,7 +1014,7 @@
     initProductCards();
     initProductPage();
     initFooterPaymentStrip();
-    
+
   }
 
   if (document.readyState === 'loading') {
