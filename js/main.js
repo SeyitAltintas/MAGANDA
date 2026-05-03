@@ -103,6 +103,45 @@
     });
   }
 
+  /* --- COLLECTION FILTERS ─────────────── */
+  function initFilters() {
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    var productCards = document.querySelectorAll('.product-card');
+    
+    if (!filterBtns.length || !productCards.length) return;
+
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        // Remove active class from all
+        filterBtns.forEach(function (b) { b.classList.remove('active'); });
+        // Add active to clicked
+        this.classList.add('active');
+
+        var filterValue = this.getAttribute('data-filter');
+
+        productCards.forEach(function (card) {
+          if (filterValue === 'all') {
+            card.style.display = 'block';
+            // trigger small animation reflow
+            card.style.animation = 'none';
+            card.offsetHeight; /* trigger reflow */
+            card.style.animation = null;
+          } else {
+            var cat = card.getAttribute('data-category');
+            if (cat === filterValue) {
+              card.style.display = 'block';
+              card.style.animation = 'none';
+              card.offsetHeight; 
+              card.style.animation = null;
+            } else {
+              card.style.display = 'none';
+            }
+          }
+        });
+      });
+    });
+  }
+
   /* ─── SCROLL ANIMATIONS ─────────────── */
   function initScrollAnimations() {
     var elements = document.querySelectorAll('[data-animate]');
@@ -475,13 +514,28 @@
     });
   }
 
+  function parsePriceValue(value) {
+    var normalized = String(value || '')
+      .replace(/\u20BA/g, '')
+      .replace(/₺/g, '')
+      .replace(/\./g, '')
+      .replace(/,/g, '')
+      .replace(/[^\d]/g, '');
+    return parseInt(normalized, 10) || 0;
+  }
+
+  function formatPrice(value) {
+    var amount = parsePriceValue(value);
+    return amount.toLocaleString('tr-TR') + ' ₺';
+  }
+
   /* ─── ÜRÜN DETAY SAYFASI (product.html) ─────── */
   function initProductPage() {
     if (!document.getElementById('productPage')) return;
 
     var params  = new URLSearchParams(window.location.search);
     var name    = params.get('name')   || 'ÜRÜN';
-    var price   = params.get('price')  || '₺0';
+    var price   = formatPrice(params.get('price') || '₺0');
     var series  = params.get('series') || '';
     var badge   = params.get('badge')  || '';
     var imgUrl  = params.get('img')    || '';
@@ -573,12 +627,30 @@
           body: [
             '<p>Siparişler ödeme onayından sonra genellikle <strong>1-2 iş günü</strong> içinde hazırlanır ve kargoya teslim edilir.</p>',
             '<ul>',
-              '<li>500₺ ve üzeri siparişlerde ücretsiz kargo</li>',
+              '<li>1000&#8378; ve &#252;zeri sipari&#351;lerde &#252;cretsiz kargo</li>',
               '<li>Kargo takip bilgisi sipariş sonrası paylaşılır</li>',
               '<li>Kullanılmamış ve etiketi çıkarılmamış ürünlerde 14 gün içinde iade</li>',
               '<li>İade edilecek ürünün orijinal paketinde gönderilmesi gerekir</li>',
             '</ul>',
             '<p>Drop ve sınırlı üretim ürünlerde stok tekrar etmeyebilir; beden değişimi stok durumuna bağlıdır.</p>'
+          ].join('')
+        },
+        sizeGuide: {
+          title: 'BEDEN REHBERİ',
+          body: [
+            '<table class="pp-size-guide-table">',
+              '<thead>',
+                '<tr><th>BEDEN</th><th>GÖĞÜS (cm)</th><th>BEL (cm)</th><th>BOY (cm)</th></tr>',
+              '</thead>',
+              '<tbody>',
+                '<tr><td>XS</td><td>82–86</td><td>66–70</td><td>160–165</td></tr>',
+                '<tr><td>S</td><td>88–92</td><td>72–76</td><td>165–170</td></tr>',
+                '<tr><td>M</td><td>94–98</td><td>78–82</td><td>170–175</td></tr>',
+                '<tr><td>L</td><td>100–104</td><td>84–88</td><td>175–180</td></tr>',
+                '<tr><td>XL</td><td>106–110</td><td>90–94</td><td>180–185</td></tr>',
+                '<tr><td>XXL</td><td>112–118</td><td>96–102</td><td>185–190</td></tr>',
+              '</tbody>',
+            '</table>'
           ].join('')
         }
       };
@@ -641,7 +713,6 @@
         });
         favoriteBtn.classList.toggle('pp-favorite-btn--active', active);
         favoriteBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
-        favoriteBtn.textContent = active ? 'FAVORİLERDE' : 'FAVORİLERE EKLE';
       }
 
       syncButton();
@@ -809,7 +880,7 @@
           return;
         }
 
-        var priceNum = parseInt(price.replace('₺', '').replace(/\./g, '').trim(), 10) || 0;
+        var priceNum = parsePriceValue(price);
         var existingItem = cart.find(function (item) {
           return item.name === name && item.size === selectedSize;
         });
@@ -849,15 +920,7 @@
       }
     }
 
-    // Beden Rehberi toggle (accordion)
-    var sgToggle = document.getElementById('pp-size-guide-toggle');
-    var sgPanel  = document.getElementById('pp-size-guide-panel');
-    if (sgToggle && sgPanel) {
-      sgToggle.addEventListener('click', function () {
-        var open = sgPanel.classList.toggle('pp-size-guide-panel--open');
-        sgToggle.textContent = open ? 'Beden Rehberini Kapat ↑' : 'Beden Rehberi →';
-      });
-    }
+    // Beden Rehberi toggle logic removed as it's now handled by the info panel
   }
 
   function getFavorites() {
@@ -1130,6 +1193,47 @@
     }
   }
 
+  function initCartDrawerWidget() {
+    if (document.getElementById('cartDrawer')) return;
+
+    var html =
+      '<div class="cart-overlay" id="cartOverlay"></div>' +
+      '<div class="cart-drawer" id="cartDrawer">' +
+        '<div class="cart-drawer__header">' +
+          '<div>' +
+            '<span class="cart-drawer__title">SEPET</span>' +
+            '<span class="cart-drawer__count" id="cartDrawerCount"></span>' +
+          '</div>' +
+          '<button class="cart-drawer__close" id="cartCloseBtn" type="button" aria-label="Sepeti kapat">&times;</button>' +
+        '</div>' +
+        '<div class="cart-shipping-bar" id="cartShippingBar">' +
+          '<div class="cart-shipping-bar__label">' +
+            '<span>&#220;CRETS&#304;Z KARGO</span>' +
+            '<strong>&#8378;<span class="cart-shipping-bar__remain">1000</span> kald&#305;</strong>' +
+          '</div>' +
+          '<div class="cart-shipping-bar__track">' +
+            '<div class="cart-shipping-bar__fill cart-shipping-bar__fill--red" style="width:0%"></div>' +
+          '</div>' +
+          '<p class="cart-shipping-bar__achieved">&#220;CRETS&#304;Z KARGO KAZANDIN!</p>' +
+        '</div>' +
+        '<div class="cart-drawer__body" id="cartItems"></div>' +
+        '<div class="cart-drawer__footer">' +
+          '<div class="cart-drawer__total">' +
+            '<span>ARA TOPLAM</span>' +
+            '<span class="cart-drawer__total-amount" id="cartTotal">&#8378;0</span>' +
+          '</div>' +
+          '<button class="cart-drawer__checkout" id="checkoutBtn" type="button">&#214;DEMEYE GE&#199; &rarr;</button>' +
+        '</div>' +
+      '</div>';
+
+    var script = document.querySelector('script[src="js/main.js"]') || document.querySelector('script');
+    if (script) {
+      script.insertAdjacentHTML('beforebegin', html);
+    } else {
+      document.body.insertAdjacentHTML('beforeend', html);
+    }
+  }
+
   function initFooterPaymentStrip() {
     var footer = document.querySelector('.footer');
     if (!footer || document.querySelector('.footer-payment-strip')) return;
@@ -1188,6 +1292,7 @@
   function init() {
     document.body.classList.remove('no-scroll');
     initHeaderWidget();
+    initCartDrawerWidget();
     initFooterBrandWidget();
     initFooterWidget();
     initToast();        // En önce — window.toast hazır olsun
@@ -1197,6 +1302,7 @@
 
     initCart();
     initSmoothScroll();
+    initFilters();
     initScrollAnimations();
     initManifestoStagger();
     initParallax();

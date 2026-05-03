@@ -125,9 +125,24 @@
     listEl.innerHTML = listHtml;
     if (summaryItemsEl) summaryItemsEl.innerHTML = summaryHtml;
 
-    var totalStr = '₺' + total.toLocaleString('tr-TR');
-    if (subtotalEl) subtotalEl.textContent = totalStr;
-    if (totalEl) totalEl.textContent = totalStr;
+    var SHIPPING_THRESHOLD = 1000;
+    var SHIPPING_COST = 149.90;
+    var shipping = (total > 0 && total < SHIPPING_THRESHOLD) ? SHIPPING_COST : 0;
+    var finalTotal = total + shipping;
+
+    var shippingEl = document.getElementById('summaryShipping');
+    if (shippingEl) {
+      if (shipping === 0) {
+        shippingEl.textContent = 'Ücretsiz';
+        shippingEl.className = 'co-summary__free';
+      } else {
+        shippingEl.textContent = '₺' + shipping.toLocaleString('tr-TR');
+        shippingEl.className = '';
+      }
+    }
+
+    if (subtotalEl) subtotalEl.textContent = '₺' + total.toLocaleString('tr-TR');
+    if (totalEl) totalEl.textContent = '₺' + finalTotal.toLocaleString('tr-TR');
   }
 
   window.changeQty = function (id, delta) {

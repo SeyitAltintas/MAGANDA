@@ -65,22 +65,7 @@
   color: #F5F5F5;
 }
 
-
-[data-theme="light"] .navbar:not(.navbar--scrolled) .navbar__theme-btn {
-  border-color: rgba(0, 0, 0, 0.2);
-  background: rgba(255, 255, 255, 0.5);
-}
-
-[data-theme="light"] .navbar:not(.navbar--scrolled) .navbar__theme-btn::after {
-  background: #F5F5F5;
-}
-
-[data-theme="light"] .navbar:not(.navbar--scrolled) .navbar__theme-btn .theme-icon-dark,
-[data-theme="light"] .navbar:not(.navbar--scrolled) .navbar__theme-btn .theme-icon-light {
-  color: #F5F5F5;
-}
-
-
+/* (Theme button matches dark theme at the top) */
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    RESET & BASE
    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
@@ -659,7 +644,7 @@ html[data-theme="light"] body .navbar.navbar--scrolled .navbar__theme-btn .theme
   font-size: clamp(80px, 12vw, 180px);
   line-height: 0.9;
   letter-spacing: 0.05em;
-  color: var(--color-white);
+  color: #FFFFFF;
   margin-bottom: 8px;
 }
 
@@ -673,7 +658,7 @@ html[data-theme="light"] body .navbar.navbar--scrolled .navbar__theme-btn .theme
 
 .hero__desc {
   font-size: 18px;
-  color: var(--color-white);
+  color: #FFFFFF;
   opacity: 0.8;
   margin-bottom: 32px;
 }
@@ -696,7 +681,7 @@ html[data-theme="light"] body .navbar.navbar--scrolled .navbar__theme-btn .theme
 
 .hero__btn--primary {
   background: var(--color-red);
-  color: var(--color-white);
+  color: #FFFFFF;
 }
 
 .hero__btn--primary:hover {
@@ -706,7 +691,7 @@ html[data-theme="light"] body .navbar.navbar--scrolled .navbar__theme-btn .theme
 
 .hero__btn--secondary {
   border: 2px solid var(--color-red);
-  color: var(--color-white);
+  color: #FFFFFF;
   background: transparent;
 }
 
@@ -720,7 +705,7 @@ html[data-theme="light"] body .navbar.navbar--scrolled .navbar__theme-btn .theme
 }
 
 .hero__social-link {
-  color: var(--color-white);
+  color: #FFFFFF;
   opacity: 0.6;
   transition: opacity 0.2s, color 0.2s;
 }
@@ -740,7 +725,7 @@ html[data-theme="light"] body .navbar.navbar--scrolled .navbar__theme-btn .theme
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  color: var(--color-white);
+  color: #FFFFFF;
   opacity: 0.5;
   animation: bounce 2s infinite;
 }

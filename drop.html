@@ -40,22 +40,22 @@
     <p class="drop-countdown__label">SONRAKİ DROP'A KALAN SÜRE</p>
     <div class="drop-countdown__units">
       <div class="drop-countdown__unit">
-        <span class="drop-countdown__num" id="cdDays">07</span>
+        <span class="drop-countdown__num" id="cdDays">undefined7 ?</span>
         <span class="drop-countdown__name">GÜN</span>
       </div>
       <span class="drop-countdown__sep" aria-hidden="true">:</span>
       <div class="drop-countdown__unit">
-        <span class="drop-countdown__num" id="cdHours">00</span>
+        <span class="drop-countdown__num" id="cdHours">undefined0 ?</span>
         <span class="drop-countdown__name">SAAT</span>
       </div>
       <span class="drop-countdown__sep" aria-hidden="true">:</span>
       <div class="drop-countdown__unit">
-        <span class="drop-countdown__num" id="cdMinutes">00</span>
+        <span class="drop-countdown__num" id="cdMinutes">undefined0 ?</span>
         <span class="drop-countdown__name">DAKİKA</span>
       </div>
       <span class="drop-countdown__sep" aria-hidden="true">:</span>
       <div class="drop-countdown__unit">
-        <span class="drop-countdown__num" id="cdSeconds">00</span>
+        <span class="drop-countdown__num" id="cdSeconds">undefined0 ?</span>
         <span class="drop-countdown__name">SANİYE</span>
       </div>
     </div>
@@ -66,73 +66,102 @@
     <section class="collection" id="koleksiyon">
       <div class="collection__header" data-animate>
         <h2 class="collection__title">DROP ÜRÜNLER</h2>
-        <span class="collection__badge-cat">6 ÜRÜN</span>
+        <span class="collection__badge-cat">8 ÜRÜN</span>
+      </div>
+      <div class="collection__filters" data-animate>
+        <button class="filter-btn active" data-filter="all">Tümü</button>
+        <button class="filter-btn" data-filter="t-shirt">T-Shirt</button>
+        <button class="filter-btn" data-filter="hoodie">Hoodie</button>
+        <button class="filter-btn" data-filter="esofman">Eşofman</button>
+        <button class="filter-btn" data-filter="sapka">Şapka</button>
       </div>
       <div class="collection__grid">
-        <article class="product-card" data-animate data-badge="SON 5 ADET">
-          <div class="product-card__image" style="background-image: url('assets/products/manifesto_hoodie.png'); background-size: cover; background-position: center;"></div>
+        <article class="product-card" data-category="hoodie" data-animate data-badge="SON 5 ADET">
+          <div class="product-card__image" style="background-image: url('assets/products/maganda_hoodie_black_1777846105084.png'); background-size: cover; background-position: center;"></div>
           <div class="product-card__corner"></div>
           <div class="product-card__info">
             <h3 class="product-card__name">DROP #01: THE MANIFESTO HOODIE</h3>
-            <p class="product-card__tag">Drop Özel</p>
+            <p class="product-card__tag">Koleksiyon Özel Kalın Erkek Hoodie</p>
             <div class="product-card__row">
-              <span class="product-card__price">₺1999</span>
+              <span class="product-card__price">1.999 &#8378;</span>
             </div>
           </div>
         </article>
-        <article class="product-card" data-animate data-badge="TÜKENMEK ÜZERE">
-          <div class="product-card__image" style="background-image: url('https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;"></div>
+        <article class="product-card" data-category="esofman" data-animate data-badge="TÜKENMEK ÜZERE">
+          <div class="product-card__image" style="background-image: url('assets/products/maganda_sweatpants_redline_1777846482324.png'); background-size: cover; background-position: center;"></div>
           <div class="product-card__corner"></div>
           <div class="product-card__info">
-            <h3 class="product-card__name">DROP #02: REDLINE TECHNICAL PANTS</h3>
-            <p class="product-card__tag">Drop Özel</p>
+            <h3 class="product-card__name">DROP #02: REDLINE TRACKSUIT</h3>
+            <p class="product-card__tag">Kırmızı Şeritli Siyah Eşofman Altı</p>
             <div class="product-card__row">
-              <span class="product-card__price">₺1599</span>
+              <span class="product-card__price">1.599 &#8378;</span>
             </div>
           </div>
         </article>
-        <article class="product-card" data-animate data-badge="SINIRLI">
-          <div class="product-card__image" style="background-image: url('https://images.unsplash.com/photo-1485230405346-71acb9518d9c?auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;"></div>
+        <article class="product-card" data-category="hoodie" data-animate data-badge="SINIRLI">
+          <div class="product-card__image" style="background-image: url('assets/products/maganda_hoodie_acid_1777846208954.png'); background-size: cover; background-position: center;"></div>
           <div class="product-card__corner"></div>
           <div class="product-card__info">
-            <h3 class="product-card__name">DROP #03: SHADOW REFLECTIVE JACKET</h3>
-            <p class="product-card__tag">Drop Özel</p>
+            <h3 class="product-card__name">DROP #03: SHADOW REFLECTIVE HOODIE</h3>
+            <p class="product-card__tag">Karanlıkta Parlayan Erkek Hoodie</p>
             <div class="product-card__row">
-              <span class="product-card__price">₺2499</span>
+              <span class="product-card__price">2.499 &#8378;</span>
             </div>
           </div>
         </article>
-        <article class="product-card" data-animate data-badge="SON 2 ADET">
-          <div class="product-card__image" style="background-image: url('https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;"></div>
+        <article class="product-card" data-category="t-shirt" data-animate data-badge="SON 2 ADET">
+          <div class="product-card__image" style="background-image: url('assets/products/maganda_tshirt_car_1777846004490.png'); background-size: cover; background-position: center;"></div>
           <div class="product-card__corner"></div>
           <div class="product-card__info">
             <h3 class="product-card__name">DROP #04: OBSESSED ACID WASH TEE</h3>
-            <p class="product-card__tag">Drop Özel</p>
+            <p class="product-card__tag">Yıkanmış Görünümlü Gri Erkek Tişört</p>
             <div class="product-card__row">
-              <span class="product-card__price">₺899</span>
+              <span class="product-card__price">899 &#8378;</span>
             </div>
           </div>
         </article>
-        <article class="product-card" data-animate data-badge="TÜKENDİ">
-          <div class="product-card__image" style="background-image: url('https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;"></div>
+        <article class="product-card" data-category="sapka" data-animate data-badge="TÜKENDİ">
+          <div class="product-card__image" style="background-image: url('assets/products/maganda_cap_carbon_1777846506524.png'); background-size: cover; background-position: center;"></div>
           <div class="product-card__corner"></div>
           <div class="product-card__info">
             <h3 class="product-card__name" style="text-decoration: line-through;">DROP #05: CARBON FIBER CAP</h3>
-            <p class="product-card__tag">Drop Özel</p>
+            <p class="product-card__tag">Karbon Fiber Dokulu Siyah Şapka</p>
             <div class="product-card__row">
-              <span class="product-card__price" style="text-decoration: line-through; opacity: 0.5;">₺599</span>
+              <span class="product-card__price" style="text-decoration: line-through; opacity: 0.5;">599 &#8378;</span>
               <span class="product-card__sold-out">TÜKENDİ</span>
             </div>
           </div>
         </article>
-        <article class="product-card" data-animate data-badge="SINIRLI">
-          <div class="product-card__image" style="background-image: url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;"></div>
+        <article class="product-card" data-category="t-shirt" data-animate data-badge="SINIRLI">
+          <div class="product-card__image" style="background-image: url('assets/products/maganda_longsleeve_tokyo_1777846775576.png'); background-size: cover; background-position: center;"></div>
           <div class="product-card__corner"></div>
           <div class="product-card__info">
-            <h3 class="product-card__name">DROP #06: PIT CREW VEST</h3>
-            <p class="product-card__tag">Drop Özel</p>
+            <h3 class="product-card__name">DROP #06: PIT CREW T-SHIRT</h3>
+            <p class="product-card__tag">Logolu Yarış Ekibi Tişörtü</p>
             <div class="product-card__row">
-              <span class="product-card__price">₺1799</span>
+              <span class="product-card__price">1.799 &#8378;</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card" data-category="esofman" data-animate data-badge="SON 1 ADET">
+          <div class="product-card__image" style="background-image: url('assets/products/maganda_sweatpants_neon_1777846349061.png'); background-size: cover; background-position: center;"></div>
+          <div class="product-card__corner"></div>
+          <div class="product-card__info">
+            <h3 class="product-card__name">DROP #07: NEON EDGE TRACK PANTS</h3>
+            <p class="product-card__tag">Neon Detaylı İnce Eşofman Altı</p>
+            <div class="product-card__row">
+              <span class="product-card__price">1.899 &#8378;</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card" data-category="sapka" data-animate>
+          <div class="product-card__image" style="background-image: url('assets/products/maganda_beanie_skull_1777846540448.png'); background-size: cover; background-position: center;"></div>
+          <div class="product-card__corner"></div>
+          <div class="product-card__info">
+            <h3 class="product-card__name">DROP #08: GHOST RIDER BEANIE</h3>
+            <p class="product-card__tag">Kafatası Desenli Kışlık Bere</p>
+            <div class="product-card__row">
+              <span class="product-card__price">499 &#8378;</span>
             </div>
           </div>
         </article>
@@ -160,35 +189,6 @@
       </div>
     </section>
   </main>
-<!-- CART DRAWER -->
-  <div class="cart-overlay" id="cartOverlay"></div>
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-drawer__header">
-      <div>
-        <span class="cart-drawer__title">SEPET</span>
-        <span class="cart-drawer__count" id="cartDrawerCount"></span>
-      </div>
-      <button class="cart-drawer__close" id="cartCloseBtn">✕</button>
-    </div>
-    <div class="cart-shipping-bar" id="cartShippingBar">
-      <div class="cart-shipping-bar__label">
-        <span>ÜCRETSİZ KARGO</span>
-        <strong>₺<span class="cart-shipping-bar__remain">1000</span> kaldı</strong>
-      </div>
-      <div class="cart-shipping-bar__track">
-        <div class="cart-shipping-bar__fill cart-shipping-bar__fill--red" style="width:0%"></div>
-      </div>
-      <p class="cart-shipping-bar__achieved">ÜCRETSİZ KARGO KAZANDIN! 🎉</p>
-    </div>
-    <div class="cart-drawer__body" id="cartItems"></div>
-    <div class="cart-drawer__footer">
-      <div class="cart-drawer__total">
-        <span>ARA TOPLAM</span>
-        <span class="cart-drawer__total-amount" id="cartTotal">₺0</span>
-      </div>
-      <button class="cart-drawer__checkout" id="checkoutBtn">ÖDEMEYE GEÇ →</button>
-    </div>
-  </div>
 
   <script src="js/main.js"></script>
   <script src="js/drop.js"></script>
