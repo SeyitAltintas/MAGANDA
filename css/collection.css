@@ -1,0 +1,322 @@
+/* ═══════════════════════════════════════════
+   MAGANDA — collection.css
+   Araba & Motor ürün sayfaları için stiller
+   ═══════════════════════════════════════════ */
+
+/* ─── NAVBAR ACTIVE LINK ─────────────────── */
+.navbar__link--active {
+  color: var(--color-red);
+}
+.navbar__link--active::after {
+  transform: scaleX(1) !important;
+}
+
+/* ─── COLLECTION PAGE WRAPPER ─────────────── */
+.collection-page {
+  padding-top: 0;
+}
+
+/* ─── COL HERO ───────────────────────────── */
+.col-hero {
+  position: relative;
+  height: 55vh;
+  min-height: 360px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 clamp(20px, 6vw, 80px) clamp(32px, 5vw, 60px);
+  margin-top: 70px; /* navbar offset */
+  overflow: hidden;
+}
+
+.col-hero__bg {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(45deg, #0A0A0A, #0A0A0A 10px, #150000 10px, #150000 12px);
+}
+
+.col-hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.4) saturate(0.7);
+}
+
+.col-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.92) 0%,
+    rgba(10, 10, 10, 0.3) 60%,
+    rgba(10, 10, 10, 0.1) 100%
+  );
+}
+
+.col-hero__content {
+  position: relative;
+  z-index: 2;
+  animation: fadeUp 0.8s ease-out both;
+}
+
+.col-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--color-red);
+  margin-bottom: 12px;
+}
+
+.col-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(72px, 12vw, 160px);
+  line-height: 0.85;
+  letter-spacing: 0.05em;
+  color: var(--color-white);
+  margin-bottom: 12px;
+}
+
+.col-hero__sub {
+  font-size: clamp(14px, 1.6vw, 18px);
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 500px;
+  line-height: 1.5;
+}
+
+/* ─── COLLECTION HEADER BADGE ─────────────── */
+.collection__badge-cat {
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  color: var(--color-red);
+  border: 1px solid var(--color-red);
+  padding: 6px 16px;
+  align-self: center;
+}
+
+/* ─── PRODUCT TAG ─────────────────────────── */
+.product-card__tag {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--color-red);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+/* ─── SWITCH BANNER ──────────────────────── */
+.switch-banner {
+  background: var(--color-gray);
+  padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 60px);
+  border-top: 1px solid var(--color-gray-mid);
+  border-bottom: 1px solid var(--color-gray-mid);
+}
+
+.switch-banner__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.switch-banner__text {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 3vw, 36px);
+  letter-spacing: 0.05em;
+  color: var(--color-gray-text);
+}
+
+.switch-banner__btn {
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.8vw, 18px);
+  letter-spacing: 0.1em;
+  padding: 14px 32px;
+  background: var(--color-red);
+  color: var(--color-white);
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+}
+
+.switch-banner__btn:hover {
+  background: var(--color-red-dark);
+  transform: translateX(4px);
+}
+
+/* ─── RESPONSIVE ─────────────────────────── */
+@media (max-width: 767px) {
+  .col-hero { height: 45vh; }
+  .switch-banner__inner { flex-direction: column; align-items: flex-start; }
+  .switch-banner__btn { width: 100%; text-align: center; }
+}
+
+@media (max-width: 479px) {
+  .col-hero { height: 40vh; }
+}
+
+/* ─── COUNTDOWN TIMER ────────────────────── */
+.drop-countdown {
+  background: var(--color-gray);
+  border-top: 2px solid var(--color-red);
+  border-bottom: 1px solid var(--color-gray-mid);
+  padding: clamp(32px, 5vw, 56px) clamp(20px, 6vw, 80px);
+  text-align: center;
+}
+
+.drop-countdown__label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--color-red);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.drop-countdown__units {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.drop-countdown__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: clamp(72px, 14vw, 130px);
+}
+
+.drop-countdown__num {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 10vw, 120px);
+  line-height: 1;
+  color: var(--color-white);
+  letter-spacing: 0.04em;
+  transition: color 0.3s;
+}
+
+.drop-countdown__name {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--color-gray-text);
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+.drop-countdown__sep {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 7vw, 90px);
+  color: var(--color-red);
+  opacity: 0.5;
+  line-height: 1;
+  padding-bottom: clamp(20px, 3vw, 36px);
+  user-select: none;
+}
+
+/* Süre doldu state */
+.drop-countdown--expired .drop-countdown__units {
+  display: none;
+}
+
+.drop-countdown__fired {
+  display: none;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 64px);
+  letter-spacing: 0.08em;
+  color: var(--color-red);
+  animation: pulseRed 1.2s ease-in-out infinite;
+}
+
+.drop-countdown--expired .drop-countdown__fired {
+  display: block;
+}
+
+@keyframes pulseRed {
+  0%, 100% { opacity: 1; text-shadow: 0 0 0 transparent; }
+  50% { opacity: 0.7; text-shadow: 0 0 20px rgba(204, 0, 0, 0.8), 0 0 40px rgba(204, 0, 0, 0.4); }
+}
+
+/* ─── STOCK BAR ───────────────────────────── */
+.product-card__stock {
+  margin-top: 10px;
+}
+
+.product-card__stock-bar-wrap {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.product-card__stock-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  border-radius: 0;
+}
+
+/* Renk varyantları */
+.product-card__stock-bar--red    { background: var(--color-red); }
+.product-card__stock-bar--orange { background: #E67E22; }
+.product-card__stock-bar--yellow { background: #D4AC0D; }
+.product-card__stock-bar--gray   { background: var(--color-gray-mid); }
+.product-card__stock-bar--green  { background: #27AE60; }
+
+.product-card__stock-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.product-card__stock-viewers {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--color-gray-text);
+}
+
+.product-card__stock-viewers em {
+  color: var(--color-white);
+  font-style: normal;
+  font-weight: 600;
+}
+
+.product-card__stock-pct {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--color-gray-text);
+}
+
+/* TÜKENDİ kartı — tüm info üzeri çizili görünüm */
+.product-card[data-badge="TÜKENDİ"] .product-card__stock-bar-wrap {
+  opacity: 0.4;
+}
+.product-card[data-badge="TÜKENDİ"] .product-card__stock-viewers {
+  opacity: 0.4;
+}
+
+/* ─── COUNTDOWN RESPONSIVE ───────────────── */
+@media (max-width: 600px) {
+  .drop-countdown__sep { display: none; }
+  .drop-countdown__units { gap: 8px; }
+  .drop-countdown__unit { min-width: 68px; }
+}
+
+@media (max-width: 479px) {
+  .drop-countdown { padding: 28px 16px; }
+  .drop-countdown__num { font-size: 48px; }
+}

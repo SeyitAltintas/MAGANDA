@@ -1,0 +1,437 @@
+/* ═══════════════════════════════════════════
+   MAGANDA — product.css
+   Ürün Detay Sayfası Stilleri
+   ═══════════════════════════════════════════ */
+
+/* ─── SAYFA YÜKLENİŞ ANİMASYONU ───────── */
+@keyframes ppFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── BREADCRUMB ─────────────────────── */
+.pp-breadcrumb {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  padding: 10px clamp(20px, 4vw, 60px);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  transition: background 0.4s, border-color 0.4s;
+}
+
+.pp-breadcrumb a {
+  color: var(--color-red);
+  transition: opacity 0.2s;
+}
+.pp-breadcrumb a:hover { opacity: 0.7; }
+.pp-breadcrumb__sep { opacity: 0.4; }
+.pp-breadcrumb__current { color: var(--text-primary); }
+
+/* ─── ANA LAYOUT ──────────────────────── */
+.product-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  min-height: 100vh;
+  padding-top: 140px; /* navbar(70) + breadcrumb(41) + spacing */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+  padding-left: clamp(20px, 4vw, 40px);
+  padding-right: clamp(20px, 4vw, 40px);
+}
+
+/* SOL: Sticky görsel */
+.pp-visual {
+  position: sticky;
+  top: 140px;
+  height: calc(100vh - 180px);
+  max-height: 700px; /* Görsel çok büyük olmasın */
+  border-radius: 8px; /* Trendyol tarzı yumuşak kenarlar */
+  overflow: hidden;
+  background: var(--bg-secondary);
+}
+
+.pp-img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--bg-surface);
+  transition: transform 6s ease;
+}
+
+.pp-visual:hover .pp-img {
+  transform: scale(1.04);
+}
+/* Badge */
+.pp-badge {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 5px 16px;
+  background: var(--color-red);
+  color: #FFF;
+  z-index: 2;
+  animation: ppFadeIn 0.6s 0.2s both;
+}
+
+/* SAĞ: Bilgi paneli */
+.pp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: ppFadeIn 0.5s ease both;
+}
+
+/* Seri etiketi */
+.pp-series {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--color-red);
+  text-transform: uppercase;
+}
+
+/* Ürün adı */
+.pp-name {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 56px);
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  color: var(--text-primary);
+}
+
+/* Fiyat */
+.pp-price {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 40px);
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+}
+
+/* Bölücü */
+.pp-divider {
+  height: 1px;
+  background: var(--border-color);
+}
+
+/* Açıklama */
+.pp-desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+
+/* Malzeme chip'leri */
+.pp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pp-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-mid);
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: border-color 0.2s, color 0.2s;
+}
+.pp-chip:hover { border-color: var(--color-red); color: var(--text-primary); }
+.pp-chip-icon { font-size: 13px; }
+
+/* ─── BEDEN SEÇİCİ ───────────────────── */
+.pp-size-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pp-size-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.pp-size-warn {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-red);
+  letter-spacing: 0.1em;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.pp-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Shake animasyonu beden seçilmeden tıklandığında */
+@keyframes ppShake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
+}
+
+.pp-sizes--warn {
+  animation: ppShake 0.6s ease;
+}
+
+.pp-size-btn {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  width: 56px;
+  height: 48px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-mid);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s, background 0.18s, transform 0.15s;
+}
+
+.pp-size-btn:hover {
+  border-color: var(--color-red);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.pp-size-btn--active {
+  background: var(--color-red);
+  border-color: var(--color-red);
+  color: #FFF;
+}
+
+/* Beden Rehberi Toggle */
+.pp-size-guide-toggle {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-red);
+  letter-spacing: 0.08em;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: opacity 0.2s;
+}
+.pp-size-guide-toggle:hover { opacity: 0.7; }
+
+/* Beden Rehberi Panel (accordion) */
+.pp-size-guide-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pp-size-guide-panel--open {
+  max-height: 360px;
+}
+
+.pp-size-guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: 12px;
+  margin-top: 12px;
+}
+
+.pp-size-guide-table th,
+.pp-size-guide-table td {
+  padding: 9px 12px;
+  border: 1px solid var(--border-color);
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.pp-size-guide-table th {
+  background: var(--bg-surface);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-red);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.pp-size-guide-table tr:hover td {
+  background: var(--bg-hover);
+}
+
+/* ─── ADET SEÇİCİ ────────────────────── */
+.pp-qty-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.pp-qty-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  min-width: 50px;
+}
+
+.pp-qty-ctrl {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--border-mid);
+}
+
+.pp-qty-btn {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-surface);
+  border: none;
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1;
+}
+.pp-qty-btn:hover { background: var(--bg-hover); color: var(--color-red); }
+.pp-qty-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.pp-qty-val {
+  width: 48px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-left: 1px solid var(--border-mid);
+  border-right: 1px solid var(--border-mid);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── SEPETE EKLE BUTONU ─────────────── */
+.pp-add-btn {
+  width: 100%;
+  padding: 18px 24px;
+  background: var(--color-red);
+  color: #FFF;
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 0.14em;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.pp-add-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.08);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.pp-add-btn:hover::after { opacity: 1; }
+.pp-add-btn:hover { background: var(--color-red-dark); transform: translateY(-2px); }
+
+.pp-add-btn--success {
+  background: #1a7a38 !important;
+  transform: none !important;
+  pointer-events: none;
+}
+
+/* Güven badgeleri */
+.pp-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 4px;
+}
+
+.pp-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.pp-trust-icon {
+  font-size: 14px;
+}
+
+/* ─── RESPONSIVE ──────────────────────── */
+@media (max-width: 900px) {
+  .product-page {
+    grid-template-columns: 1fr;
+  }
+
+  .pp-visual {
+    position: relative;
+    top: 0;
+    height: 55vw;
+    min-height: 280px;
+    max-height: 420px;
+  }
+
+  .pp-info {
+    padding: 32px 20px 60px;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .pp-name { font-size: 28px; }
+  .pp-price { font-size: 24px; }
+  .pp-size-btn { width: 48px; height: 44px; }
+}
+
+/* reduced-motion uyumu */
+@media (prefers-reduced-motion: reduce) {
+  .pp-img, .pp-info, .pp-badge,
+  .pp-size-guide-panel { transition: none; animation: none; }
+}

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAGANDA — Araba Koleksiyonu</title>
+  <meta name="description" content="MAGANDA araba koleksiyonu. Dört teker, sınırsız güç. Petrolhead giyim.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/collection.css">
+</head>
+
+<body>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo">
+        <span class="navbar__logo-text">MAGANDA</span>
+        <span class="navbar__logo-divider"></span>
+        <span class="navbar__logo-est">KUR. 2026</span>
+      </a>
+      <ul class="navbar__links" id="navLinks">
+        <li><a href="index.html" class="navbar__link">ANA SAYFA</a></li>
+        <li><a href="araba.html" class="navbar__link">ARABA</a></li>
+        <li><a href="motor.html" class="navbar__link">MOTOSİKLET</a></li>
+        <li><a href="drop.html" class="navbar__link">DROP ÜRÜNLER</a></li>
+        <li><a href="hakkimizda.html" class="navbar__link">HAKKIMIZDA</a></li>
+        <li><a href="iletisim.html" class="navbar__link">BİZE ULAŞIN</a></li>
+      </ul>
+      <!-- TEMA TOGGLE -->
+      <button class="navbar__theme-btn" id="themeToggle" aria-label="Temayı değiştir">
+        <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+        <span class="theme-icon-light" aria-hidden="true">☀️</span>
+      </button>
+      <button class="navbar__cart-btn" id="cartOpenBtn" aria-label="Sepet">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span class="navbar__cart-badge" id="cartCount">0</span>
+      </button>
+      <button class="navbar__hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="mobile-menu__link">ANA SAYFA</a>
+    <a href="araba.html" class="mobile-menu__link">ARABA</a>
+    <a href="motor.html" class="mobile-menu__link">MOTOSİKLET</a>
+    <a href="drop.html" class="mobile-menu__link">DROP ÜRÜNLER</a>
+    <a href="hakkimizda.html" class="mobile-menu__link">HAKKIMIZDA</a>
+    <a href="iletisim.html" class="mobile-menu__link">BİZE ULAŞIN</a>
+  </div>
+
+  <main class="collection-page">
+
+    <!-- PAGE HERO -->
+    <section class="col-hero">
+      <div class="col-hero__bg">
+        <video class="col-hero__video" autoplay muted loop playsinline>
+          <source src="assets/video/car-side.mp4" type="video/mp4">
+        </video>
+        <div class="col-hero__overlay"></div>
+      </div>
+      <div class="col-hero__content">
+        <span class="col-hero__badge">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+          ARABA KOLEKSİYONU
+        </span>
+        <h1 class="col-hero__title">ARABA</h1>
+        <p class="col-hero__sub">Dört teker, sınırsız güç. Asfaltta iz bırakan taraf.</p>
+      </div>
+    </section>
+
+<!-- PRODUCTS -->
+    <section class="collection" id="koleksiyon">
+      <div class="collection__header" data-animate>
+        <h2 class="collection__title">ARABA KOLEKSİYONU</h2>
+        <span class="collection__badge-cat">6 ÜRÜN</span>
+      </div>
+      <div class="collection__grid">
+        <article class="product-card" data-animate data-badge="YENİ">
+          <div class="product-card__image" style="background-image: url('https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;"></div>
+          <div class="product-card__corner"></div>
+          <div class="product-card__info">
+            <h3 class="product-card__name">V8 OBSESSION HOODIE — SİYAH</h3>
+            <p class="product-card__tag">Araba Serisi</p>
+            <div class="product-card__row">
+              <span class="product-card__price">₺1499</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card" data-animate data-badge="ÇOK SATAN">
+          <div class="product-card__image" style="background-image: url('https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;"></div>
+          <div class="product-card__corner"></div>
+          <div class="product-card__info">
+            <h3 class="product-card__name">DRIFT KING OVERSIZE T-SHIRT</h3>
+            <p class="product-card__tag">Araba Serisi</p>
+            <div class="product-card__row">
+              <span class="product-card__price">₺699</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card" data-animate>
+          <div class="product-card__image" style="background-image: url('assets/products/track_jacket.png'); background-size: cover; background-position: center;"></div>
+          <div class="product-card__corner"></div>
+          <div class="product-card__info">
+            <h3 class="product-card__name">MIDNIGHT RUN TRACK JACKET</h3>
+            <p class="product-card__tag">Araba Serisi</p>
+            <div class="product-card__row">
+              <span class="product-card__price">₺1899</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card" data-animate data-badge="SINIRLI">
+          <div class="product-card__image" style="background-image: url('assets/products/cargo_pants.png'); background-size: cover; background-position: center;"></div>
+          <div class="product-card__corner"></div>
+          <div class="product-card__info">
+            <h3 class="product-card__name">GEARHEAD CARGO PANTS</h3>
+            <p class="product-card__tag">Araba Serisi</p>
+            <div class="product-card__row">
+              <span class="product-card__price">₺1299</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card" data-animate>
+          <div class="product-card__image" style="background-image: url('assets/products/tokyo_longsleeve.png'); background-size: cover; background-position: center;"></div>
+          <div class="product-card__corner"></div>
+          <div class="product-card__info">
+            <h3 class="product-card__name">TOKYO NIGHTS LONG SLEEVE</h3>
+            <p class="product-card__tag">Araba Serisi</p>
+            <div class="product-card__row">
+              <span class="product-card__price">₺899</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card" data-animate>
+          <div class="product-card__image" style="background-image: url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;"></div>
+          <div class="product-card__corner"></div>
+          <div class="product-card__info">
+            <h3 class="product-card__name">TRACK DAY CAP — KIRMIZI</h3>
+            <p class="product-card__tag">Araba Serisi</p>
+            <div class="product-card__row">
+              <span class="product-card__price">₺499</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SWITCH SIDE BANNER -->
+    <section class="switch-banner">
+      <div class="switch-banner__inner">
+        <p class="switch-banner__text">Motosiklet tarafına mı geçmek istiyorsun?</p>
+        <a href="motor.html" class="switch-banner__btn">MOTOSİKLET KOLEKSİYONU →</a>
+      </div>
+    </section>
+
+    <!-- DROP -->
+    <section class="drop" id="drop">
+      <div class="drop__inner" data-animate>
+        <h2 class="drop__title">SONRAKI KOLEKSİYONU KAÇIRMA.</h2>
+        <p class="drop__text">Sınırlı koleksiyonlar, sadece listedekiler için.</p>
+        <form class="drop__form" id="dropForm">
+          <input type="email" class="drop__input" placeholder="E-posta adresin" required>
+          <button type="submit" class="drop__btn">LİSTEYE GİR →</button>
+        </form>
+        <div class="drop__success" id="dropSuccess">KAYIT ALINDI. HOŞ GELDİN, MAGANDA.</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__grid">
+      <div class="footer__col">
+        <span class="footer__logo">MAGANDA</span>
+        <p class="footer__tagline">SINIR TANIMAYANLARA..</p>
+      </div>
+      <div class="footer__col">
+        <a href="index.html" class="footer__link">Ana Sayfa</a>
+        <a href="araba.html" class="footer__link">Araba</a>
+        <a href="motor.html" class="footer__link">Motosiklet</a>
+        <a href="drop.html" class="footer__link">Drop Ürünler</a>
+        <a href="hakkimizda.html" class="footer__link">Hakkımızda</a>
+        <a href="iletisim.html" class="footer__link">İletişim</a>
+      </div>
+      <div class="footer__col">
+        <div class="footer__social">
+          <a href="#" class="footer__social-link" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+        </div>
+        <span class="footer__badge">TÜRKİYE'DE ÜRETİLDİ</span>
+      </div>
+    </div>
+    <div class="footer__bar">
+      <span>© 2026 MAGANDA. Tüm hakları saklıdır.</span>
+      <a href="#">Gizlilik Politikası</a>
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer__header">
+      <div>
+        <span class="cart-drawer__title">SEPET</span>
+        <span class="cart-drawer__count" id="cartDrawerCount"></span>
+      </div>
+      <button class="cart-drawer__close" id="cartCloseBtn">✕</button>
+    </div>
+    <div class="cart-shipping-bar" id="cartShippingBar">
+      <div class="cart-shipping-bar__label">
+        <span>ÜCRETSİZ KARGO</span>
+        <strong>₺<span class="cart-shipping-bar__remain">1000</span> kaldı</strong>
+      </div>
+      <div class="cart-shipping-bar__track">
+        <div class="cart-shipping-bar__fill cart-shipping-bar__fill--red" style="width:0%"></div>
+      </div>
+      <p class="cart-shipping-bar__achieved">ÜCRETSİZ KARGO KAZANDIN! 🎉</p>
+    </div>
+    <div class="cart-drawer__body" id="cartItems"></div>
+    <div class="cart-drawer__footer">
+      <div class="cart-drawer__total">
+        <span>ARA TOPLAM</span>
+        <span class="cart-drawer__total-amount" id="cartTotal">₺0</span>
+      </div>
+      <button class="cart-drawer__checkout" id="checkoutBtn">ÖDEMEYE GEÇ →</button>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
+
+
+
