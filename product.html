@@ -45,23 +45,6 @@
 
       <div class="pp-divider"></div>
 
-      <!-- Açıklama -->
-      <p class="pp-desc" id="pp-desc"></p>
-
-      <!-- Urun bilgi sekmeleri -->
-      <div class="pp-tabs" id="pp-tabs">
-        <div class="pp-tabs__nav" role="tablist" aria-label="Ürün bilgileri">
-          <button class="pp-tabs__btn pp-tabs__btn--active" type="button" role="tab" aria-selected="true" data-tab="desc">AÇIKLAMA</button>
-          <button class="pp-tabs__btn" type="button" role="tab" aria-selected="false" data-tab="material">MATERYAL</button>
-          <button class="pp-tabs__btn" type="button" role="tab" aria-selected="false" data-tab="care">BAKIM</button>
-          <button class="pp-tabs__btn" type="button" role="tab" aria-selected="false" data-tab="shipping">KARGO & İADE</button>
-        </div>
-        <div class="pp-tabs__panel pp-tabs__panel--active" role="tabpanel" data-panel="desc" id="pp-tab-desc"></div>
-        <div class="pp-tabs__panel" role="tabpanel" data-panel="material">Orta ağırlıkta premium kumaş, yumuşak iç yüzey ve günlük kullanıma uygun dayanıklı dikiş yapısı.</div>
-        <div class="pp-tabs__panel" role="tabpanel" data-panel="care">30 derecede ters çevirerek yıka. Ağartıcı kullanma. Baskı ömrü için düşük ısıda ütüle.</div>
-        <div class="pp-tabs__panel" role="tabpanel" data-panel="shipping">Siparişler 1-2 iş günü içinde hazırlanır. Kullanılmamış ürünlerde 14 gün içinde iade kabul edilir.</div>
-      </div>
-
       <!-- Malzeme Chip'leri -->
       <div class="pp-chips">
         <span class="pp-chip"><span class="pp-chip-icon">🧵</span>%100 Pamuk</span>
@@ -121,6 +104,25 @@
       <!-- Sepete Ekle -->
       <button class="pp-add-btn" id="pp-add-btn">SEPETE EKLE</button>
 
+      <div class="pp-info-links" id="pp-info-links" aria-label="&#220;r&#252;n bilgi detaylar&#305;">
+        <button class="pp-info-link" type="button" data-info-panel="desc">
+          <span>A&#199;IKLAMA</span>
+          <span class="pp-info-link__arrow" aria-hidden="true">&rarr;</span>
+        </button>
+        <button class="pp-info-link" type="button" data-info-panel="material">
+          <span>MATERYAL</span>
+          <span class="pp-info-link__arrow" aria-hidden="true">&rarr;</span>
+        </button>
+        <button class="pp-info-link" type="button" data-info-panel="care">
+          <span>BAKIM</span>
+          <span class="pp-info-link__arrow" aria-hidden="true">&rarr;</span>
+        </button>
+        <button class="pp-info-link" type="button" data-info-panel="shipping">
+          <span>KARGO &amp; &#304;ADE</span>
+          <span class="pp-info-link__arrow" aria-hidden="true">&rarr;</span>
+        </button>
+      </div>
+
       <div class="pp-delivery" id="pp-delivery">
         <span class="pp-delivery__label">TAHMİNİ TESLİMAT</span>
         <span class="pp-delivery__date" id="pp-delivery-date">Hesaplanıyor</span>
@@ -143,6 +145,16 @@
     </div>
     <div class="pp-related__grid" id="pp-related-grid"></div>
   </section>
+
+  <div class="pp-info-panel-overlay" id="ppInfoPanelOverlay"></div>
+  <aside class="pp-info-panel" id="ppInfoPanel" aria-hidden="true" aria-labelledby="ppInfoPanelTitle">
+    <div class="pp-info-panel__header">
+      <span class="pp-info-panel__eyebrow">&#220;R&#220;N B&#304;LG&#304;S&#304;</span>
+      <button class="pp-info-panel__close" id="ppInfoPanelClose" type="button" aria-label="Kapat">&times;</button>
+    </div>
+    <h2 class="pp-info-panel__title" id="ppInfoPanelTitle"></h2>
+    <div class="pp-info-panel__body" id="ppInfoPanelBody"></div>
+  </aside>
 <!-- CART DRAWER -->
   <div class="cart-overlay" id="cartOverlay"></div>
   <div class="cart-drawer" id="cartDrawer">

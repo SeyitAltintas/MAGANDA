@@ -67,6 +67,8 @@
     });
   }
 
+
+
   /* ─── NAVBAR SCROLL ──────────────────── */
   function initNavbar() {
     var navbar = document.getElementById('navbar');
@@ -448,6 +450,7 @@
   /* ─── ÜRÜN KARTLARI → product.html yönlendirme ── */
   function initProductCards() {
     document.addEventListener('click', function (e) {
+      if (e.target.closest('[data-stop-card]')) return;
       var card = e.target.closest('.product-card');
       if (!card) return;
 
@@ -522,29 +525,91 @@
 
 
     function initProductInfoTabs(activeDescription) {
-      var tabDesc = document.getElementById('pp-tab-desc');
-      if (tabDesc) tabDesc.textContent = activeDescription;
+      var links = Array.from(document.querySelectorAll('[data-info-panel]'));
+      var panel = document.getElementById('ppInfoPanel');
+      var overlay = document.getElementById('ppInfoPanelOverlay');
+      var closeBtn = document.getElementById('ppInfoPanelClose');
+      var titleEl = document.getElementById('ppInfoPanelTitle');
+      var bodyEl = document.getElementById('ppInfoPanelBody');
+      if (!links.length || !panel || !overlay || !titleEl || !bodyEl) return;
 
-      var tabs = document.getElementById('pp-tabs');
-      if (!tabs) return;
+      var content = {
+        desc: {
+          title: 'AÇIKLAMA',
+          body: [
+            '<p><strong>' + name + '</strong>, MAGANDA ruhunu günlük kullanıma taşıyan sınırlı üretim bir parça olarak tasarlandı.</p>',
+            '<p>' + activeDescription + '</p>',
+            '<p>Kesimi rahat hareket alanı verir; baskı, kumaş ve form dengesi uzun süreli kullanım için seçilmiştir. Garajdan şehir içine, gece sürüşünden günlük kombinlere kadar net bir duruş verir.</p>'
+          ].join('')
+        },
+        material: {
+          title: 'MATERYAL',
+          body: [
+            '<p>Üründe tok tutumlu, orta ağırlıkta premium kumaş yapısı kullanılır. İç yüzey yumuşak, dış yüzey formunu koruyacak şekilde dayanıklıdır.</p>',
+            '<ul>',
+              '<li>%100 pamuk hissi veren nefes alabilir yapı</li>',
+              '<li>Günlük kullanıma uygun dayanıklı dikiş</li>',
+              '<li>Baskı yüzeyinde uzun ömürlü tutunma</li>',
+              '<li>Türkiye üretimi kalite standardı</li>',
+            '</ul>',
+            '<p>Ürün tipine göre kumaş karışımı ve gramaj farklılık gösterebilir; her parçada konfor ve dayanıklılık önceliklidir.</p>'
+          ].join('')
+        },
+        care: {
+          title: 'BAKIM',
+          body: [
+            '<p>Ürünün formunu, rengini ve baskı kalitesini uzun süre korumak için bakım adımlarını takip etmeni öneririz.</p>',
+            '<ul>',
+              '<li>30 derecede, ters çevirerek yıka</li>',
+              '<li>Ağartıcı ve sert kimyasal kullanma</li>',
+              '<li>Kurutma makinesi yerine doğal kurutma tercih et</li>',
+              '<li>Baskı üzerine direkt ütü uygulama</li>',
+              '<li>Benzer renklerle birlikte yıka</li>',
+            '</ul>'
+          ].join('')
+        },
+        shipping: {
+          title: 'KARGO & İADE',
+          body: [
+            '<p>Siparişler ödeme onayından sonra genellikle <strong>1-2 iş günü</strong> içinde hazırlanır ve kargoya teslim edilir.</p>',
+            '<ul>',
+              '<li>500₺ ve üzeri siparişlerde ücretsiz kargo</li>',
+              '<li>Kargo takip bilgisi sipariş sonrası paylaşılır</li>',
+              '<li>Kullanılmamış ve etiketi çıkarılmamış ürünlerde 14 gün içinde iade</li>',
+              '<li>İade edilecek ürünün orijinal paketinde gönderilmesi gerekir</li>',
+            '</ul>',
+            '<p>Drop ve sınırlı üretim ürünlerde stok tekrar etmeyebilir; beden değişimi stok durumuna bağlıdır.</p>'
+          ].join('')
+        }
+      };
 
-      var buttons = Array.from(tabs.querySelectorAll('.pp-tabs__btn'));
-      var panels = Array.from(tabs.querySelectorAll('.pp-tabs__panel'));
+      function openPanel(type) {
+        var item = content[type] || content.desc;
+        titleEl.textContent = item.title;
+        bodyEl.innerHTML = item.body;
+        panel.classList.add('pp-info-panel--active');
+        overlay.classList.add('pp-info-panel-overlay--active');
+        panel.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('no-scroll');
+      }
 
-      buttons.forEach(function (button) {
-        button.addEventListener('click', function () {
-          var target = button.getAttribute('data-tab');
+      function closePanel() {
+        panel.classList.remove('pp-info-panel--active');
+        overlay.classList.remove('pp-info-panel-overlay--active');
+        panel.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('no-scroll');
+      }
 
-          buttons.forEach(function (btn) {
-            var active = btn === button;
-            btn.classList.toggle('pp-tabs__btn--active', active);
-            btn.setAttribute('aria-selected', active ? 'true' : 'false');
-          });
-
-          panels.forEach(function (panel) {
-            panel.classList.toggle('pp-tabs__panel--active', panel.getAttribute('data-panel') === target);
-          });
+      links.forEach(function (link) {
+        link.addEventListener('click', function () {
+          openPanel(link.getAttribute('data-info-panel'));
         });
+      });
+
+      overlay.addEventListener('click', closePanel);
+      if (closeBtn) closeBtn.addEventListener('click', closePanel);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && panel.classList.contains('pp-info-panel--active')) closePanel();
       });
     }
 
@@ -555,6 +620,14 @@
       var key = 'maganda_favorites';
       var favoriteId = productName + '|' + productPrice;
       var favorites = [];
+      var favoriteItem = {
+        id: favoriteId,
+        name: productName,
+        price: productPrice,
+        series: series,
+        badge: badge,
+        img: imgUrl
+      };
 
       try {
         favorites = JSON.parse(localStorage.getItem(key)) || [];
@@ -563,7 +636,9 @@
       }
 
       function syncButton() {
-        var active = favorites.indexOf(favoriteId) !== -1;
+        var active = favorites.some(function (item) {
+          return (typeof item === 'string' ? item : item.id) === favoriteId;
+        });
         favoriteBtn.classList.toggle('pp-favorite-btn--active', active);
         favoriteBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
         favoriteBtn.textContent = active ? 'FAVORİLERDE' : 'FAVORİLERE EKLE';
@@ -572,9 +647,11 @@
       syncButton();
 
       favoriteBtn.addEventListener('click', function () {
-        var index = favorites.indexOf(favoriteId);
+        var index = favorites.findIndex(function (item) {
+          return (typeof item === 'string' ? item : item.id) === favoriteId;
+        });
         if (index === -1) {
-          favorites.push(favoriteId);
+          favorites.push(favoriteItem);
           window.toast && window.toast('Favorilere eklendi', 'success');
         } else {
           favorites.splice(index, 1);
@@ -783,6 +860,111 @@
     }
   }
 
+  function getFavorites() {
+    try {
+      return JSON.parse(localStorage.getItem('maganda_favorites')) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveFavorites(items) {
+    localStorage.setItem('maganda_favorites', JSON.stringify(items));
+  }
+
+  function normalizeFavorite(item) {
+    if (typeof item === 'string') {
+      var parts = item.split('|');
+      return {
+        id: item,
+        name: parts[0] || 'Favori ürün',
+        price: parts[1] || '',
+        series: '',
+        badge: '',
+        img: ''
+      };
+    }
+    return {
+      id: item.id || ((item.name || '') + '|' + (item.price || '')),
+      name: item.name || 'Favori ürün',
+      price: item.price || '',
+      series: item.series || '',
+      badge: item.badge || '',
+      img: item.img || item.image || ''
+    };
+  }
+
+  function escapeAttr(value) {
+    return String(value || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+  }
+
+  function escapeHtml(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function initFavoritesPage() {
+    var grid = document.getElementById('favoritesGrid');
+    var empty = document.getElementById('favoritesEmpty');
+    var count = document.getElementById('favoritesCount');
+    if (!grid) return;
+
+    function render() {
+      var favorites = getFavorites().map(normalizeFavorite);
+      if (count) count.textContent = favorites.length + ' ÜRÜN';
+
+      if (!favorites.length) {
+        grid.innerHTML = '';
+        if (empty) empty.hidden = false;
+        return;
+      }
+
+      if (empty) empty.hidden = true;
+      grid.innerHTML = favorites.map(function (item) {
+        var params = new URLSearchParams({
+          name: item.name,
+          price: item.price,
+          series: item.series,
+          badge: item.badge,
+          img: item.img
+        });
+        var imgStyle = item.img ? 'background-image:url(&quot;' + escapeAttr(item.img) + '&quot;); background-size:cover; background-position:center;' : '';
+        var id = escapeAttr(item.id);
+        return '<article class="product-card favorite-card" data-favorite-id="' + id + '">' +
+          '<div class="product-card__image" style="' + imgStyle + '"></div>' +
+          '<div class="product-card__corner"></div>' +
+          '<div class="product-card__info">' +
+            '<p class="product-card__tag">' + escapeHtml(item.series || 'MAGANDA') + '</p>' +
+            '<h3 class="product-card__name">' + escapeHtml(item.name) + '</h3>' +
+            '<div class="product-card__row">' +
+              '<span class="product-card__price">' + escapeHtml(item.price) + '</span>' +
+              '<a class="favorite-card__detail" href="product.html?' + params.toString() + '" data-stop-card>DETAY</a>' +
+            '</div>' +
+            '<button class="favorite-card__remove" type="button" data-stop-card data-remove-favorite="' + id + '">FAVORİDEN KALDIR</button>' +
+          '</div>' +
+        '</article>';
+      }).join('');
+    }
+
+    grid.addEventListener('click', function (e) {
+      var removeBtn = e.target.closest('[data-remove-favorite]');
+      if (!removeBtn) return;
+      var id = removeBtn.getAttribute('data-remove-favorite');
+      var filtered = getFavorites().filter(function (item) {
+        return (typeof item === 'string' ? item : item.id) !== id;
+      });
+      saveFavorites(filtered);
+      window.toast && window.toast('Favorilerden kaldırıldı', 'info');
+      render();
+    });
+
+    render();
+  }
+
   /* ─── TOAST BİLDİRİM SİSTEMİ ─────────── */
   function initToast() {
     var container = document.createElement('div');
@@ -852,10 +1034,16 @@
             '<li><a href="hakkimizda.html" class="navbar__link">HAKKIMIZDA</a></li>' +
             '<li><a href="iletisim.html" class="navbar__link">BİZE ULAŞIN</a></li>' +
           '</ul>' +
+          '<div class="navbar__actions">' +
           '<button class="navbar__theme-btn" id="themeToggle" aria-label="Temayı değiştir">' +
             '<span class="theme-icon-dark" aria-hidden="true">🌙</span>' +
             '<span class="theme-icon-light" aria-hidden="true">☀️</span>' +
           '</button>' +
+          '<a href="favoriler.html" class="navbar__icon-btn navbar__favorite-btn" aria-label="Favorilerim">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="23" height="23">' +
+              '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"></path>' +
+            '</svg>' +
+          '</a>' +
           '<button class="navbar__cart-btn" id="cartOpenBtn" aria-label="Sepet">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">' +
               '<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>' +
@@ -864,6 +1052,7 @@
             '</svg>' +
             '<span class="navbar__cart-badge" id="cartCount">0</span>' +
           '</button>' +
+          '</div>' +
         '</div>' +
       '</nav>';
 
@@ -905,6 +1094,7 @@
             '<a href="araba.html" class="footer__link">Araba</a>' +
             '<a href="motor.html" class="footer__link">Motosiklet</a>' +
             '<a href="drop.html" class="footer__link">Drop Ürünler</a>' +
+            '<a href="favoriler.html" class="footer__link">Favorilerim</a>' +
             '<a href="hakkimizda.html" class="footer__link">Hakkımızda</a>' +
             '<a href="iletisim.html" class="footer__link">İletişim</a>' +
           '</div>' +
@@ -1013,6 +1203,7 @@
     initDropForm();
     initProductCards();
     initProductPage();
+    initFavoritesPage();
     initFooterPaymentStrip();
 
   }
@@ -1023,5 +1214,3 @@
     init();
   }
 })();
-
-

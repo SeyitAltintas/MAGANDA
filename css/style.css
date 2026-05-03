@@ -51,6 +51,7 @@
 [data-theme="light"] .navbar--scrolled .navbar__logo-text,
 [data-theme="light"] .navbar--scrolled .navbar__logo-est,
 [data-theme="light"] .navbar--scrolled .navbar__link,
+[data-theme="light"] .navbar--scrolled .navbar__icon-btn,
 [data-theme="light"] .navbar--scrolled .navbar__cart-btn {
   color: #0A0A0A;
 }
@@ -59,8 +60,9 @@
 [data-theme="light"] .navbar:not(.navbar--scrolled) .navbar__logo-text,
 [data-theme="light"] .navbar:not(.navbar--scrolled) .navbar__logo-est,
 [data-theme="light"] .navbar:not(.navbar--scrolled) .navbar__link,
+[data-theme="light"] .navbar:not(.navbar--scrolled) .navbar__icon-btn,
 [data-theme="light"] .navbar:not(.navbar--scrolled) .navbar__cart-btn {
-  color: #0A0A0A;
+  color: #F5F5F5;
 }
 
 
@@ -70,12 +72,12 @@
 }
 
 [data-theme="light"] .navbar:not(.navbar--scrolled) .navbar__theme-btn::after {
-  background: #0A0A0A;
+  background: #F5F5F5;
 }
 
 [data-theme="light"] .navbar:not(.navbar--scrolled) .navbar__theme-btn .theme-icon-dark,
 [data-theme="light"] .navbar:not(.navbar--scrolled) .navbar__theme-btn .theme-icon-light {
-  color: #0A0A0A;
+  color: #F5F5F5;
 }
 
 
@@ -354,10 +356,12 @@ body.no-scroll {
 .navbar:not(.navbar--scrolled) .navbar__logo-text,
 .navbar:not(.navbar--scrolled) .navbar__logo-est,
 .navbar:not(.navbar--scrolled) .navbar__link,
+.navbar:not(.navbar--scrolled) .navbar__icon-btn,
 .navbar:not(.navbar--scrolled) .navbar__cart-btn {
   color: #F5F5F5;
 }
 
+.navbar:not(.navbar--scrolled) .navbar__icon-btn:hover,
 .navbar:not(.navbar--scrolled) .navbar__cart-btn:hover {
   color: var(--color-red);
 }
@@ -377,27 +381,6 @@ body.no-scroll {
   color: #F5F5F5;
 }
 
-[data-theme="light"] body:not(.force-scrolled-nav) .navbar:not(.navbar--scrolled) .navbar__logo-text,
-[data-theme="light"] body:not(.force-scrolled-nav) .navbar:not(.navbar--scrolled) .navbar__logo-est,
-[data-theme="light"] body:not(.force-scrolled-nav) .navbar:not(.navbar--scrolled) .navbar__link,
-[data-theme="light"] body:not(.force-scrolled-nav) .navbar:not(.navbar--scrolled) .navbar__cart-btn {
-  color: #F5F5F5;
-}
-
-
-[data-theme="light"] body:not(.force-scrolled-nav) .navbar:not(.navbar--scrolled) .navbar__theme-btn {
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(0, 0, 0, 0.2);
-}
-
-[data-theme="light"] body:not(.force-scrolled-nav) .navbar:not(.navbar--scrolled) .navbar__theme-btn::after {
-  background: #F5F5F5;
-}
-
-[data-theme="light"] body:not(.force-scrolled-nav) .navbar:not(.navbar--scrolled) .navbar__theme-btn .theme-icon-dark,
-[data-theme="light"] body:not(.force-scrolled-nav) .navbar:not(.navbar--scrolled) .navbar__theme-btn .theme-icon-light {
-  color: #F5F5F5;
-}
 
 .navbar__inner {
   max-width: 1400px;
@@ -440,6 +423,12 @@ body.no-scroll {
   gap: 32px;
 }
 
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
 .navbar__link {
   font-family: var(--font-body);
   font-size: 13px;
@@ -468,22 +457,31 @@ body.no-scroll {
   transform: scaleX(1);
 }
 
+.navbar__icon-btn,
 .navbar__cart-btn {
   position: relative;
   background: transparent;
   color: var(--text-primary);
   border: none;
-  padding: 8px;
+  width: 30px;
+  height: 32px;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: color 0.2s, transform 0.2s;
 }
 
+.navbar__icon-btn:hover,
 .navbar__cart-btn:hover {
   color: var(--color-red);
   transform: scale(1.1);
 }
+
+.navbar__favorite-btn {
+  margin: 0;
+}
+
 
 .navbar__cart-badge {
   position: absolute;
@@ -507,6 +505,7 @@ body.no-scroll {
   position: relative;
   width: 52px;
   height: 28px;
+  margin-right: 8px;
   border-radius: 14px;
   background: var(--bg-surface);
   border: 1.5px solid var(--border-mid);
@@ -558,6 +557,52 @@ body.no-scroll {
 
 [data-theme="light"] .navbar__theme-btn .theme-icon-light {
   opacity: 1;
+}
+
+/* Header color contract:
+   Scroll en ?stte her temada beyaz; scroll sonras? a??k tema siyah, koyu tema beyaz. */
+html body .navbar:not(.navbar--scrolled) .navbar__logo-text,
+html body .navbar:not(.navbar--scrolled) .navbar__logo-est,
+html body .navbar:not(.navbar--scrolled) .navbar__link,
+html body .navbar:not(.navbar--scrolled) .navbar__icon-btn,
+html body .navbar:not(.navbar--scrolled) .navbar__cart-btn {
+  color: #F5F5F5;
+}
+
+html body .navbar:not(.navbar--scrolled) .navbar__theme-btn {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+html body .navbar:not(.navbar--scrolled) .navbar__theme-btn::after {
+  background: #F5F5F5;
+}
+
+html body .navbar:not(.navbar--scrolled) .navbar__theme-btn .theme-icon-dark,
+html body .navbar:not(.navbar--scrolled) .navbar__theme-btn .theme-icon-light {
+  color: #F5F5F5;
+}
+
+html[data-theme="light"] body .navbar.navbar--scrolled .navbar__logo-text,
+html[data-theme="light"] body .navbar.navbar--scrolled .navbar__logo-est,
+html[data-theme="light"] body .navbar.navbar--scrolled .navbar__link,
+html[data-theme="light"] body .navbar.navbar--scrolled .navbar__icon-btn,
+html[data-theme="light"] body .navbar.navbar--scrolled .navbar__cart-btn {
+  color: #0A0A0A;
+}
+
+html[data-theme="light"] body .navbar.navbar--scrolled .navbar__theme-btn {
+  border-color: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+html[data-theme="light"] body .navbar.navbar--scrolled .navbar__theme-btn::after {
+  background: #0A0A0A;
+}
+
+html[data-theme="light"] body .navbar.navbar--scrolled .navbar__theme-btn .theme-icon-dark,
+html[data-theme="light"] body .navbar.navbar--scrolled .navbar__theme-btn .theme-icon-light {
+  color: #0A0A0A;
 }
 
 
@@ -2756,6 +2801,144 @@ body.no-scroll {
 /* Ürün kartına tıklanabilirlik imleci */
 .product-card {
   cursor: pointer;
+}
+
+/* ═══════════════════════════════════════════
+   FAVORITES PAGE
+   ═══════════════════════════════════════════ */
+.favorites-page {
+  min-height: 70vh;
+  padding: 150px clamp(28px, 5vw, 70px) 90px;
+}
+
+.favorites-hero {
+  max-width: 1400px;
+  margin: 0 auto 42px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 28px;
+}
+
+.favorites-hero__eyebrow {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--color-red);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+}
+
+.favorites-hero__row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.favorites-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(72px, 10vw, 150px);
+  line-height: 0.88;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+}
+
+.favorites-hero__count {
+  margin-bottom: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.favorites-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.favorites-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.favorite-card__detail,
+.favorite-card__remove {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.favorite-card__detail {
+  color: var(--color-red);
+}
+
+.favorite-card__remove {
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px 12px;
+  border: 1px solid var(--border-mid);
+  color: var(--text-muted);
+  background: transparent;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.favorite-card__remove:hover {
+  border-color: var(--color-red);
+  color: #fff;
+  background: var(--color-red);
+}
+
+.favorites-empty {
+  display: grid;
+  place-items: center;
+  min-height: 360px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  text-align: center;
+  padding: 50px;
+}
+
+.favorites-empty[hidden] {
+  display: none;
+}
+
+.favorites-empty__mark {
+  color: var(--color-red);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+}
+
+.favorites-empty__title {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-size: 54px;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+}
+
+.favorites-empty__text {
+  max-width: 420px;
+  margin: 10px auto 24px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.favorites-empty__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 22px;
+  color: #fff;
+  background: var(--color-red);
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0.1em;
 }
 
 /* ═══════════════════════════════════════════

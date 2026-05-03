@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAGANDA — Favorilerim</title>
+  <meta name="description" content="MAGANDA favorilere eklenen ürünler.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="force-scrolled-nav">
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <main class="favorites-page">
+    <section class="favorites-hero">
+      <span class="favorites-hero__eyebrow">SEÇTİKLERİN</span>
+      <div class="favorites-hero__row">
+        <h1 class="favorites-hero__title">FAVORİLERİM</h1>
+        <span class="favorites-hero__count" id="favoritesCount">0 ÜRÜN</span>
+      </div>
+    </section>
+
+    <section class="favorites-content" aria-label="Favori ürünler">
+      <div class="favorites-empty" id="favoritesEmpty" hidden>
+        <span class="favorites-empty__mark">MAGANDA</span>
+        <h2 class="favorites-empty__title">HENÜZ FAVORİN YOK</h2>
+        <p class="favorites-empty__text">Beğendiğin ürünleri ürün detay sayfasından favorilerine ekleyebilirsin.</p>
+        <a href="drop.html" class="favorites-empty__btn">DROP ÜRÜNLERE GİT</a>
+      </div>
+      <div class="collection__grid favorites-grid" id="favoritesGrid"></div>
+    </section>
+  </main>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer__header">
+      <h3 class="cart-drawer__title">SEPETİNİZ</h3>
+      <button class="cart-drawer__close" id="cartCloseBtn">×</button>
+    </div>
+    <div class="cart-drawer__body" id="cartItems">
+      <div class="cart-drawer__empty">Sepetiniz şu an boş.</div>
+    </div>
+    <div class="cart-drawer__footer">
+      <div class="cart-drawer__total">
+        <span>ARA TOPLAM:</span>
+        <span id="cartTotal">₺0</span>
+      </div>
+      <button class="cart-drawer__checkout" id="checkoutBtn">DEVAM ET</button>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
