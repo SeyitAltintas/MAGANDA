@@ -15,53 +15,7 @@
 
 <body class="force-scrolled-nav">
   <div class="noise-overlay" aria-hidden="true"></div>
-
-  <!-- NAVBAR -->
-  <nav class="navbar navbar--scrolled" id="navbar">
-    <div class="navbar__inner">
-      <a href="index.html" class="navbar__logo">
-        <span class="navbar__logo-text">MAGANDA</span>
-        <span class="navbar__logo-divider"></span>
-        <span class="navbar__logo-est">KUR. 2026</span>
-      </a>
-      <ul class="navbar__links" id="navLinks">
-        <li><a href="index.html" class="navbar__link">ANA SAYFA</a></li>
-        <li><a href="araba.html" class="navbar__link">ARABA</a></li>
-        <li><a href="motor.html" class="navbar__link">MOTOSİKLET</a></li>
-        <li><a href="drop.html" class="navbar__link">DROP ÜRÜNLER</a></li>
-        <li><a href="hakkimizda.html" class="navbar__link">HAKKIMIZDA</a></li>
-        <li><a href="iletisim.html" class="navbar__link">BİZE ULAŞIN</a></li>
-      </ul>
-      <!-- TEMA TOGGLE -->
-      <button class="navbar__theme-btn" id="themeToggle" aria-label="Temayı değiştir">
-        <span class="theme-icon-dark" aria-hidden="true">🌙</span>
-        <span class="theme-icon-light" aria-hidden="true">☀️</span>
-      </button>
-      <button class="navbar__cart-btn" id="cartOpenBtn" aria-label="Sepet">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <path d="M16 10a4 4 0 0 1-8 0"></path>
-        </svg>
-        <span class="navbar__cart-badge" id="cartCount">0</span>
-      </button>
-      <button class="navbar__hamburger" id="hamburger" aria-label="Menü">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html" class="mobile-menu__link">ANA SAYFA</a>
-    <a href="araba.html" class="mobile-menu__link">ARABA</a>
-    <a href="motor.html" class="mobile-menu__link">MOTOSİKLET</a>
-    <a href="drop.html" class="mobile-menu__link">DROP ÜRÜNLER</a>
-    <a href="hakkimizda.html" class="mobile-menu__link">HAKKIMIZDA</a>
-    <a href="iletisim.html" class="mobile-menu__link">BİZE ULAŞIN</a>
-  </div>
-
-  <!-- BREADCRUMB -->
+<!-- BREADCRUMB -->
   <div class="pp-breadcrumb">
     <a href="index.html" id="pp-back">← <span id="pp-back-label">KOLEKSİYON</span></a>
     <span class="pp-breadcrumb__sep">/</span>
@@ -84,11 +38,29 @@
       <span class="pp-series" id="pp-series"></span>
       <h1 class="pp-name" id="pp-name">ÜRÜN YÜKLENİYOR...</h1>
       <span class="pp-price" id="pp-price">₺—</span>
+      <div class="pp-action-row">
+        <span class="pp-limited-badge" id="pp-limited-badge">SINIRLI DROP</span>
+        <button class="pp-favorite-btn" id="pp-favorite-btn" type="button" aria-pressed="false">FAVORİLERE EKLE</button>
+      </div>
 
       <div class="pp-divider"></div>
 
       <!-- Açıklama -->
       <p class="pp-desc" id="pp-desc"></p>
+
+      <!-- Urun bilgi sekmeleri -->
+      <div class="pp-tabs" id="pp-tabs">
+        <div class="pp-tabs__nav" role="tablist" aria-label="Ürün bilgileri">
+          <button class="pp-tabs__btn pp-tabs__btn--active" type="button" role="tab" aria-selected="true" data-tab="desc">AÇIKLAMA</button>
+          <button class="pp-tabs__btn" type="button" role="tab" aria-selected="false" data-tab="material">MATERYAL</button>
+          <button class="pp-tabs__btn" type="button" role="tab" aria-selected="false" data-tab="care">BAKIM</button>
+          <button class="pp-tabs__btn" type="button" role="tab" aria-selected="false" data-tab="shipping">KARGO & İADE</button>
+        </div>
+        <div class="pp-tabs__panel pp-tabs__panel--active" role="tabpanel" data-panel="desc" id="pp-tab-desc"></div>
+        <div class="pp-tabs__panel" role="tabpanel" data-panel="material">Orta ağırlıkta premium kumaş, yumuşak iç yüzey ve günlük kullanıma uygun dayanıklı dikiş yapısı.</div>
+        <div class="pp-tabs__panel" role="tabpanel" data-panel="care">30 derecede ters çevirerek yıka. Ağartıcı kullanma. Baskı ömrü için düşük ısıda ütüle.</div>
+        <div class="pp-tabs__panel" role="tabpanel" data-panel="shipping">Siparişler 1-2 iş günü içinde hazırlanır. Kullanılmamış ürünlerde 14 gün içinde iade kabul edilir.</div>
+      </div>
 
       <!-- Malzeme Chip'leri -->
       <div class="pp-chips">
@@ -149,6 +121,11 @@
       <!-- Sepete Ekle -->
       <button class="pp-add-btn" id="pp-add-btn">SEPETE EKLE</button>
 
+      <div class="pp-delivery" id="pp-delivery">
+        <span class="pp-delivery__label">TAHMİNİ TESLİMAT</span>
+        <span class="pp-delivery__date" id="pp-delivery-date">Hesaplanıyor</span>
+      </div>
+
       <!-- Güven İkonları -->
       <div class="pp-trust">
         <span class="pp-trust-item"><span class="pp-trust-icon">🚚</span>Ücretsiz Kargo — 500₺ ve üzeri</span>
@@ -159,37 +136,14 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer__grid">
-      <div class="footer__col">
-        <span class="footer__logo">MAGANDA</span>
-        <p class="footer__tagline">SINIR TANIMAYANLARA..</p>
-      </div>
-      <div class="footer__col">
-        <a href="index.html" class="footer__link">Ana Sayfa</a>
-        <a href="araba.html" class="footer__link">Araba</a>
-        <a href="motor.html" class="footer__link">Motosiklet</a>
-        <a href="drop.html" class="footer__link">Drop Ürünler</a>
-        <a href="hakkimizda.html" class="footer__link">Hakkımızda</a>
-        <a href="iletisim.html" class="footer__link">İletişim</a>
-      </div>
-      <div class="footer__col">
-        <div class="footer__social">
-          <a href="#" class="footer__social-link" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          </a>
-        </div>
-        <span class="footer__badge">TÜRKİYE'DE ÜRETİLDİ</span>
-      </div>
+  <section class="pp-related" id="pp-related" aria-label="Benzer ürünler">
+    <div class="pp-related__head">
+      <span class="pp-related__eyebrow">BUNU DA SEVEBİLİRSİN</span>
+      <h2 class="pp-related__title">BENZER ÜRÜNLER</h2>
     </div>
-    <div class="footer__bar">
-      <span>© 2026 MAGANDA. Tüm hakları saklıdır.</span>
-      <a href="#">Gizlilik Politikası</a>
-    </div>
-  </footer>
-
-  <!-- CART DRAWER -->
+    <div class="pp-related__grid" id="pp-related-grid"></div>
+  </section>
+<!-- CART DRAWER -->
   <div class="cart-overlay" id="cartOverlay"></div>
   <div class="cart-drawer" id="cartDrawer">
     <div class="cart-drawer__header">

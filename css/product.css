@@ -125,6 +125,54 @@
   color: var(--text-primary);
 }
 
+.pp-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pp-limited-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 30px;
+  padding: 6px 12px;
+  border: 1px solid var(--color-red);
+  color: var(--color-red);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.pp-limited-badge[hidden] {
+  display: none;
+}
+
+.pp-favorite-btn {
+  min-height: 34px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-mid);
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.pp-favorite-btn:hover,
+.pp-favorite-btn--active {
+  border-color: var(--color-red);
+  color: #fff;
+  background: var(--color-red);
+}
+
 /* Bölücü */
 .pp-divider {
   height: 1px;
@@ -137,6 +185,55 @@
   font-size: 14px;
   line-height: 1.75;
   color: var(--text-muted);
+}
+
+.pp-tabs {
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.pp-tabs__nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pp-tabs__btn {
+  min-height: 44px;
+  padding: 10px 8px;
+  border-right: 1px solid var(--border-color);
+  color: var(--text-muted);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.2s, background 0.2s;
+}
+
+.pp-tabs__btn:last-child {
+  border-right: 0;
+}
+
+.pp-tabs__btn:hover,
+.pp-tabs__btn--active {
+  color: var(--text-primary);
+  background: var(--bg-surface);
+}
+
+.pp-tabs__panel {
+  display: none;
+  min-height: 96px;
+  padding: 18px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.pp-tabs__panel--active {
+  display: block;
 }
 
 /* Malzeme chip'leri */
@@ -382,6 +479,32 @@
   pointer-events: none;
 }
 
+.pp-delivery {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.pp-delivery__label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.pp-delivery__date {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: right;
+}
+
 /* Güven badgeleri */
 .pp-trust {
   display: flex;
@@ -404,6 +527,95 @@
   font-size: 14px;
 }
 
+.pp-related {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 40px) 90px;
+}
+
+.pp-related__head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 36px;
+}
+
+.pp-related__eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: var(--color-red);
+}
+
+.pp-related__title {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 48px);
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+}
+
+.pp-related__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.pp-related-card {
+  display: block;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.pp-related-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-red);
+}
+
+.pp-related-card__img {
+  aspect-ratio: 4 / 5;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--bg-secondary);
+}
+
+.pp-related-card__body {
+  padding: 14px;
+}
+
+.pp-related-card__tag {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--color-red);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pp-related-card__name {
+  min-height: 42px;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+}
+
+.pp-related-card__price {
+  display: block;
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+}
+
 /* ─── RESPONSIVE ──────────────────────── */
 @media (max-width: 900px) {
   .product-page {
@@ -422,12 +634,23 @@
     padding: 32px 20px 60px;
     min-height: auto;
   }
+
+  .pp-related__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 480px) {
   .pp-name { font-size: 28px; }
   .pp-price { font-size: 24px; }
   .pp-size-btn { width: 48px; height: 44px; }
+  .pp-tabs__nav { grid-template-columns: repeat(2, 1fr); }
+  .pp-tabs__btn:nth-child(2) { border-right: 0; }
+  .pp-tabs__btn:nth-child(-n+2) { border-bottom: 1px solid var(--border-color); }
+  .pp-delivery { align-items: flex-start; flex-direction: column; }
+  .pp-delivery__date { text-align: left; }
+  .pp-related__head { display: block; }
+  .pp-related__grid { grid-template-columns: 1fr; }
 }
 
 /* reduced-motion uyumu */
