@@ -17,7 +17,7 @@
 
 
 
-    /* --- TEMA YONETIMI -------------------- */
+  /* --- TEMA YONETIMI -------------------- */
   function initTheme() {
     var btn = document.getElementById('themeToggle');
     if (!btn) return;
@@ -32,7 +32,7 @@
       }
     });
   }
-/* ─── CINEMATIC HERO ─────────────────── */
+  /* ─── CINEMATIC HERO ─────────────────── */
   function initCinematicHero() {
     var hero = document.getElementById('cinematicHero');
     if (!hero) return;
@@ -45,14 +45,14 @@
     if (!carLink || !motoLink) return;
 
     // Araba Linki Hover
-    carLink.addEventListener('mouseenter', function() {
+    carLink.addEventListener('mouseenter', function () {
       hero.setAttribute('data-active', 'car');
       if (carVideo) carVideo.play();
       if (motoVideo) motoVideo.pause();
     });
 
     // Moto Linki Hover
-    motoLink.addEventListener('mouseenter', function() {
+    motoLink.addEventListener('mouseenter', function () {
       hero.setAttribute('data-active', 'moto');
       if (motoVideo) motoVideo.play();
       if (carVideo) carVideo.pause();
@@ -60,7 +60,7 @@
 
     // İkisinden de çıkıldığında
     var linksContainer = hero.querySelector('.cinematic-hero__links');
-    linksContainer.addEventListener('mouseleave', function() {
+    linksContainer.addEventListener('mouseleave', function () {
       hero.setAttribute('data-active', 'none');
       if (carVideo) carVideo.pause();
       if (motoVideo) motoVideo.pause();
@@ -109,7 +109,7 @@
     var grid = document.querySelector('.collection__grid');
     var filters = document.querySelector('.collection__filters');
     var productCards = grid ? Array.prototype.slice.call(grid.querySelectorAll('.product-card')) : [];
-    
+
     if (!filterBtns.length || !productCards.length || !grid || !filters) return;
 
     var state = {
@@ -133,36 +133,36 @@
     if (!document.querySelector('.collection-filter-panel')) {
       filters.insertAdjacentHTML('afterend',
         '<div class="collection-filter-panel" data-animate>' +
-          '<div class="collection-filter-panel__controls">' +
-            '<div class="collection-filter-panel__dropdown">' +
-              '<button class="collection-filter-panel__dropdown-toggle" type="button" aria-expanded="false">Fiyat</button>' +
-              '<div class="collection-filter-panel__dropdown-menu">' +
-                '<label class="collection-filter-panel__price">' +
-                  '<span>₺</span>' +
-                  '<input class="collection-filter-panel__input" id="priceMin" type="text" inputmode="numeric" autocomplete="off" placeholder="En düşük">' +
-                '</label>' +
-                '<label class="collection-filter-panel__price">' +
-                  '<span>₺</span>' +
-                  '<input class="collection-filter-panel__input" id="priceMax" type="text" inputmode="numeric" autocomplete="off" placeholder="En yüksek">' +
-                '</label>' +
-                '<button class="collection-filter-panel__price-reset" type="button" aria-label="Fiyat filtresini temizle">×</button>' +
-              '</div>' +
-            '</div>' +
-            '<label class="collection-filter-panel__sort">' +
-              '<span>Sıralama ölçütü:</span>' +
-              '<select class="collection-filter-panel__select" id="collectionSort">' +
-                '<option value="featured">Öne çıkan</option>' +
-                '<option value="relevance">En alakalı</option>' +
-                '<option value="best-selling">En çok satan</option>' +
-                '<option value="alpha-asc">Alfabetik olarak, A-Z</option>' +
-                '<option value="alpha-desc">Alfabetik olarak, Z-A</option>' +
-                '<option value="price-asc">Fiyat, düşükten yükseğe</option>' +
-                '<option value="price-desc">Fiyat, yüksekten düşüğe</option>' +
-                '<option value="date-asc">Tarih, eskiden yeniye</option>' +
-                '<option value="date-desc">Tarih, yeniden eskiye</option>' +
-              '</select>' +
-            '</label>' +
-          '</div>' +
+        '<div class="collection-filter-panel__controls">' +
+        '<div class="collection-filter-panel__dropdown">' +
+        '<button class="collection-filter-panel__dropdown-toggle" type="button" aria-expanded="false">Fiyat</button>' +
+        '<div class="collection-filter-panel__dropdown-menu">' +
+        '<label class="collection-filter-panel__price">' +
+        '<span>₺</span>' +
+        '<input class="collection-filter-panel__input" id="priceMin" type="text" inputmode="numeric" autocomplete="off" placeholder="En düşük">' +
+        '</label>' +
+        '<label class="collection-filter-panel__price">' +
+        '<span>₺</span>' +
+        '<input class="collection-filter-panel__input" id="priceMax" type="text" inputmode="numeric" autocomplete="off" placeholder="En yüksek">' +
+        '</label>' +
+        '<button class="collection-filter-panel__price-reset" type="button" aria-label="Fiyat filtresini temizle">×</button>' +
+        '</div>' +
+        '</div>' +
+        '<label class="collection-filter-panel__sort">' +
+        '<span>Sıralama ölçütü:</span>' +
+        '<select class="collection-filter-panel__select" id="collectionSort">' +
+        '<option value="featured">Öne çıkan</option>' +
+        '<option value="relevance">En alakalı</option>' +
+        '<option value="best-selling">En çok satan</option>' +
+        '<option value="alpha-asc">Alfabetik olarak, A-Z</option>' +
+        '<option value="alpha-desc">Alfabetik olarak, Z-A</option>' +
+        '<option value="price-asc">Fiyat, düşükten yükseğe</option>' +
+        '<option value="price-desc">Fiyat, yüksekten düşüğe</option>' +
+        '<option value="date-asc">Tarih, eskiden yeniye</option>' +
+        '<option value="date-desc">Tarih, yeniden eskiye</option>' +
+        '</select>' +
+        '</label>' +
+        '</div>' +
         '</div>');
     }
 
@@ -325,15 +325,15 @@
           var lines = entry.target.querySelectorAll('[data-animate]');
           lines.forEach(function (line, i) {
             setTimeout// Tema flasini onlemek icin sayfa yuklenmeden once temayi uygula
-(function () {
-  var saved = localStorage.getItem('maganda_theme');
-  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  var theme = saved || (prefersDark ? 'dark' : 'light');
-  if (theme === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
-  }
-})();
-(function () {
+              (function () {
+                var saved = localStorage.getItem('maganda_theme');
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var theme = saved || (prefersDark ? 'dark' : 'light');
+                if (theme === 'light') {
+                  document.documentElement.setAttribute('data-theme', 'light');
+                }
+              })();
+            (function () {
               line.classList.add('is-visible');
             }, i * 150);
           });
@@ -355,19 +355,19 @@
     window.addEventListener('scroll', function () {
       if (!ticking) {
         requestAnimationFrame// Tema flasini onlemek icin sayfa yuklenmeden once temayi uygula
-(function () {
-  var saved = localStorage.getItem('maganda_theme');
-  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  var theme = saved || (prefersDark ? 'dark' : 'light');
-  if (theme === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
-  }
-})();
-(function () {
+          (function () {
+            var saved = localStorage.getItem('maganda_theme');
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            var theme = saved || (prefersDark ? 'dark' : 'light');
+            if (theme === 'light') {
+              document.documentElement.setAttribute('data-theme', 'light');
+            }
+          })();
+        (function () {
           var scrollY = window.scrollY;
 
           // Background Text Parallax
-          bgTexts.forEach(function(text) {
+          bgTexts.forEach(function (text) {
             var parent = text.parentElement;
             var rect = parent.getBoundingClientRect();
             // Sadece ekrandaysa hesapla
@@ -396,7 +396,7 @@
     window.dispatchEvent(new Event('maganda_cart_updated'));
   }
 
-  window.addEventListener('maganda_cart_updated', function() {
+  window.addEventListener('maganda_cart_updated', function () {
     cart = JSON.parse(localStorage.getItem('maganda_cart')) || [];
     if (typeof updateCartUI === 'function') {
       updateCartUI();
@@ -422,7 +422,7 @@
       cartOverlay.classList.remove('cart-overlay--active');
       cartDrawer.classList.remove('cart-drawer--active');
       document.body.classList.remove('no-scroll');
-    initTheme();
+      initTheme();
     }
 
     if (cartOpenBtn) cartOpenBtn.addEventListener('click', openCart);
@@ -432,7 +432,7 @@
 
     var checkoutBtn = document.getElementById('checkoutBtn');
     if (checkoutBtn) {
-      checkoutBtn.addEventListener('click', function() {
+      checkoutBtn.addEventListener('click', function () {
         if (cart.length === 0) return alert('Sepetiniz boş.');
         window.location.href = 'checkout.html';
       });
@@ -472,7 +472,7 @@
 
   // HTML'den tetiklenebilmesi için global
   window.removeFromCartGlobal = removeFromCart;
-  window.changeQtyDrawer      = changeQtyDrawer;
+  window.changeQtyDrawer = changeQtyDrawer;
 
   /* ─── UPSELL: DOM'dan dinamik oku ─────── */
   function getUpsellProducts() {
@@ -482,10 +482,10 @@
     var candidates = [];
 
     cards.forEach(function (card) {
-      var nameEl  = card.querySelector('.product-card__name');
+      var nameEl = card.querySelector('.product-card__name');
       var priceEl = card.querySelector('.product-card__price');
-      var imgEl   = card.querySelector('.product-card__image');
-      var badge   = card.getAttribute('data-badge') || '';
+      var imgEl = card.querySelector('.product-card__image');
+      var badge = card.getAttribute('data-badge') || '';
 
       if (!nameEl || !priceEl) return;
       var name = nameEl.textContent.trim();
@@ -493,7 +493,7 @@
       if (badge === 'TÜKENDİ') return;            // tükenmiş, önerme
 
       var priceNum = parseInt((priceEl.textContent || '0').replace('₺', '').replace(/\./g, ''), 10) || 0;
-      var imgUrl   = imgEl
+      var imgUrl = imgEl
         ? (imgEl.style.backgroundImage || '').replace(/url\(["']?/, '').replace(/["']?\)$/, '')
         : '';
 
@@ -512,10 +512,10 @@
     var bar = document.getElementById('cartShippingBar');
     if (!bar) return;
 
-    var fill        = bar.querySelector('.cart-shipping-bar__fill');
+    var fill = bar.querySelector('.cart-shipping-bar__fill');
     var labelRemain = bar.querySelector('.cart-shipping-bar__remain');
 
-    var pct       = Math.min(100, (total / SHIPPING_THRESHOLD) * 100);
+    var pct = Math.min(100, (total / SHIPPING_THRESHOLD) * 100);
     var remaining = SHIPPING_THRESHOLD - total;
 
     if (total >= SHIPPING_THRESHOLD) {
@@ -563,9 +563,9 @@
   /* ─── CART UI ────────────────────────── */
   function updateCartUI() {
     var itemsContainer = document.getElementById('cartItems');
-    var totalEl        = document.getElementById('cartTotal');
-    var countEl        = document.getElementById('cartCount');
-    var headerCountEl  = document.getElementById('cartDrawerCount');
+    var totalEl = document.getElementById('cartTotal');
+    var countEl = document.getElementById('cartCount');
+    var headerCountEl = document.getElementById('cartDrawerCount');
 
     var totalQty = cart.reduce(function (acc, i) { return acc + (i.quantity || 1); }, 0);
     if (countEl) countEl.textContent = totalQty;
@@ -576,14 +576,14 @@
     if (cart.length === 0) {
       itemsContainer.innerHTML = [
         '<div class="cart-drawer__empty">',
-          '<svg class="cart-drawer__empty-icon" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">',
-            '<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>',
-            '<line x1="3" y1="6" x2="21" y2="6"/>',
-            '<path d="M16 10a4 4 0 0 1-8 0"/>',
-          '</svg>',
-          '<p class="cart-drawer__empty-title">Henüz hiçbir şey yok</p>',
-          '<p class="cart-drawer__empty-sub">Sınırlı stoklar seni bekliyor.<br>Koleksiyona bir göz at.</p>',
-          '<a href="drop.html" class="cart-drawer__empty-cta">Koleksiyona göz at →</a>',
+        '<svg class="cart-drawer__empty-icon" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">',
+        '<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>',
+        '<line x1="3" y1="6" x2="21" y2="6"/>',
+        '<path d="M16 10a4 4 0 0 1-8 0"/>',
+        '</svg>',
+        '<p class="cart-drawer__empty-title">Henüz hiçbir şey yok</p>',
+        '<p class="cart-drawer__empty-sub">Sınırlı stoklar seni bekliyor.<br>Koleksiyona bir göz at.</p>',
+        '<a href="drop.html" class="cart-drawer__empty-cta">Koleksiyona göz at →</a>',
         '</div>'
       ].join('');
       if (totalEl) totalEl.textContent = '₺0';
@@ -595,32 +595,32 @@
     var itemsHTML = '<div class="cart-items-list">';
 
     cart.forEach(function (item) {
-      var qty       = item.quantity || 1;
+      var qty = item.quantity || 1;
       var linePrice = item.price * qty;
       total += linePrice;
 
-      var imgStyle  = item.image ? 'background-image:url(' + item.image + ');background-size:cover;background-position:center;' : '';
+      var imgStyle = item.image ? 'background-image:url(' + item.image + ');background-size:cover;background-position:center;' : '';
       var sizeLabel = item.size || '—';
 
       itemsHTML += '<div class="cart-item">'
         + '<div class="cart-item__img" style="' + imgStyle + '"></div>'
         + '<div class="cart-item__info">'
-        +   '<span class="cart-item__name">' + item.name + '</span>'
-        +   '<div class="cart-item__meta">'
-        +     '<span class="cart-item__size">BEDEN: ' + sizeLabel + '</span>'
-        +     '<span class="cart-item__unit-price">₺' + item.price.toLocaleString('tr-TR') + ' / adet</span>'
-        +   '</div>'
-        +   '<div class="cart-item__qty-row">'
-        +     '<div class="cart-item__qty">'
-        +       '<button class="cart-item__qty-btn" onclick="changeQtyDrawer(' + item.id + ', -1)" aria-label="Azalt"' + (qty <= 1 ? ' disabled' : '') + '>−</button>'
-        +       '<span class="cart-item__qty-val">' + qty + '</span>'
-        +       '<button class="cart-item__qty-btn" onclick="changeQtyDrawer(' + item.id + ', 1)" aria-label="Artır"' + (qty >= 10 ? ' disabled' : '') + '>+</button>'
-        +     '</div>'
-        +     '<span class="cart-item__line-price">₺' + linePrice.toLocaleString('tr-TR') + '</span>'
-        +   '</div>'
-        +   '<button class="cart-item__remove" onclick="removeFromCartGlobal(' + item.id + ')" aria-label="Kaldır">'
-        +     '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>'
-        +   '</button>'
+        + '<span class="cart-item__name">' + item.name + '</span>'
+        + '<div class="cart-item__meta">'
+        + '<span class="cart-item__size">BEDEN: ' + sizeLabel + '</span>'
+        + '<span class="cart-item__unit-price">₺' + item.price.toLocaleString('tr-TR') + ' / adet</span>'
+        + '</div>'
+        + '<div class="cart-item__qty-row">'
+        + '<div class="cart-item__qty">'
+        + '<button class="cart-item__qty-btn" onclick="changeQtyDrawer(' + item.id + ', -1)" aria-label="Azalt"' + (qty <= 1 ? ' disabled' : '') + '>−</button>'
+        + '<span class="cart-item__qty-val">' + qty + '</span>'
+        + '<button class="cart-item__qty-btn" onclick="changeQtyDrawer(' + item.id + ', 1)" aria-label="Artır"' + (qty >= 10 ? ' disabled' : '') + '>+</button>'
+        + '</div>'
+        + '<span class="cart-item__line-price">₺' + linePrice.toLocaleString('tr-TR') + '</span>'
+        + '</div>'
+        + '<button class="cart-item__remove" onclick="removeFromCartGlobal(' + item.id + ')" aria-label="Kaldır">'
+        + '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>'
+        + '</button>'
         + '</div>'
         + '</div>';
     });
@@ -660,17 +660,17 @@
       var imgUrl = imgStyle
         ? (imgStyle.backgroundImage || '').replace(/url\(["']?/, '').replace(/["']?\)$/, '')
         : '';
-      var name   = (card.querySelector('.product-card__name') || {}).textContent || '';
-      var price  = (card.querySelector('.product-card__price') || {}).textContent || '';
+      var name = (card.querySelector('.product-card__name') || {}).textContent || '';
+      var price = (card.querySelector('.product-card__price') || {}).textContent || '';
       var series = (card.querySelector('.product-card__tag') || {}).textContent || '';
-      var badge  = card.getAttribute('data-badge') || '';
+      var badge = card.getAttribute('data-badge') || '';
 
       var params = new URLSearchParams({
-        name:   name.trim(),
-        price:  price.trim(),
+        name: name.trim(),
+        price: price.trim(),
         series: series.trim(),
-        badge:  badge,
-        img:    imgUrl
+        badge: badge,
+        img: imgUrl
       });
 
       window.location.href = 'product.html?' + params.toString();
@@ -696,12 +696,15 @@
   function initProductPage() {
     if (!document.getElementById('productPage')) return;
 
-    var params  = new URLSearchParams(window.location.search);
-    var name    = params.get('name')   || 'ÜRÜN';
-    var price   = formatPrice(params.get('price') || '₺0');
-    var series  = params.get('series') || '';
-    var badge   = params.get('badge')  || '';
-    var imgUrl  = params.get('img')    || '';
+    // Skeleton loader'ı hemen göster
+    if (typeof window.showProductSkeleton === 'function') window.showProductSkeleton();
+
+    var params = new URLSearchParams(window.location.search);
+    var name = params.get('name') || 'ÜRÜN';
+    var price = formatPrice(params.get('price') || '₺0');
+    var series = params.get('series') || '';
+    var badge = params.get('badge') || '';
+    var imgUrl = params.get('img') || '';
 
     var sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
     var descriptions = [
@@ -723,14 +726,17 @@
     if (badgeEl) { badgeEl.textContent = badge; badgeEl.style.display = badge ? '' : 'none'; }
 
     // Meta bilgiler
-    var nameEl   = document.getElementById('pp-name');
-    var priceEl  = document.getElementById('pp-price');
+    var nameEl = document.getElementById('pp-name');
+    var priceEl = document.getElementById('pp-price');
     var seriesEl = document.getElementById('pp-series');
-    var descEl   = document.getElementById('pp-desc');
-    if (nameEl)   nameEl.textContent   = name;
-    if (priceEl)  priceEl.textContent  = price;
+    var descEl = document.getElementById('pp-desc');
+    if (nameEl) nameEl.textContent = name;
+    if (priceEl) priceEl.textContent = price;
     if (seriesEl) seriesEl.textContent = series;
-    if (descEl)   descEl.textContent   = descriptions[Math.floor(Math.random() * descriptions.length)];
+    if (descEl) descEl.textContent = descriptions[Math.floor(Math.random() * descriptions.length)];
+
+    // Veri doldu — skeleton'ı kaldır
+    if (typeof window.hideProductSkeleton === 'function') window.hideProductSkeleton();
 
     var activeDescription = descEl ? descEl.textContent : descriptions[0];
     initProductInfoTabs(activeDescription);
@@ -738,7 +744,6 @@
     updateProductLimitedBadge(name, series, badge);
     updateProductDeliveryDate();
     renderRelatedProducts(name, series);
-
 
 
     function initProductInfoTabs(activeDescription) {
@@ -764,10 +769,10 @@
           body: [
             '<p>Üründe tok tutumlu, orta ağırlıkta premium kumaş yapısı kullanılır. İç yüzey yumuşak, dış yüzey formunu koruyacak şekilde dayanıklıdır.</p>',
             '<ul>',
-              '<li>%100 pamuk hissi veren nefes alabilir yapı</li>',
-              '<li>Günlük kullanıma uygun dayanıklı dikiş</li>',
-              '<li>Baskı yüzeyinde uzun ömürlü tutunma</li>',
-              '<li>Türkiye üretimi kalite standardı</li>',
+            '<li>%100 pamuk hissi veren nefes alabilir yapı</li>',
+            '<li>Günlük kullanıma uygun dayanıklı dikiş</li>',
+            '<li>Baskı yüzeyinde uzun ömürlü tutunma</li>',
+            '<li>Türkiye üretimi kalite standardı</li>',
             '</ul>',
             '<p>Ürün tipine göre kumaş karışımı ve gramaj farklılık gösterebilir; her parçada konfor ve dayanıklılık önceliklidir.</p>'
           ].join('')
@@ -777,11 +782,11 @@
           body: [
             '<p>Ürünün formunu, rengini ve baskı kalitesini uzun süre korumak için bakım adımlarını takip etmeni öneririz.</p>',
             '<ul>',
-              '<li>30 derecede, ters çevirerek yıka</li>',
-              '<li>Ağartıcı ve sert kimyasal kullanma</li>',
-              '<li>Kurutma makinesi yerine doğal kurutma tercih et</li>',
-              '<li>Baskı üzerine direkt ütü uygulama</li>',
-              '<li>Benzer renklerle birlikte yıka</li>',
+            '<li>30 derecede, ters çevirerek yıka</li>',
+            '<li>Ağartıcı ve sert kimyasal kullanma</li>',
+            '<li>Kurutma makinesi yerine doğal kurutma tercih et</li>',
+            '<li>Baskı üzerine direkt ütü uygulama</li>',
+            '<li>Benzer renklerle birlikte yıka</li>',
             '</ul>'
           ].join('')
         },
@@ -790,10 +795,10 @@
           body: [
             '<p>Siparişler ödeme onayından sonra genellikle <strong>1-2 iş günü</strong> içinde hazırlanır ve kargoya teslim edilir.</p>',
             '<ul>',
-              '<li>1000&#8378; ve &#252;zeri sipari&#351;lerde &#252;cretsiz kargo</li>',
-              '<li>Kargo takip bilgisi sipariş sonrası paylaşılır</li>',
-              '<li>Kullanılmamış ve etiketi çıkarılmamış ürünlerde 14 gün içinde iade</li>',
-              '<li>İade edilecek ürünün orijinal paketinde gönderilmesi gerekir</li>',
+            '<li>1000&#8378; ve &#252;zeri sipari&#351;lerde &#252;cretsiz kargo</li>',
+            '<li>Kargo takip bilgisi sipariş sonrası paylaşılır</li>',
+            '<li>Kullanılmamış ve etiketi çıkarılmamış ürünlerde 14 gün içinde iade</li>',
+            '<li>İade edilecek ürünün orijinal paketinde gönderilmesi gerekir</li>',
             '</ul>',
             '<p>Drop ve sınırlı üretim ürünlerde stok tekrar etmeyebilir; beden değişimi stok durumuna bağlıdır.</p>'
           ].join('')
@@ -802,17 +807,17 @@
           title: 'BEDEN REHBERİ',
           body: [
             '<table class="pp-size-guide-table">',
-              '<thead>',
-                '<tr><th>BEDEN</th><th>GÖĞÜS (cm)</th><th>BEL (cm)</th><th>BOY (cm)</th></tr>',
-              '</thead>',
-              '<tbody>',
-                '<tr><td>XS</td><td>82–86</td><td>66–70</td><td>160–165</td></tr>',
-                '<tr><td>S</td><td>88–92</td><td>72–76</td><td>165–170</td></tr>',
-                '<tr><td>M</td><td>94–98</td><td>78–82</td><td>170–175</td></tr>',
-                '<tr><td>L</td><td>100–104</td><td>84–88</td><td>175–180</td></tr>',
-                '<tr><td>XL</td><td>106–110</td><td>90–94</td><td>180–185</td></tr>',
-                '<tr><td>XXL</td><td>112–118</td><td>96–102</td><td>185–190</td></tr>',
-              '</tbody>',
+            '<thead>',
+            '<tr><th>BEDEN</th><th>GÖĞÜS (cm)</th><th>BEL (cm)</th><th>BOY (cm)</th></tr>',
+            '</thead>',
+            '<tbody>',
+            '<tr><td>XS</td><td>82–86</td><td>66–70</td><td>160–165</td></tr>',
+            '<tr><td>S</td><td>88–92</td><td>72–76</td><td>165–170</td></tr>',
+            '<tr><td>M</td><td>94–98</td><td>78–82</td><td>170–175</td></tr>',
+            '<tr><td>L</td><td>100–104</td><td>84–88</td><td>175–180</td></tr>',
+            '<tr><td>XL</td><td>106–110</td><td>90–94</td><td>180–185</td></tr>',
+            '<tr><td>XXL</td><td>112–118</td><td>96–102</td><td>185–190</td></tr>',
+            '</tbody>',
             '</table>'
           ].join('')
         }
@@ -965,11 +970,11 @@
     if (backLink) {
       var ref = document.referrer || '';
       var colName = ref.indexOf('araba') !== -1 ? 'ARABA KOLEKSİYONU'
-                  : ref.indexOf('motor') !== -1  ? 'MOTOSİKLET KOLEKSİYONU'
-                  : ref.indexOf('drop')  !== -1  ? 'DROP KOLEKSİYONU'
-                  : 'KOLEKSİYON';
+        : ref.indexOf('motor') !== -1 ? 'MOTOSİKLET KOLEKSİYONU'
+          : ref.indexOf('drop') !== -1 ? 'DROP KOLEKSİYONU'
+            : 'KOLEKSİYON';
       var colHref = ref && (ref.indexOf('araba') !== -1 || ref.indexOf('motor') !== -1 || ref.indexOf('drop') !== -1)
-                  ? ref : 'index.html';
+        ? ref : 'index.html';
       backLink.href = colHref;
       var colEl = document.getElementById('pp-back-label');
       if (colEl) colEl.textContent = colName;
@@ -1002,7 +1007,7 @@
     // Adet
     var qtyValEl = document.getElementById('pp-qty-val');
     var qtyMinus = document.getElementById('pp-qty-minus');
-    var qtyPlus  = document.getElementById('pp-qty-plus');
+    var qtyPlus = document.getElementById('pp-qty-plus');
     if (qtyMinus) qtyMinus.disabled = true;
 
     if (qtyMinus) {
@@ -1027,7 +1032,7 @@
     }
 
     // Sepete Ekle
-    var addBtn   = document.getElementById('pp-add-btn');
+    var addBtn = document.getElementById('pp-add-btn');
     var sizeWarn = document.getElementById('pp-size-warn');
     if (addBtn) {
       addBtn.addEventListener('click', function () {
@@ -1145,9 +1150,29 @@
 
       if (!favorites.length) {
         grid.innerHTML = '';
-        if (empty) empty.hidden = false;
+        if (empty) {
+          empty.hidden = false;
+          if (!empty.dataset.rendered) {
+            empty.dataset.rendered = '1';
+            empty.innerHTML =
+              '<div class="fav-empty-anim" aria-hidden="true">' +
+              '<svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.4" width="80" height="80">' +
+              '<path class="fav-empty-heart" d="M40 65 C10 45 5 20 20 12 C30 6 40 16 40 16 C40 16 50 6 60 12 C75 20 70 45 40 65Z" stroke-linecap="round" stroke-linejoin="round"/>' +
+              '</svg>' +
+              '</div>' +
+              '<span class="favorites-empty__mark">MAGANDA</span>' +
+              '<h2 class="favorites-empty__title">HENÜZ FAVORİN YOK</h2>' +
+              '<p class="favorites-empty__text">Beğendiğin ürünleri ürün detay sayfasından favorilerine ekleyebilirsin.<br>Koleksiyona göz at ve ilk ürünü seç.</p>' +
+              '<div class="fav-empty-actions">' +
+              '<a href="drop.html" class="favorites-empty__btn">DROP ÜRÜNLER</a>' +
+              '<a href="araba.html" class="favorites-empty__btn">ARABA KOLEKSİYONU</a>' +
+              '<a href="motor.html" class="favorites-empty__btn">MOTOSİKLET KOLEKSİYONU</a>' +
+              '</div>';
+          }
+        }
         return;
       }
+
 
       if (empty) empty.hidden = true;
       grid.innerHTML = favorites.map(function (item) {
@@ -1164,15 +1189,15 @@
           '<div class="product-card__image" style="' + imgStyle + '"></div>' +
           '<div class="product-card__corner"></div>' +
           '<div class="product-card__info">' +
-            '<p class="product-card__tag">' + escapeHtml(item.series || 'MAGANDA') + '</p>' +
-            '<h3 class="product-card__name">' + escapeHtml(item.name) + '</h3>' +
-            '<div class="product-card__row">' +
-              '<span class="product-card__price">' + escapeHtml(item.price) + '</span>' +
-              '<a class="favorite-card__detail" href="product.html?' + params.toString() + '" data-stop-card>DETAY</a>' +
-            '</div>' +
-            '<button class="favorite-card__remove" type="button" data-stop-card data-remove-favorite="' + id + '">FAVORİDEN KALDIR</button>' +
+          '<p class="product-card__tag">' + escapeHtml(item.series || 'MAGANDA') + '</p>' +
+          '<h3 class="product-card__name">' + escapeHtml(item.name) + '</h3>' +
+          '<div class="product-card__row">' +
+          '<span class="product-card__price">' + escapeHtml(item.price) + '</span>' +
+          '<a class="favorite-card__detail" href="product.html?' + params.toString() + '" data-stop-card>DETAY</a>' +
           '</div>' +
-        '</article>';
+          '<button class="favorite-card__remove" type="button" data-stop-card data-remove-favorite="' + id + '">FAVORİDEN KALDIR</button>' +
+          '</div>' +
+          '</article>';
       }).join('');
     }
 
@@ -1246,49 +1271,49 @@
 
     var html =
       '<nav class="' + navClass + '" id="navbar">' +
-        '<div class="navbar__inner">' +
-          '<a href="index.html" class="navbar__logo">' +
-            '<span class="navbar__logo-text">MAGANDA</span>' +
-            '<span class="navbar__logo-divider"></span>' +
-            '<span class="navbar__logo-est">KUR. 2026</span>' +
-          '</a>' +
-          '<ul class="navbar__links" id="navLinks">' +
-            '<li><a href="index.html" class="navbar__link">ANA SAYFA</a></li>' +
-            '<li><a href="araba.html" class="navbar__link">ARABA</a></li>' +
-            '<li><a href="motor.html" class="navbar__link">MOTOSİKLET</a></li>' +
-            '<li><a href="drop.html" class="navbar__link">DROP ÜRÜNLER</a></li>' +
-            '<li class="navbar__dropdown">' +
-              '<button type="button" class="navbar__link navbar__dropdown-toggle" aria-haspopup="true" aria-expanded="false">BİZE ULAŞIN</button>' +
-              '<div class="navbar__dropdown-menu" role="menu">' +
-                '<a href="iletisim.html" class="navbar__dropdown-link" role="menuitem">İLETİŞİM</a>' +
-                '<a href="hakkimizda.html" class="navbar__dropdown-link" role="menuitem">HAKKIMIZDA</a>' +
-              '</div>' +
-            '</li>' +
-          '</ul>' +
-          '<div class="navbar__actions">' +
-          '<button class="navbar__theme-btn" id="themeToggle" aria-label="Temayı değiştir">' +
-            '<span class="theme-icon-dark" aria-hidden="true">🌙</span>' +
-            '<span class="theme-icon-light" aria-hidden="true">☀️</span>' +
-          '</button>' +
-          '<a href="login.html" class="navbar__icon-btn navbar__auth-btn" id="navAuthLink" aria-label="Hesabım">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' +
-            '<span class="navbar__auth-name" id="navAuthName"></span>' +
-          '</a>' +
-          '<a href="favoriler.html" class="navbar__icon-btn navbar__favorite-btn" aria-label="Favorilerim">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="23" height="23">' +
-              '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"></path>' +
-            '</svg>' +
-          '</a>' +
-          '<button class="navbar__cart-btn" id="cartOpenBtn" aria-label="Sepet">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">' +
-              '<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>' +
-              '<line x1="3" y1="6" x2="21" y2="6"></line>' +
-              '<path d="M16 10a4 4 0 0 1-8 0"></path>' +
-            '</svg>' +
-            '<span class="navbar__cart-badge" id="cartCount">0</span>' +
-          '</button>' +
-          '</div>' +
-        '</div>' +
+      '<div class="navbar__inner">' +
+      '<a href="index.html" class="navbar__logo">' +
+      '<span class="navbar__logo-text">MAGANDA</span>' +
+      '<span class="navbar__logo-divider"></span>' +
+      '<span class="navbar__logo-est">KUR. 2026</span>' +
+      '</a>' +
+      '<ul class="navbar__links" id="navLinks">' +
+      '<li><a href="index.html" class="navbar__link">ANA SAYFA</a></li>' +
+      '<li><a href="araba.html" class="navbar__link">ARABA</a></li>' +
+      '<li><a href="motor.html" class="navbar__link">MOTOSİKLET</a></li>' +
+      '<li><a href="drop.html" class="navbar__link">DROP ÜRÜNLER</a></li>' +
+      '<li class="navbar__dropdown">' +
+      '<button type="button" class="navbar__link navbar__dropdown-toggle" aria-haspopup="true" aria-expanded="false">BİZE ULAŞIN</button>' +
+      '<div class="navbar__dropdown-menu" role="menu">' +
+      '<a href="iletisim.html" class="navbar__dropdown-link" role="menuitem">İLETİŞİM</a>' +
+      '<a href="hakkimizda.html" class="navbar__dropdown-link" role="menuitem">HAKKIMIZDA</a>' +
+      '</div>' +
+      '</li>' +
+      '</ul>' +
+      '<div class="navbar__actions">' +
+      '<button class="navbar__theme-btn" id="themeToggle" aria-label="Temayı değiştir">' +
+      '<span class="theme-icon-dark" aria-hidden="true">🌙</span>' +
+      '<span class="theme-icon-light" aria-hidden="true">☀️</span>' +
+      '</button>' +
+      '<a href="login.html" class="navbar__icon-btn navbar__auth-btn" id="navAuthLink" aria-label="Hesabım">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' +
+      '<span class="navbar__auth-name" id="navAuthName"></span>' +
+      '</a>' +
+      '<a href="favoriler.html" class="navbar__icon-btn navbar__favorite-btn" aria-label="Favorilerim">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="23" height="23">' +
+      '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"></path>' +
+      '</svg>' +
+      '</a>' +
+      '<button class="navbar__cart-btn" id="cartOpenBtn" aria-label="Sepet">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">' +
+      '<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>' +
+      '<line x1="3" y1="6" x2="21" y2="6"></line>' +
+      '<path d="M16 10a4 4 0 0 1-8 0"></path>' +
+      '</svg>' +
+      '<span class="navbar__cart-badge" id="cartCount">0</span>' +
+      '</button>' +
+      '</div>' +
+      '</div>' +
       '</nav>';
 
     var noise = document.querySelector('.noise-overlay');
@@ -1303,6 +1328,22 @@
       var authScript = document.createElement('script');
       authScript.src = 'js/auth.js';
       document.head.appendChild(authScript);
+    }
+
+    // search.js ve skeleton.js modüllerini dinamik yükle
+    if (!document.querySelector('script[src*="search.js"]')) {
+      var searchScript = document.createElement('script');
+      searchScript.src = 'js/search.js';
+      searchScript.onload = function () {
+        if (typeof window.initSearch === 'function') window.initSearch();
+      };
+      document.head.appendChild(searchScript);
+    }
+
+    if (!document.querySelector('script[src*="skeleton.js"]')) {
+      var skelScript = document.createElement('script');
+      skelScript.src = 'js/skeleton.js';
+      document.head.appendChild(skelScript);
     }
 
     var dropdown = document.querySelector('.navbar__dropdown');
@@ -1340,7 +1381,7 @@
 
     var html =
       '<section class="footer-brand-band" aria-label="MAGANDA">' +
-        '<span class="footer-brand-band__text">MAGANDA</span>' +
+      '<span class="footer-brand-band__text">MAGANDA</span>' +
       '</section>';
     var anchor = document.getElementById('cartOverlay') || document.querySelector('script');
     if (anchor) {
@@ -1355,39 +1396,39 @@
 
     var html =
       '<footer class="footer">' +
-        '<div class="footer__grid">' +
-          '<div class="footer__col">' +
-            '<span class="footer__logo">MAGANDA</span>' +
-            '<p class="footer__tagline">SINIR TANIMAYANLARA..</p>' +
-          '</div>' +
-          '<div class="footer__col">' +
-            '<a href="index.html" class="footer__link">Ana Sayfa</a>' +
-            '<a href="araba.html" class="footer__link">Araba</a>' +
-            '<a href="motor.html" class="footer__link">Motosiklet</a>' +
-            '<a href="drop.html" class="footer__link">Drop Ürünler</a>' +
-            '<a href="favoriler.html" class="footer__link">Favorilerim</a>' +
-            '<a href="hakkimizda.html" class="footer__link">Hakkımızda</a>' +
-            '<a href="iletisim.html" class="footer__link">İletişim</a>' +
-          '</div>' +
-          '<div class="footer__col">' +
-            '<div class="footer__social">' +
-              '<a href="#" class="footer__social-link" aria-label="Instagram">' +
-                '<svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg>' +
-              '</a>' +
-              '<a href="#" class="footer__social-link" aria-label="TikTok">' +
-                '<svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"></path></svg>' +
-              '</a>' +
-              '<a href="#" class="footer__social-link" aria-label="YouTube">' +
-                '<svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>' +
-              '</a>' +
-            '</div>' +
-            '<span class="footer__badge">TÜRKİYE\'DE ÜRETİLDİ</span>' +
-          '</div>' +
-        '</div>' +
-        '<div class="footer__bar">' +
-          '<span>© 2026 MAGANDA. Tüm hakları saklıdır.</span>' +
-          '<a href="#">Gizlilik Politikası</a>' +
-        '</div>' +
+      '<div class="footer__grid">' +
+      '<div class="footer__col">' +
+      '<span class="footer__logo">MAGANDA</span>' +
+      '<p class="footer__tagline">SINIR TANIMAYANLARA..</p>' +
+      '</div>' +
+      '<div class="footer__col">' +
+      '<a href="index.html" class="footer__link">Ana Sayfa</a>' +
+      '<a href="araba.html" class="footer__link">Araba</a>' +
+      '<a href="motor.html" class="footer__link">Motosiklet</a>' +
+      '<a href="drop.html" class="footer__link">Drop Ürünler</a>' +
+      '<a href="favoriler.html" class="footer__link">Favorilerim</a>' +
+      '<a href="hakkimizda.html" class="footer__link">Hakkımızda</a>' +
+      '<a href="iletisim.html" class="footer__link">İletişim</a>' +
+      '</div>' +
+      '<div class="footer__col">' +
+      '<div class="footer__social">' +
+      '<a href="#" class="footer__social-link" aria-label="Instagram">' +
+      '<svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg>' +
+      '</a>' +
+      '<a href="#" class="footer__social-link" aria-label="TikTok">' +
+      '<svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"></path></svg>' +
+      '</a>' +
+      '<a href="#" class="footer__social-link" aria-label="YouTube">' +
+      '<svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>' +
+      '</a>' +
+      '</div>' +
+      '<span class="footer__badge">TÜRKİYE\'DE ÜRETİLDİ</span>' +
+      '</div>' +
+      '</div>' +
+      '<div class="footer__bar">' +
+      '<span>© 2026 MAGANDA. Tüm hakları saklıdır.</span>' +
+      '<a href="#">Gizlilik Politikası</a>' +
+      '</div>' +
       '</footer>';
 
     var brandBand = document.querySelector('.footer-brand-band');
@@ -1407,31 +1448,31 @@
     var html =
       '<div class="cart-overlay" id="cartOverlay"></div>' +
       '<div class="cart-drawer" id="cartDrawer">' +
-        '<div class="cart-drawer__header">' +
-          '<div>' +
-            '<span class="cart-drawer__title">Sepet</span>' +
-            '<span class="cart-drawer__count" id="cartDrawerCount"></span>' +
-          '</div>' +
-          '<button class="cart-drawer__close" id="cartCloseBtn" type="button" aria-label="Sepeti kapat">&times;</button>' +
-        '</div>' +
-        '<div class="cart-shipping-bar" id="cartShippingBar">' +
-          '<div class="cart-shipping-bar__label">' +
-            '<span>Ücretsiz kargo</span>' +
-            '<strong>&#8378;<span class="cart-shipping-bar__remain">1000</span> kald&#305;</strong>' +
-          '</div>' +
-          '<div class="cart-shipping-bar__track">' +
-            '<div class="cart-shipping-bar__fill cart-shipping-bar__fill--red" style="width:0%"></div>' +
-          '</div>' +
-          '<p class="cart-shipping-bar__achieved">Ücretsiz kargo kazandın!</p>' +
-        '</div>' +
-        '<div class="cart-drawer__body" id="cartItems"></div>' +
-        '<div class="cart-drawer__footer">' +
-          '<div class="cart-drawer__total">' +
-            '<span>Tahmini toplam:</span>' +
-            '<span class="cart-drawer__total-amount" id="cartTotal">&#8378;0</span>' +
-          '</div>' +
-          '<button class="cart-drawer__checkout" id="checkoutBtn" type="button">Ödemeye geç →</button>' +
-        '</div>' +
+      '<div class="cart-drawer__header">' +
+      '<div>' +
+      '<span class="cart-drawer__title">Sepet</span>' +
+      '<span class="cart-drawer__count" id="cartDrawerCount"></span>' +
+      '</div>' +
+      '<button class="cart-drawer__close" id="cartCloseBtn" type="button" aria-label="Sepeti kapat">&times;</button>' +
+      '</div>' +
+      '<div class="cart-shipping-bar" id="cartShippingBar">' +
+      '<div class="cart-shipping-bar__label">' +
+      '<span>Ücretsiz kargo</span>' +
+      '<strong>&#8378;<span class="cart-shipping-bar__remain">1000</span> kald&#305;</strong>' +
+      '</div>' +
+      '<div class="cart-shipping-bar__track">' +
+      '<div class="cart-shipping-bar__fill cart-shipping-bar__fill--red" style="width:0%"></div>' +
+      '</div>' +
+      '<p class="cart-shipping-bar__achieved">Ücretsiz kargo kazandın!</p>' +
+      '</div>' +
+      '<div class="cart-drawer__body" id="cartItems"></div>' +
+      '<div class="cart-drawer__footer">' +
+      '<div class="cart-drawer__total">' +
+      '<span>Tahmini toplam:</span>' +
+      '<span class="cart-drawer__total-amount" id="cartTotal">&#8378;0</span>' +
+      '</div>' +
+      '<button class="cart-drawer__checkout" id="checkoutBtn" type="button">Ödemeye geç →</button>' +
+      '</div>' +
       '</div>';
 
     var script = document.querySelector('script[src="js/main.js"]') || document.querySelector('script');
@@ -1497,6 +1538,70 @@
     strip.appendChild(logoGroup);
     footer.insertAdjacentElement('afterend', strip);
   }
+
+  /* ─── SİPARİŞ TAKİP SİMÜLASYONU ─── */
+  function initOrderTracking() {
+    var orderList = document.getElementById('orderList');
+    if (!orderList) return;
+
+    var STATUSES = [
+      { key: 'preparing', label: 'Hazırlanıyor', icon: '📦', color: '#f59e0b' },
+      { key: 'shipped', label: 'Kargoya Verildi', icon: '🚚', color: '#3b82f6' },
+      { key: 'transit', label: 'Dağıtımda', icon: '⚡', color: '#8b5cf6' },
+      { key: 'delivered', label: 'Teslim Edildi', icon: '✅', color: '#10b981' }
+    ];
+
+    function getStatusForOrder(orderId) {
+      var digits = String(orderId).replace(/\D/g, '');
+      var idx = parseInt(digits.slice(-2) || '0', 10) % STATUSES.length;
+      return { status: STATUSES[idx], idx: idx };
+    }
+
+    function buildTrackingHTML(orderId) {
+      var result = getStatusForOrder(orderId);
+      var status = result.status;
+      var statusIdx = result.idx;
+
+      var stepsHTML = STATUSES.map(function (s, i) {
+        var done = i <= statusIdx;
+        var active = i === statusIdx;
+        return '<div class="track-step' + (done ? ' track-step--done' : '') + (active ? ' track-step--active' : '') + '">' +
+          '<div class="track-step__dot"></div>' +
+          '<span class="track-step__label">' + s.label + '</span>' +
+          '</div>' + (i < STATUSES.length - 1 ? '<div class="track-line' + (i < statusIdx ? ' track-line--done' : '') + '"></div>' : '');
+      }).join('');
+
+      return '<div class="order-tracking">' +
+        '<div class="order-tracking__badge" style="--track-color:' + status.color + '">' +
+        '<span class="order-tracking__icon">' + status.icon + '</span>' +
+        '<strong>' + status.label + '</strong>' +
+        '</div>' +
+        '<div class="order-tracking__steps">' + stepsHTML + '</div>' +
+        '</div>';
+    }
+
+    // MutationObserver: sipariş listesi render edildikten sonra tracking ekle
+    var observer = new MutationObserver(function () {
+      var cards = orderList.querySelectorAll('.order-card:not([data-tracked])');
+      cards.forEach(function (card) {
+        card.setAttribute('data-tracked', '1');
+        var idEl = card.querySelector('.order-card__id');
+        var orderId = idEl ? idEl.textContent : String(Date.now());
+        card.insertAdjacentHTML('beforeend', buildTrackingHTML(orderId));
+      });
+    });
+
+    observer.observe(orderList, { childList: true, subtree: false });
+    // Sayfa yüklendiğinde zaten varsa da çalıştır
+    var existingCards = orderList.querySelectorAll('.order-card:not([data-tracked])');
+    existingCards.forEach(function (card) {
+      card.setAttribute('data-tracked', '1');
+      var idEl = card.querySelector('.order-card__id');
+      var orderId = idEl ? idEl.textContent : String(Date.now());
+      card.insertAdjacentHTML('beforeend', buildTrackingHTML(orderId));
+    });
+  }
+
   function init() {
     document.body.classList.remove('no-scroll');
     initHeaderWidget();
@@ -1519,6 +1624,7 @@
     initProductPage();
     initFavoritesPage();
     initFooterPaymentStrip();
+    initOrderTracking();
 
   }
 
