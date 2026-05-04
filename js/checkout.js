@@ -17,7 +17,15 @@
 
   function saveCart() {
     localStorage.setItem('maganda_cart', JSON.stringify(cart));
+    window.dispatchEvent(new Event('maganda_cart_updated'));
   }
+
+  window.addEventListener('maganda_cart_updated', function() {
+    cart = JSON.parse(localStorage.getItem('maganda_cart')) || [];
+    if (typeof renderCart === 'function') {
+      renderCart();
+    }
+  });
 
   /* ───────────────────────────────────────────
      ADIM YÖNETİMİ (0-3)
@@ -26,11 +34,12 @@
     if (n < 0 || n > 3) return;
     currentStep = n;
 
-    // Adres adımına girilince içeriği render et
+    // Adım 2 (Adres) veya Adım 3 (Ödeme) girilince içeriği render et
     if (n === 2) renderAddressStep();
+    if (n === 3) renderPaymentStep();
 
-    var navIds  = ['navStep0', 'navStep1', 'navStep2', 'navStep3'];
-    var cardIds = ['card0', 'card1', 'card2', 'card3'];
+    var navIds  = [null, 'navStep1', 'navStep2', 'navStep3'];
+    var cardIds = [null, 'card1', 'card2', 'card3'];
 
     navIds.forEach(function (id, i) {
       var navEl  = document.getElementById(id);
@@ -50,7 +59,7 @@
   };
 
   function initStepNavigation() {
-    var navIds = ['navStep0', 'navStep1', 'navStep2', 'navStep3'];
+    var navIds = [null, 'navStep1', 'navStep2', 'navStep3'];
     navIds.forEach(function (id, idx) {
       var el = document.getElementById(id);
       if (el) {
@@ -90,26 +99,28 @@
       var imgStyle = item.image ? 'background-image:url(' + item.image + ');background-size:cover;background-position:center;' : '';
 
       listHtml +=
-        '<div class="co-cart-item">' +
-          '<div class="co-cart-item__img" style="' + imgStyle + '"></div>' +
-          '<div class="co-cart-item__info">' +
-            '<p class="co-cart-item__name">' + (item.name || '') + '</p>' +
-            (item.size ? '<p class="co-cart-item__meta">Beden: ' + item.size + '</p>' : '') +
-            '<p class="co-cart-item__price">₺' + lineTotal.toLocaleString('tr-TR') + '</p>' +
+        '<div class="ci">' +
+          '<div class="ci__img" style="' + imgStyle + '"></div>' +
+          '<div class="ci__info">' +
+            '<span class="ci__name">' + (item.name || '') + '</span>' +
+            (item.size ? '<span class="ci__unit">Beden: ' + item.size + '</span>' : '') +
+            '<span class="ci__total">₺' + lineTotal.toLocaleString('tr-TR') + '</span>' +
           '</div>' +
-          '<div class="co-cart-item__qty">' +
-            '<button type="button" onclick="changeQty(\'' + item.id + '\',-1)">−</button>' +
-            '<span>' + qty + '</span>' +
-            '<button type="button" onclick="changeQty(\'' + item.id + '\',1)">+</button>' +
+          '<div class="ci__right">' +
+            '<div class="ci__qty">' +
+              '<button type="button" class="ci__qty-btn" onclick="changeQty(\'' + item.id + '\',-1)">−</button>' +
+              '<span class="ci__qty-val">' + qty + '</span>' +
+              '<button type="button" class="ci__qty-btn" onclick="changeQty(\'' + item.id + '\',1)">+</button>' +
+            '</div>' +
+            '<button type="button" class="ci__remove" onclick="removeItem(\'' + item.id + '\')" title="Ürünü Sil">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="pointer-events:none"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>' +
+            '</button>' +
           '</div>' +
-          '<button type="button" class="co-cart-item__del" onclick="removeItem(\'' + item.id + '\')">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
-          '</button>' +
         '</div>';
 
       summaryHtml +=
         '<div class="co-summary__item">' +
-          '<span>' + (item.name || '') + (qty > 1 ? ' ×' + qty : '') + '</span>' +
+          '<span class="co-summary__item-name">' + (item.name || '') + (qty > 1 ? ' ×' + qty : '') + '</span>' +
           '<span>₺' + lineTotal.toLocaleString('tr-TR') + '</span>' +
         '</div>';
     });
@@ -117,7 +128,7 @@
     listEl.innerHTML = listHtml;
     if (summaryItemsEl) summaryItemsEl.innerHTML = summaryHtml;
 
-    var FREE_SHIPPING = 500;
+    var FREE_SHIPPING = 1000;
     var shipping      = total >= FREE_SHIPPING ? 0 : 49;
     var finalTotal    = total + shipping;
 
@@ -269,7 +280,7 @@
   }
 
   window.changeQty = function (id, delta) {
-    var item = cart.find(function (i) { return i.id === id; });
+    var item = cart.find(function (i) { return String(i.id) === String(id); });
     if (!item) return;
     item.quantity = (item.quantity || 1) + delta;
     if (item.quantity < 1) item.quantity = 1;
@@ -278,7 +289,7 @@
   };
 
   window.removeItem = function (id) {
-    cart = cart.filter(function (i) { return i.id !== id; });
+    cart = cart.filter(function (i) { return String(i.id) !== String(id); });
     saveCart();
     renderCart();
   };
@@ -369,11 +380,120 @@
     return ok;
   }
 
-  /* ─────────────────────────────────────────
-     ÖDEME FORMU VALİDASYONU
-  ───────────────────────────────────────── */
+  /* ───────────────────────────────────────────
+     ADIM 3: ÖDEME ADIMI RENDER
+  ─────────────────────────────────────────── */
+  var selectedCardId = null;
+
+  function renderPaymentStep() {
+    var container = document.getElementById('paymentStepContent');
+    if (!container) return;
+
+    var auth    = window.MagandaAuth;
+    var session = auth ? auth.getSession() : null;
+
+    if (!isGuest && session && auth.getCards) {
+      var cards = auth.getCards();
+      if (cards.length > 0) {
+        var defaultCard = cards.find(function (c) { return c.isDefault; }) || cards[0];
+        if (!selectedCardId) selectedCardId = defaultCard.id;
+
+        var html = '<p class="co-addr-label">Kayıtlı kartlarından birini seç:</p>' +
+                   '<div class="co-addr-list">';
+
+        cards.forEach(function (c) {
+          var isSel = (c.id === selectedCardId);
+          html +=
+            '<label class="co-addr-card' + (isSel ? ' is-selected' : '') + '" data-id="' + c.id + '">' +
+              '<input type="radio" name="selectedCard" value="' + c.id + '"' + (isSel ? ' checked' : '') + ' style="display:none">' +
+              '<div class="co-addr-card__check">' +
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><polyline points="20 6 9 17 4 12"/></svg>' +
+              '</div>' +
+              '<div class="co-addr-card__body">' +
+                '<strong>' + (c.maskedNum || '•••• •••• •••• ••••') + '</strong>' +
+                '<span>' + (c.name || '') + '</span>' +
+                '<span>SKT: ' + (c.exp || '') + '</span>' +
+              '</div>' +
+              (c.isDefault ? '<span class="co-addr-card__badge">Varsayılan</span>' : '') +
+            '</label>';
+        });
+
+        html += '</div>' +
+          '<a href="hesabim.html" class="co-addr-add-link" target="_blank">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
+            ' Hesabımda yeni kart ekle' +
+          '</a>' +
+          '<div class="field" style="margin-top:1.5rem"><label class="field__label">Seçili Kart CVV <span class="req">*</span></label>' +
+          '<input type="text" id="cardCvv" class="field__input" placeholder="•••" autocomplete="cc-csc" maxlength="4" inputmode="numeric">' +
+          '<span class="field__error" id="cardCvvErr"></span></div>';
+
+        container.innerHTML = html;
+
+        container.querySelectorAll('.co-addr-card').forEach(function (card) {
+          card.addEventListener('click', function () {
+            container.querySelectorAll('.co-addr-card').forEach(function (c) { c.classList.remove('is-selected'); });
+            card.classList.add('is-selected');
+            selectedCardId = parseInt(card.getAttribute('data-id'), 10);
+          });
+        });
+        bindLiveClear('cardCvv', 'cardCvvErr');
+        return;
+      }
+    }
+
+    // Manuel Form
+    container.innerHTML =
+      '<div class="card-icons">' +
+        '<span class="card-icon">VISA</span>' +
+        '<span class="card-icon">MC</span>' +
+        '<span class="card-icon">TROY</span>' +
+      '</div>' +
+      '<form id="paymentForm" novalidate>' +
+        '<div class="field">' +
+          '<label for="cardName" class="field__label">Kart Üzerindeki İsim <span class="req">*</span></label>' +
+          '<input type="text" id="cardName" class="field__input" placeholder="ADI SOYADI" autocomplete="cc-name" style="text-transform:uppercase">' +
+          '<span class="field__error" id="cardNameErr"></span>' +
+        '</div>' +
+        '<div class="field">' +
+          '<label for="cardNum" class="field__label">Kart Numarası <span class="req">*</span></label>' +
+          '<input type="text" id="cardNum" class="field__input" placeholder="XXXX  XXXX  XXXX  XXXX" autocomplete="cc-number" maxlength="19" inputmode="numeric">' +
+          '<span class="field__error" id="cardNumErr"></span>' +
+        '</div>' +
+        '<div class="field-row">' +
+          '<div class="field">' +
+            '<label for="cardExp" class="field__label">Son Kullanma <span class="req">*</span></label>' +
+            '<input type="text" id="cardExp" class="field__input" placeholder="AA/YY" autocomplete="cc-exp" maxlength="5" inputmode="numeric">' +
+            '<span class="field__error" id="cardExpErr"></span>' +
+          '</div>' +
+          '<div class="field">' +
+            '<label for="cardCvv" class="field__label">CVV <span class="req">*</span></label>' +
+            '<input type="text" id="cardCvv" class="field__input" placeholder="•••" autocomplete="cc-csc" maxlength="4" inputmode="numeric">' +
+            '<span class="field__error" id="cardCvvErr"></span>' +
+          '</div>' +
+        '</div>' +
+      '</form>';
+
+    initCardMask();
+    ['cardName','cardNum','cardExp','cardCvv'].forEach(function(id) { bindLiveClear(id, id+'Err'); });
+  }
+
   function validatePayment() {
     var ok = true;
+    var auth    = window.MagandaAuth;
+    var session = auth ? auth.getSession() : null;
+
+    if (!isGuest && session && auth.getCards && auth.getCards().length > 0) {
+      if (!selectedCardId) {
+        var firstCard = document.querySelector('.co-addr-card');
+        if (firstCard) { firstCard.click(); }
+        else { return false; }
+      }
+      var cvv = (document.getElementById('cardCvv') || {}).value;
+      if (!/^\d{3,4}$/.test(cvv)) {
+        showError('cardCvv', 'cardCvvErr', 'CVV 3 veya 4 haneli olmalı.'); ok = false;
+      } else { showOk('cardCvv', 'cardCvvErr'); }
+      return ok;
+    }
 
     var cardName = (document.getElementById('cardName') || {}).value;
     if (!cardName || cardName.trim().split(' ').length < 2 || cardName.trim().length < 5) {
@@ -399,8 +519,8 @@
       } else { showOk('cardExp', 'cardExpErr'); }
     }
 
-    var cvv = (document.getElementById('cardCvv') || {}).value;
-    if (!/^\d{3,4}$/.test(cvv)) {
+    var cvvManual = (document.getElementById('cardCvv') || {}).value;
+    if (!/^\d{3,4}$/.test(cvvManual)) {
       showError('cardCvv', 'cardCvvErr', 'CVV 3 veya 4 haneli olmalı.'); ok = false;
     } else { showOk('cardCvv', 'cardCvvErr'); }
 
@@ -502,7 +622,7 @@
     bindLiveValidation();
     initCardMask();
     initStepNavigation();
-    goToStep(0);
+    goToStep(1);
   });
 
 })();

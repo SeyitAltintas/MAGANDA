@@ -393,7 +393,15 @@
 
   function saveCart() {
     localStorage.setItem('maganda_cart', JSON.stringify(cart));
+    window.dispatchEvent(new Event('maganda_cart_updated'));
   }
+
+  window.addEventListener('maganda_cart_updated', function() {
+    cart = JSON.parse(localStorage.getItem('maganda_cart')) || [];
+    if (typeof updateCartUI === 'function') {
+      updateCartUI();
+    }
+  });
 
   function initCart() {
     var cartOverlay = document.getElementById('cartOverlay');

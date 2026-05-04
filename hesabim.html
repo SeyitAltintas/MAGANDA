@@ -8,7 +8,8 @@
   <meta name="description" content="MAGANDA hesap paneli. Sipariş geçmişi, kayıtlı adres ve kart bilgilerin.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/auth.css">
 </head>
@@ -27,32 +28,49 @@
       <nav>
         <ul class="account-nav" role="tablist">
           <li class="account-nav__item">
-            <button class="account-nav__link is-active" data-tab="orders" role="tab" aria-selected="true" id="tabOrders">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg>
+            <button class="account-nav__link is-active" data-tab="orders" role="tab" aria-selected="true"
+              id="tabOrders">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                <rect x="9" y="3" width="6" height="4" rx="2" />
+              </svg>
               Sipariş Geçmişi
             </button>
           </li>
           <li class="account-nav__item">
             <button class="account-nav__link" data-tab="profile" role="tab" aria-selected="false" id="tabProfile">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
               Profil Bilgileri
             </button>
           </li>
           <li class="account-nav__item">
             <button class="account-nav__link" data-tab="address" role="tab" aria-selected="false" id="tabAddress">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
               Kayıtlı Adres
             </button>
           </li>
           <li class="account-nav__item">
             <button class="account-nav__link" data-tab="card" role="tab" aria-selected="false" id="tabCard">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <rect x="1" y="4" width="22" height="16" rx="2" />
+                <line x1="1" y1="10" x2="23" y2="10" />
+              </svg>
               Kayıtlı Kart
             </button>
           </li>
           <li class="account-nav__item">
             <button class="account-nav__link account-nav__logout" id="logoutBtn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
               Çıkış Yap
             </button>
           </li>
@@ -85,13 +103,17 @@
             <input type="email" id="profileEmail" class="auth-field__input" autocomplete="email" disabled>
           </div>
           <div class="auth-field">
-            <label for="profileNewPassword" class="auth-field__label">Yeni Şifre <span style="color:var(--color-muted);font-size:.7em">(boş bırakırsan değişmez)</span></label>
-            <input type="password" id="profileNewPassword" class="auth-field__input" placeholder="••••••••" autocomplete="new-password">
+            <label for="profileNewPassword" class="auth-field__label">Yeni Şifre <span
+                style="color:var(--color-muted);font-size:.7em">(boş bırakırsan değişmez)</span></label>
+            <input type="password" id="profileNewPassword" class="auth-field__input" placeholder="••••••••"
+              autocomplete="new-password">
             <span class="auth-field__error" id="profileNewPasswordErr"></span>
           </div>
           <div class="auth-alert" id="profileAlert" role="alert"></div>
           <button type="submit" class="account-form__save">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
             KAYDET
           </button>
         </form>
@@ -102,7 +124,10 @@
         <div class="address-panel-head">
           <h2 class="account-panel__title" style="margin:0;border:none;padding:0">KAYITLI ADRESLER</h2>
           <button class="addr-add-btn" id="showAddAddrFormBtn" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
             Adres Ekle
           </button>
         </div>
@@ -111,46 +136,52 @@
         <div id="addressList" class="address-list"></div>
 
         <!-- Adres Formu (başlangıçta gizli) -->
-        <div id="addressFormWrap" class="address-form-wrap" hidden>
-          <h3 class="address-form-wrap__title" id="addrFormTitle">Yeni Adres Ekle</h3>
-          <form class="account-form" id="addressForm" novalidate>
-            <input type="hidden" id="editingAddrId" value="">
-            <div class="auth-field">
-              <label for="addrName" class="auth-field__label">Ad Soyad <span class="auth-field__req">*</span></label>
-              <input type="text" id="addrName" class="auth-field__input" autocomplete="name">
-              <span class="auth-field__error" id="addrNameErr"></span>
-            </div>
-            <div class="auth-field">
-              <label for="addrPhone" class="auth-field__label">Telefon <span class="auth-field__req">*</span></label>
-              <input type="tel" id="addrPhone" class="auth-field__input" placeholder="05XX XXX XX XX" autocomplete="tel" maxlength="11">
-              <span class="auth-field__error" id="addrPhoneErr"></span>
-            </div>
-            <div class="auth-field">
-              <label for="addrLine" class="auth-field__label">Açık Adres <span class="auth-field__req">*</span></label>
-              <textarea id="addrLine" class="auth-field__input" rows="3" placeholder="Mahalle, cadde, sokak, no, daire…" autocomplete="street-address"></textarea>
-              <span class="auth-field__error" id="addrLineErr"></span>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-              <div class="auth-field" style="margin-bottom:0">
-                <label for="addrCity" class="auth-field__label">İl <span class="auth-field__req">*</span></label>
-                <input type="text" id="addrCity" class="auth-field__input" autocomplete="address-level1">
-                <span class="auth-field__error" id="addrCityErr"></span>
+        <div id="addressFormWrap" class="address-form-wrap" style="display:none">
+          <div class="modal-content">
+            <h3 class="address-form-wrap__title" id="addrFormTitle">Yeni Adres Ekle</h3>
+            <form class="account-form" id="addressForm" novalidate>
+              <input type="hidden" id="editingAddrId" value="">
+              <div class="auth-field">
+                <label for="addrName" class="auth-field__label">Ad Soyad <span class="auth-field__req">*</span></label>
+                <input type="text" id="addrName" class="auth-field__input" autocomplete="name">
+                <span class="auth-field__error" id="addrNameErr"></span>
               </div>
-              <div class="auth-field" style="margin-bottom:0">
-                <label for="addrDistrict" class="auth-field__label">İlçe <span class="auth-field__req">*</span></label>
-                <input type="text" id="addrDistrict" class="auth-field__input" autocomplete="address-level2">
-                <span class="auth-field__error" id="addrDistrictErr"></span>
+              <div class="auth-field">
+                <label for="addrPhone" class="auth-field__label">Telefon <span class="auth-field__req">*</span></label>
+                <input type="tel" id="addrPhone" class="auth-field__input" placeholder="05XX XXX XX XX" autocomplete="tel"
+                  maxlength="11">
+                <span class="auth-field__error" id="addrPhoneErr"></span>
               </div>
-            </div>
-            <div class="auth-alert" id="addressAlert" role="alert"></div>
-            <div style="display:flex;gap:1rem;flex-wrap:wrap">
-              <button type="submit" class="account-form__save" id="addrSaveBtn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg>
-                KAYDET
-              </button>
-              <button type="button" class="account-form__cancel" id="addrCancelBtn">İPTAL</button>
-            </div>
-          </form>
+              <div class="auth-field">
+                <label for="addrLine" class="auth-field__label">Açık Adres <span class="auth-field__req">*</span></label>
+                <textarea id="addrLine" class="auth-field__input" rows="3" placeholder="Mahalle, cadde, sokak, no, daire…"
+                  autocomplete="street-address"></textarea>
+                <span class="auth-field__error" id="addrLineErr"></span>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+                <div class="auth-field" style="margin-bottom:0">
+                  <label for="addrCity" class="auth-field__label">İl <span class="auth-field__req">*</span></label>
+                  <input type="text" id="addrCity" class="auth-field__input" autocomplete="address-level1">
+                  <span class="auth-field__error" id="addrCityErr"></span>
+                </div>
+                <div class="auth-field" style="margin-bottom:0">
+                  <label for="addrDistrict" class="auth-field__label">İlçe <span class="auth-field__req">*</span></label>
+                  <input type="text" id="addrDistrict" class="auth-field__input" autocomplete="address-level2">
+                  <span class="auth-field__error" id="addrDistrictErr"></span>
+                </div>
+              </div>
+              <div class="auth-alert" id="addressAlert" role="alert"></div>
+              <div style="display:flex;gap:1rem;flex-wrap:wrap">
+                <button type="submit" class="account-form__save" id="addrSaveBtn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  KAYDET
+                </button>
+                <button type="button" class="account-form__cancel" id="addrCancelBtn">İPTAL</button>
+              </div>
+            </form>
+          </div>
         </div>
       </section>
 
@@ -160,7 +191,10 @@
         <div class="address-panel-head">
           <h2 class="account-panel__title" style="margin:0;border:none;padding:0">KAYITLI KARTLAR</h2>
           <button class="addr-add-btn" id="showAddCardFormBtn" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
             Kart Ekle
           </button>
         </div>
@@ -170,39 +204,49 @@
 
         <!-- Kart Formu (başlangıçta gizli) -->
         <div id="cardFormWrap" class="address-form-wrap" style="display:none">
-          <h3 class="address-form-wrap__title" id="cardFormTitle">Yeni Kart Ekle</h3>
-          <form class="account-form" id="cardForm" novalidate>
-            <input type="hidden" id="editingCardId" value="">
-            <div class="auth-field">
-              <label for="savedCardName" class="auth-field__label">Kart Üzerindeki İsim <span class="auth-field__req">*</span></label>
-              <input type="text" id="savedCardName" class="auth-field__input" placeholder="ADI SOYADI" autocomplete="cc-name" style="text-transform:uppercase">
-              <span class="auth-field__error" id="savedCardNameErr"></span>
-            </div>
-            <div class="auth-field">
-              <label for="savedCardNum" class="auth-field__label">Kart Numarası <span class="auth-field__req">*</span></label>
-              <input type="text" id="savedCardNum" class="auth-field__input" placeholder="XXXX  XXXX  XXXX  XXXX" autocomplete="cc-number" maxlength="19" inputmode="numeric">
-              <span class="auth-field__error" id="savedCardNumErr"></span>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-              <div class="auth-field" style="margin-bottom:0">
-                <label for="savedCardExp" class="auth-field__label">Son Kullanma <span class="auth-field__req">*</span></label>
-                <input type="text" id="savedCardExp" class="auth-field__input" placeholder="AA/YY" autocomplete="cc-exp" maxlength="5" inputmode="numeric">
-                <span class="auth-field__error" id="savedCardExpErr"></span>
+          <div class="modal-content">
+            <h3 class="address-form-wrap__title" id="cardFormTitle">Yeni Kart Ekle</h3>
+            <form class="account-form" id="cardForm" novalidate>
+              <input type="hidden" id="editingCardId" value="">
+              <div class="auth-field">
+                <label for="savedCardName" class="auth-field__label">Kart Üzerindeki İsim <span
+                    class="auth-field__req">*</span></label>
+                <input type="text" id="savedCardName" class="auth-field__input" placeholder="ADI SOYADI"
+                  autocomplete="cc-name" style="text-transform:uppercase">
+                <span class="auth-field__error" id="savedCardNameErr"></span>
               </div>
-              <div class="auth-field" style="margin-bottom:0">
-                <label class="auth-field__label" style="color:var(--color-muted)">CVV</label>
-                <input type="text" class="auth-field__input" placeholder="Saklanmaz" disabled>
+              <div class="auth-field">
+                <label for="savedCardNum" class="auth-field__label">Kart Numarası <span
+                    class="auth-field__req">*</span></label>
+                <input type="text" id="savedCardNum" class="auth-field__input" placeholder="XXXX  XXXX  XXXX  XXXX"
+                  autocomplete="cc-number" maxlength="19" inputmode="numeric">
+                <span class="auth-field__error" id="savedCardNumErr"></span>
               </div>
-            </div>
-            <div class="auth-alert" id="cardAlert" role="alert"></div>
-            <div style="display:flex;gap:1rem;flex-wrap:wrap">
-              <button type="submit" class="account-form__save" id="cardSaveBtn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg>
-                KAYDET
-              </button>
-              <button type="button" class="account-form__cancel" id="cardCancelBtn">İPTAL</button>
-            </div>
-          </form>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+                <div class="auth-field" style="margin-bottom:0">
+                  <label for="savedCardExp" class="auth-field__label">Son Kullanma <span
+                      class="auth-field__req">*</span></label>
+                  <input type="text" id="savedCardExp" class="auth-field__input" placeholder="AA/YY"
+                    autocomplete="cc-exp" maxlength="5" inputmode="numeric">
+                  <span class="auth-field__error" id="savedCardExpErr"></span>
+                </div>
+                <div class="auth-field" style="margin-bottom:0">
+                  <label class="auth-field__label" style="color:var(--color-muted)">CVV</label>
+                  <input type="text" class="auth-field__input" placeholder="Saklanmaz" disabled>
+                </div>
+              </div>
+              <div class="auth-alert" id="cardAlert" role="alert"></div>
+              <div style="display:flex;gap:1rem;flex-wrap:wrap">
+                <button type="submit" class="account-form__save" id="cardSaveBtn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  KAYDET
+                </button>
+                <button type="button" class="account-form__cancel" id="cardCancelBtn">İPTAL</button>
+              </div>
+            </form>
+          </div>
         </div>
       </section>
 
@@ -234,14 +278,14 @@
 
       /* ─── KULLANICI VERİSİ ─────────────── */
       function loadUserData(user) {
-        document.getElementById('sidebarName').textContent  = user.name.toUpperCase();
+        document.getElementById('sidebarName').textContent = user.name.toUpperCase();
         document.getElementById('sidebarEmail').textContent = user.email;
         document.title = 'MAGANDA — ' + user.name.split(' ')[0];
         renderOrders(user.orders || []);
 
-        var nameInp  = document.getElementById('profileName');
+        var nameInp = document.getElementById('profileName');
         var emailInp = document.getElementById('profileEmail');
-        if (nameInp)  nameInp.value  = user.name;
+        if (nameInp) nameInp.value = user.name;
         if (emailInp) emailInp.value = user.email;
       }
 
@@ -259,16 +303,16 @@
           return;
         }
         list.innerHTML = orders.map(function (o) {
-          var date     = new Date(o.createdAt).toLocaleDateString('tr-TR', { day:'numeric', month:'long', year:'numeric' });
+          var date = new Date(o.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
           var itemList = (o.items || []).map(function (i) { return i.name + ' ×' + (i.quantity || 1); }).join(', ') || '—';
           return '<div class="order-card">' +
             '<div class="order-card__header">' +
-              '<span class="order-card__id">' + o.id + '</span>' +
-              '<span class="order-card__date">' + date + '</span>' +
+            '<span class="order-card__id">' + o.id + '</span>' +
+            '<span class="order-card__date">' + date + '</span>' +
             '</div>' +
             '<p class="order-card__items">' + itemList + '</p>' +
             '<p class="order-card__total">Toplam: ₺' + (o.total || 0).toLocaleString('tr-TR') + '</p>' +
-          '</div>';
+            '</div>';
         }).join('');
       }
 
@@ -287,7 +331,7 @@
 
       /* ─── TAB YÖNETİMİ ───────────────── */
       function initTabs() {
-        var tabs   = document.querySelectorAll('[data-tab]');
+        var tabs = document.querySelectorAll('[data-tab]');
         var panels = document.querySelectorAll('.account-panel');
         tabs.forEach(function (tab) {
           tab.addEventListener('click', function () {
@@ -310,12 +354,12 @@
 
       /* ─── PROFİL FORMU ───────────────── */
       function initProfileForm(user) {
-        var form     = document.getElementById('profileForm');
+        var form = document.getElementById('profileForm');
         var alertBox = document.getElementById('profileAlert');
         if (!form) return;
         form.addEventListener('submit', function (e) {
           e.preventDefault();
-          var name    = document.getElementById('profileName').value.trim();
+          var name = document.getElementById('profileName').value.trim();
           var newPass = document.getElementById('profileNewPassword').value;
           alertBox.classList.remove('is-visible', 'auth-alert--success');
           if (!name || name.length < 3) {
@@ -343,13 +387,13 @@
       function initAddressPanel() {
         renderAddressList();
 
-        var showBtn   = document.getElementById('showAddAddrFormBtn');
+        var showBtn = document.getElementById('showAddAddrFormBtn');
         var cancelBtn = document.getElementById('addrCancelBtn');
-        var form      = document.getElementById('addressForm');
-        var formWrap  = document.getElementById('addressFormWrap');
+        var form = document.getElementById('addressForm');
+        var formWrap = document.getElementById('addressFormWrap');
         var formTitle = document.getElementById('addrFormTitle');
         var editingId = document.getElementById('editingAddrId');
-        var list      = document.getElementById('addressList');
+        var list = document.getElementById('addressList');
 
         /* ── Adres Ekle butonu ─────────────── */
         if (showBtn) {
@@ -359,7 +403,7 @@
             form.reset();
             clearAddrErrors();
             formWrap.removeAttribute('hidden');
-            formWrap.style.display = 'block';
+            formWrap.style.display = 'flex';
           });
         }
 
@@ -379,22 +423,22 @@
             var alertBox = document.getElementById('addressAlert');
             alertBox.classList.remove('is-visible', 'auth-alert--success');
 
-            var name     = document.getElementById('addrName').value.trim();
-            var phone    = document.getElementById('addrPhone').value.replace(/\s/g, '');
-            var line     = document.getElementById('addrLine').value.trim();
-            var city     = document.getElementById('addrCity').value.trim();
+            var name = document.getElementById('addrName').value.trim();
+            var phone = document.getElementById('addrPhone').value.replace(/\s/g, '');
+            var line = document.getElementById('addrLine').value.trim();
+            var city = document.getElementById('addrCity').value.trim();
             var district = document.getElementById('addrDistrict').value.trim();
-            var ok       = true;
+            var ok = true;
 
-            if (name.length < 2)     { markErr('addrName',     'addrNameErr',     'Ad Soyad gerekli.'); ok = false; }
+            if (name.length < 2) { markErr('addrName', 'addrNameErr', 'Ad Soyad gerekli.'); ok = false; }
             if (!/^(05[0-9]{9}|5[0-9]{9})$/.test(phone)) { markErr('addrPhone', 'addrPhoneErr', 'Geçerli telefon girin.'); ok = false; }
-            if (line.length < 10)    { markErr('addrLine',     'addrLineErr',     'Tam adresinizi girin.'); ok = false; }
-            if (city.length < 2)     { markErr('addrCity',     'addrCityErr',     'İl gerekli.'); ok = false; }
+            if (line.length < 10) { markErr('addrLine', 'addrLineErr', 'Tam adresinizi girin.'); ok = false; }
+            if (city.length < 2) { markErr('addrCity', 'addrCityErr', 'İl gerekli.'); ok = false; }
             if (district.length < 2) { markErr('addrDistrict', 'addrDistrictErr', 'İlçe gerekli.'); ok = false; }
             if (!ok) return;
 
             var addrData = { name: name, phone: phone, line: line, city: city, district: district };
-            var editId   = parseInt(editingId.value, 10);
+            var editId = parseInt(editingId.value, 10);
 
             if (editId) {
               window.MagandaAuth.updateAddress(editId, addrData);
@@ -418,13 +462,13 @@
         if (list) {
           list.addEventListener('click', function (e) {
             // SVG path, svg veya button olabilir — en yakın data-action'ı bul
-            var btn  = e.target.closest('[data-action]');
+            var btn = e.target.closest('[data-action]');
             if (!btn) return;
 
             var card = btn.closest('[data-id]');
             if (!card) return;
 
-            var id     = parseInt(card.getAttribute('data-id'), 10);
+            var id = parseInt(card.getAttribute('data-id'), 10);
             var action = btn.getAttribute('data-action');
 
             if (action === 'delete') {
@@ -442,18 +486,18 @@
               if (!addr) return;
 
               // Formu doldur
-              editingId.value       = id;
+              editingId.value = id;
               formTitle.textContent = 'Adresi Düzenle';
-              setVal('addrName',     addr.name     || '');
-              setVal('addrPhone',    addr.phone    || '');
-              setVal('addrLine',     addr.line     || '');
-              setVal('addrCity',     addr.city     || '');
+              setVal('addrName', addr.name || '');
+              setVal('addrPhone', addr.phone || '');
+              setVal('addrLine', addr.line || '');
+              setVal('addrCity', addr.city || '');
               setVal('addrDistrict', addr.district || '');
               clearAddrErrors();
 
-              // Formu göster — hem hidden kaldır hem de display:block zorla
+              // Formu göster — hem hidden kaldır hem de display:flex zorla
               formWrap.removeAttribute('hidden');
-              formWrap.style.display = 'block';
+              formWrap.style.display = 'flex';
             }
           });
         }
@@ -474,36 +518,36 @@
         list.innerHTML = addresses.map(function (a) {
           return '<div class="addr-card" data-id="' + a.id + '">' +
             '<div class="addr-card__body">' +
-              '<strong class="addr-card__name">' + escHtml(a.name) + '</strong>' +
-              (a.isDefault ? '<span class="addr-card__default">Varsayılan</span>' : '') +
-              '<span class="addr-card__line">' + escHtml(a.phone) + '</span>' +
-              '<span class="addr-card__line">' + escHtml(a.line)  + '</span>' +
-              '<span class="addr-card__line">' + [escHtml(a.district), escHtml(a.city)].filter(Boolean).join(' / ') + '</span>' +
+            '<strong class="addr-card__name">' + escHtml(a.name) + '</strong>' +
+            (a.isDefault ? '<span class="addr-card__default">Varsayılan</span>' : '') +
+            '<span class="addr-card__line">' + escHtml(a.phone) + '</span>' +
+            '<span class="addr-card__line">' + escHtml(a.line) + '</span>' +
+            '<span class="addr-card__line">' + [escHtml(a.district), escHtml(a.city)].filter(Boolean).join(' / ') + '</span>' +
             '</div>' +
             '<div class="addr-card__actions">' +
-              (!a.isDefault
-                ? '<button class="addr-card__btn addr-card__btn--default" data-action="default" title="Varsayılan yap" type="button">★</button>'
-                : '') +
-              '<button class="addr-card__btn addr-card__btn--edit" data-action="edit" title="Düzenle" type="button">' +
-                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="pointer-events:none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
-              '</button>' +
-              '<button class="addr-card__btn addr-card__btn--del" data-action="delete" title="Sil" type="button">' +
-                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="pointer-events:none"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>' +
-              '</button>' +
+            (!a.isDefault
+              ? '<button class="addr-card__btn addr-card__btn--default" data-action="default" title="Varsayılan yap" type="button">★</button>'
+              : '') +
+            '<button class="addr-card__btn addr-card__btn--edit" data-action="edit" title="Düzenle" type="button">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="pointer-events:none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+            '</button>' +
+            '<button class="addr-card__btn addr-card__btn--del" data-action="delete" title="Sil" type="button">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="pointer-events:none"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>' +
+            '</button>' +
             '</div>' +
-          '</div>';
+            '</div>';
         }).join('');
       }
 
       function escHtml(str) {
-        return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
       }
 
 
 
 
       function clearAddrErrors() {
-        ['addrName','addrPhone','addrLine','addrCity','addrDistrict'].forEach(function (id) {
+        ['addrName', 'addrPhone', 'addrLine', 'addrCity', 'addrDistrict'].forEach(function (id) {
           var inp = document.getElementById(id);
           var err = document.getElementById(id + 'Err');
           if (inp) inp.classList.remove('is-error');
@@ -515,13 +559,13 @@
       function initCardPanel() {
         renderCardList();
 
-        var showBtn   = document.getElementById('showAddCardFormBtn');
+        var showBtn = document.getElementById('showAddCardFormBtn');
         var cancelBtn = document.getElementById('cardCancelBtn');
-        var form      = document.getElementById('cardForm');
-        var formWrap  = document.getElementById('cardFormWrap');
+        var form = document.getElementById('cardForm');
+        var formWrap = document.getElementById('cardFormWrap');
         var formTitle = document.getElementById('cardFormTitle');
         var editingId = document.getElementById('editingCardId');
-        var list      = document.getElementById('cardList');
+        var list = document.getElementById('cardList');
 
         // Kart Ekle butonu
         if (showBtn) {
@@ -530,7 +574,7 @@
             formTitle.textContent = 'Yeni Kart Ekle';
             form.reset();
             clearCardErrors();
-            formWrap.style.display = 'block';
+            formWrap.style.display = 'flex';
           });
         }
 
@@ -555,7 +599,7 @@
         if (cardExpInp) {
           cardExpInp.addEventListener('input', function () {
             var val = this.value.replace(/\D/g, '').substring(0, 4);
-            this.value = val.length >= 3 ? val.substring(0,2) + '/' + val.substring(2) : val;
+            this.value = val.length >= 3 ? val.substring(0, 2) + '/' + val.substring(2) : val;
           });
         }
 
@@ -567,18 +611,18 @@
             alertBox.classList.remove('is-visible', 'auth-alert--success');
 
             var name = document.getElementById('savedCardName').value.trim();
-            var num  = document.getElementById('savedCardNum').value.replace(/\s/g, '');
-            var exp  = document.getElementById('savedCardExp').value;
-            var ok   = true;
+            var num = document.getElementById('savedCardNum').value.replace(/\s/g, '');
+            var exp = document.getElementById('savedCardExp').value;
+            var ok = true;
 
             if (name.split(' ').length < 2 || name.length < 5) { markErr('savedCardName', 'savedCardNameErr', 'Tam adı girin.'); ok = false; }
-            if (!/^\d{16}$/.test(num))                         { markErr('savedCardNum',  'savedCardNumErr',  '16 haneli kart numarası girin.'); ok = false; }
-            if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(exp))        { markErr('savedCardExp',  'savedCardExpErr',  'Format: AA/YY'); ok = false; }
+            if (!/^\d{16}$/.test(num)) { markErr('savedCardNum', 'savedCardNumErr', '16 haneli kart numarası girin.'); ok = false; }
+            if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(exp)) { markErr('savedCardExp', 'savedCardExpErr', 'Format: AA/YY'); ok = false; }
             if (!ok) return;
 
             var maskedNum = '•••• •••• •••• ' + num.slice(-4);
-            var cardData  = { name: name, maskedNum: maskedNum, fullNum: num, exp: exp };
-            var editId    = parseInt(editingId.value, 10);
+            var cardData = { name: name, maskedNum: maskedNum, fullNum: num, exp: exp };
+            var editId = parseInt(editingId.value, 10);
 
             if (editId) {
               window.MagandaAuth.updateCard(editId, cardData);
@@ -599,12 +643,12 @@
         // Event delegation — listede sil/düzenle/varsayılan
         if (list) {
           list.addEventListener('click', function (e) {
-            var btn  = e.target.closest('[data-card-action]');
+            var btn = e.target.closest('[data-card-action]');
             if (!btn) return;
             var card = btn.closest('[data-card-id]');
             if (!card) return;
 
-            var id     = parseInt(card.getAttribute('data-card-id'), 10);
+            var id = parseInt(card.getAttribute('data-card-id'), 10);
             var action = btn.getAttribute('data-card-action');
 
             if (action === 'delete') {
@@ -621,19 +665,19 @@
               var c = cards.find(function (x) { return x.id === id; });
               if (!c) return;
 
-              editingId.value       = id;
+              editingId.value = id;
               formTitle.textContent = 'Kartı Düzenle';
 
-              setVal('savedCardName', c.name      || '');
+              setVal('savedCardName', c.name || '');
               // Düzenleme için maskesiz numara göster (eğer kayıtlıysa)
               var numVal = c.fullNum
                 ? c.fullNum.replace(/(.{4})/g, '$1 ').trim()
                 : (c.maskedNum || '');
-              setVal('savedCardNum',  numVal);
-              setVal('savedCardExp',  c.exp       || '');
+              setVal('savedCardNum', numVal);
+              setVal('savedCardExp', c.exp || '');
 
               clearCardErrors();
-              formWrap.style.display = 'block';
+              formWrap.style.display = 'flex';
             }
           });
         }
@@ -648,7 +692,7 @@
           list.classList.remove('card-list-grid');
           return;
         }
-        
+
         // Grid yapısı ekle
         list.classList.add('card-list-grid');
 
@@ -656,44 +700,48 @@
           var brand = detectCardBrand(c.maskedNum || '');
           return '<div class="bank-card-wrap" data-card-id="' + c.id + '">' +
             '<div class="bank-card">' +
-              (c.isDefault ? '<div class="bank-card__badge">VARSAYILAN</div>' : '') +
-              '<div class="bank-card__top">' +
-                '<div class="bank-card__chip">' +
-                  '<svg viewBox="0 0 40 30" width="35" height="25" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-                    '<rect width="40" height="30" rx="4" fill="#E8D19D"/>' +
-                    '<path d="M0 10h12v10H0m28-10h12v10H28M12 0v10m16-10v10m-16 20v-10m16 10v-10M12 15h16" stroke="#C5A866" stroke-width="1.5"/>' +
-                  '</svg>' +
-                '</div>' +
-                '<div class="bank-card__contactless">' +
-                  '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14c-.65-1.1-1-2.4-1-3.8 0-1.4.35-2.7 1-3.8M11.5 16.5c-1.1-1.7-1.75-3.8-1.75-6.3 0-2.5.65-4.6 1.75-6.3M14.5 19.5c-1.6-2.3-2.5-5.2-2.5-8.8 0-3.6.9-6.5 2.5-8.8"/></svg>' +
-                '</div>' +
-              '</div>' +
-              '<div class="bank-card__middle">' +
-                '<div class="bank-card__number">' + escHtml(c.maskedNum || '') + '</div>' +
-              '</div>' +
-              '<div class="bank-card__bottom">' +
-                '<div class="bank-card__info">' +
-                  '<div class="bank-card__label">KART SAHİBİ</div>' +
-                  '<div class="bank-card__value bank-card__name">' + escHtml(c.name).toUpperCase() + '</div>' +
-                '</div>' +
-                '<div class="bank-card__info text-right">' +
-                  '<div class="bank-card__label">SKT</div>' +
-                  '<div class="bank-card__value">' + escHtml(c.exp || '') + '</div>' +
-                '</div>' +
-              '</div>' +
+            (c.isDefault ? '<div class="bank-card__badge">VARSAYILAN</div>' : '') +
+            '<div class="bank-card__top">' +
+            '<div class="bank-card__chip">' +
+            '<svg viewBox="0 0 40 30" width="35" height="25" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<rect width="40" height="30" rx="4" fill="#E8D19D"/>' +
+            '<path d="M0 10h12v10H0m28-10h12v10H28M12 0v10m16-10v10m-16 20v-10m16 10v-10M12 15h16" stroke="#C5A866" stroke-width="1.5"/>' +
+            '</svg>' +
+            '</div>' +
+            '<div class="bank-card__contactless">' +
+            '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+            '<path d="M5 13a10 10 0 0 1 14 0" />' +
+            '<path d="M8.5 16.5a5 5 0 0 1 7 0" />' +
+            '<path d="M2 8.82a15 15 0 0 1 20 0" />' +
+            '</svg>' +
+            '</div>' +
+            '</div>' +
+            '<div class="bank-card__middle">' +
+            '<div class="bank-card__number">' + escHtml(c.maskedNum || '') + '</div>' +
+            '</div>' +
+            '<div class="bank-card__bottom">' +
+            '<div class="bank-card__info">' +
+            '<div class="bank-card__label">KART SAHİBİ</div>' +
+            '<div class="bank-card__value bank-card__name">' + escHtml(c.name).toUpperCase() + '</div>' +
+            '</div>' +
+            '<div class="bank-card__info text-right">' +
+            '<div class="bank-card__label">SKT</div>' +
+            '<div class="bank-card__value">' + escHtml(c.exp || '') + '</div>' +
+            '</div>' +
+            '</div>' +
             '</div>' +
             '<div class="bank-card-actions">' +
-              (!c.isDefault
-                ? '<button class="addr-card__btn addr-card__btn--default" data-card-action="default" title="Varsayılan yap" type="button">★</button>'
-                : '') +
-              '<button class="addr-card__btn addr-card__btn--edit" data-card-action="edit" title="Düzenle" type="button">' +
-                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="pointer-events:none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
-              '</button>' +
-              '<button class="addr-card__btn addr-card__btn--del" data-card-action="delete" title="Sil" type="button">' +
-                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="pointer-events:none"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>' +
-              '</button>' +
+            (!c.isDefault
+              ? '<button class="addr-card__btn addr-card__btn--default" data-card-action="default" title="Varsayılan yap" type="button">★</button>'
+              : '') +
+            '<button class="addr-card__btn addr-card__btn--edit" data-card-action="edit" title="Düzenle" type="button">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="pointer-events:none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+            '</button>' +
+            '<button class="addr-card__btn addr-card__btn--del" data-card-action="delete" title="Sil" type="button">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="pointer-events:none"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>' +
+            '</button>' +
             '</div>' +
-          '</div>';
+            '</div>';
         }).join('');
       }
 
@@ -705,7 +753,7 @@
       }
 
       function clearCardErrors() {
-        ['savedCardName','savedCardNum','savedCardExp'].forEach(function (id) {
+        ['savedCardName', 'savedCardNum', 'savedCardExp'].forEach(function (id) {
           var inp = document.getElementById(id);
           var err = document.getElementById(id + 'Err');
           if (inp) inp.classList.remove('is-error');

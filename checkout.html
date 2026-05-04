@@ -19,9 +19,7 @@
   <main class="co-main">
     <div class="co-header-steps">
       <div class="co-nav__steps">
-        <span class="co-step active" id="navStep0">Hesap</span>
-        <span class="co-step__divider">›</span>
-        <span class="co-step" id="navStep1">Sepet</span>
+        <span class="co-step active" id="navStep1">Sepet</span>
         <span class="co-step__divider">›</span>
         <span class="co-step" id="navStep2">Adres</span>
         <span class="co-step__divider">›</span>
@@ -32,19 +30,6 @@
 
       <!-- SOL: Adım Paneli -->
       <section class="co-panel">
-
-        <!-- ADIM 0: HESAP SEÇİMİ -->
-        <div class="co-card active" id="card0">
-          <div class="co-card__head">
-            <span class="co-card__num">00</span>
-            <h2 class="co-card__title">Hesap</h2>
-          </div>
-          <div class="co-card__body">
-            <div id="checkoutAuthStep" class="co-auth-step">
-              <!-- JS tarafından doldurulur -->
-            </div>
-          </div>
-        </div>
 
         <!-- ADIM 1: SEPET -->
         <div class="co-card active" id="card1">
@@ -104,39 +89,9 @@
             <h2 class="co-card__title">Ödeme Yöntemi</h2>
           </div>
           <div class="co-card__body">
-            <div class="card-icons">
-              <span class="card-icon">VISA</span>
-              <span class="card-icon">MC</span>
-              <span class="card-icon">TROY</span>
+            <div id="paymentStepContent">
+              <!-- JS tarafından doldurulur -->
             </div>
-            <form id="paymentForm" novalidate>
-              <div class="field">
-                <label for="cardName" class="field__label">Kart Üzerindeki İsim <span class="req">*</span></label>
-                <input type="text" id="cardName" class="field__input" placeholder="ADI SOYADI" autocomplete="cc-name"
-                  style="text-transform:uppercase">
-                <span class="field__error" id="cardNameErr"></span>
-              </div>
-              <div class="field">
-                <label for="cardNum" class="field__label">Kart Numarası <span class="req">*</span></label>
-                <input type="text" id="cardNum" class="field__input" placeholder="XXXX  XXXX  XXXX  XXXX"
-                  autocomplete="cc-number" maxlength="19" inputmode="numeric">
-                <span class="field__error" id="cardNumErr"></span>
-              </div>
-              <div class="field-row">
-                <div class="field">
-                  <label for="cardExp" class="field__label">Son Kullanma <span class="req">*</span></label>
-                  <input type="text" id="cardExp" class="field__input" placeholder="AA/YY" autocomplete="cc-exp"
-                    maxlength="5" inputmode="numeric">
-                  <span class="field__error" id="cardExpErr"></span>
-                </div>
-                <div class="field">
-                  <label for="cardCvv" class="field__label">CVV <span class="req">*</span></label>
-                  <input type="text" id="cardCvv" class="field__input" placeholder="•••" autocomplete="cc-csc"
-                    maxlength="4" inputmode="numeric">
-                  <span class="field__error" id="cardCvvErr"></span>
-                </div>
-              </div>
-            </form>
           </div>
           <div class="co-card__foot">
             <button class="co-btn co-btn--ghost" onclick="goToStep(2)">

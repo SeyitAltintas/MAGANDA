@@ -857,20 +857,48 @@
   background: rgba(245,197,24,0.06);
 }
 
-/* Adres Formu Wrap */
+/* Adres Formu Wrap (MODAL) */
 .address-form-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  margin: 0;
+  display: flex; /* Overridden by JS, now JS sets to flex */
+  align-items: center;
+  justify-content: center;
   padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.address-form-wrap .modal-content {
   background: var(--color-surface, #111);
-  border: 1px solid var(--color-border, #222);
-  margin-top: 0.5rem;
+  border: 1px solid var(--color-border, #333);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 550px;
+  padding: 2rem;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+  animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .address-form-wrap__title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   letter-spacing: 0.06em;
   color: var(--color-text, #f5f5f0);
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.5rem;
+  border-bottom: 1px solid var(--color-border, #222);
+  padding-bottom: 0.8rem;
 }
 
 /* İptal butonu */
@@ -1053,8 +1081,9 @@
 
 .bank-card__top {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
   z-index: 1;
 }
 
