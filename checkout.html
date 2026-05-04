@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +8,20 @@
   <meta name="description" content="MAGANDA sipariş ve ödeme adımları.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/checkout.css">
+  <link rel="stylesheet" href="css/auth.css">
 </head>
+
 <body class="checkout-page force-scrolled-nav">
-<main class="co-main">
+  <main class="co-main">
     <div class="co-header-steps">
       <div class="co-nav__steps">
-        <span class="co-step active" id="navStep1">Sepet</span>
+        <span class="co-step active" id="navStep0">Hesap</span>
+        <span class="co-step__divider">›</span>
+        <span class="co-step" id="navStep1">Sepet</span>
         <span class="co-step__divider">›</span>
         <span class="co-step" id="navStep2">Adres</span>
         <span class="co-step__divider">›</span>
@@ -26,6 +32,19 @@
 
       <!-- SOL: Adım Paneli -->
       <section class="co-panel">
+
+        <!-- ADIM 0: HESAP SEÇİMİ -->
+        <div class="co-card active" id="card0">
+          <div class="co-card__head">
+            <span class="co-card__num">00</span>
+            <h2 class="co-card__title">Hesap</h2>
+          </div>
+          <div class="co-card__body">
+            <div id="checkoutAuthStep" class="co-auth-step">
+              <!-- JS tarafından doldurulur -->
+            </div>
+          </div>
+        </div>
 
         <!-- ADIM 1: SEPET -->
         <div class="co-card active" id="card1">
@@ -41,7 +60,9 @@
           <div class="co-card__foot">
             <button class="co-btn" id="toStep2Btn">
               Adrese Geç
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </button>
           </div>
         </div>
@@ -53,54 +74,28 @@
             <h2 class="co-card__title">Teslimat Adresi</h2>
           </div>
           <div class="co-card__body">
-            <form id="addressForm" novalidate>
-              <div class="field-row">
-                <div class="field">
-                  <label for="fname" class="field__label">Ad <span class="req">*</span></label>
-                  <input type="text" id="fname" class="field__input" placeholder="Adınız" autocomplete="given-name">
-                  <span class="field__error" id="fnameErr"></span>
-                </div>
-                <div class="field">
-                  <label for="lname" class="field__label">Soyad <span class="req">*</span></label>
-                  <input type="text" id="lname" class="field__input" placeholder="Soyadınız" autocomplete="family-name">
-                  <span class="field__error" id="lnameErr"></span>
-                </div>
-              </div>
-              <div class="field">
-                <label for="phone" class="field__label">Telefon <span class="req">*</span></label>
-                <input type="tel" id="phone" class="field__input" placeholder="05XX XXX XX XX" autocomplete="tel" maxlength="11">
-                <span class="field__error" id="phoneErr"></span>
-              </div>
-              <div class="field">
-                <label for="address" class="field__label">Açık Adres <span class="req">*</span></label>
-                <textarea id="address" class="field__input field__textarea" placeholder="Mahalle, cadde, sokak, no, daire…" rows="3" autocomplete="street-address"></textarea>
-                <span class="field__error" id="addressErr"></span>
-              </div>
-              <div class="field-row">
-                <div class="field">
-                  <label for="city" class="field__label">İl <span class="req">*</span></label>
-                  <input type="text" id="city" class="field__input" placeholder="İstanbul" autocomplete="address-level1">
-                  <span class="field__error" id="cityErr"></span>
-                </div>
-                <div class="field">
-                  <label for="district" class="field__label">İlçe <span class="req">*</span></label>
-                  <input type="text" id="district" class="field__input" placeholder="Kadıköy" autocomplete="address-level2">
-                  <span class="field__error" id="districtErr"></span>
-                </div>
-              </div>
-            </form>
+            <!-- Üye ise kayıtlı adresler; misafir ise manuel form -->
+            <div id="addressStepContent">
+              <!-- JS tarafından doldurulur -->
+            </div>
           </div>
           <div class="co-card__foot">
             <button class="co-btn co-btn--ghost" onclick="goToStep(1)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
               Geri
             </button>
             <button class="co-btn" id="toStep3Btn">
               Ödemeye Geç
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </button>
           </div>
         </div>
+
+
 
         <!-- ADIM 3: ÖDEME -->
         <div class="co-card" id="card3">
@@ -117,23 +112,27 @@
             <form id="paymentForm" novalidate>
               <div class="field">
                 <label for="cardName" class="field__label">Kart Üzerindeki İsim <span class="req">*</span></label>
-                <input type="text" id="cardName" class="field__input" placeholder="ADI SOYADI" autocomplete="cc-name" style="text-transform:uppercase">
+                <input type="text" id="cardName" class="field__input" placeholder="ADI SOYADI" autocomplete="cc-name"
+                  style="text-transform:uppercase">
                 <span class="field__error" id="cardNameErr"></span>
               </div>
               <div class="field">
                 <label for="cardNum" class="field__label">Kart Numarası <span class="req">*</span></label>
-                <input type="text" id="cardNum" class="field__input" placeholder="XXXX  XXXX  XXXX  XXXX" autocomplete="cc-number" maxlength="19" inputmode="numeric">
+                <input type="text" id="cardNum" class="field__input" placeholder="XXXX  XXXX  XXXX  XXXX"
+                  autocomplete="cc-number" maxlength="19" inputmode="numeric">
                 <span class="field__error" id="cardNumErr"></span>
               </div>
               <div class="field-row">
                 <div class="field">
                   <label for="cardExp" class="field__label">Son Kullanma <span class="req">*</span></label>
-                  <input type="text" id="cardExp" class="field__input" placeholder="AA/YY" autocomplete="cc-exp" maxlength="5" inputmode="numeric">
+                  <input type="text" id="cardExp" class="field__input" placeholder="AA/YY" autocomplete="cc-exp"
+                    maxlength="5" inputmode="numeric">
                   <span class="field__error" id="cardExpErr"></span>
                 </div>
                 <div class="field">
                   <label for="cardCvv" class="field__label">CVV <span class="req">*</span></label>
-                  <input type="text" id="cardCvv" class="field__input" placeholder="•••" autocomplete="cc-csc" maxlength="4" inputmode="numeric">
+                  <input type="text" id="cardCvv" class="field__input" placeholder="•••" autocomplete="cc-csc"
+                    maxlength="4" inputmode="numeric">
                   <span class="field__error" id="cardCvvErr"></span>
                 </div>
               </div>
@@ -141,12 +140,16 @@
           </div>
           <div class="co-card__foot">
             <button class="co-btn co-btn--ghost" onclick="goToStep(2)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
               Geri
             </button>
             <button class="co-btn co-btn--submit" id="submitOrderBtn">
               Siparişi Tamamla
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
             </button>
           </div>
         </div>
@@ -190,7 +193,8 @@
   </div>
 
   <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
   <script src="js/checkout.js"></script>
 </body>
-</html>
 
+</html>

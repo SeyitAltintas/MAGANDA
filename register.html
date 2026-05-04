@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAGANDA — Kayıt Ol</title>
+  <meta name="description" content="MAGANDA'ya üye ol. Sipariş geçmişi, kayıtlı adres ve kart ayrıcalıklarından faydalanmaya başla.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body class="auth-page force-scrolled-nav">
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <main class="auth-main">
+    <div class="auth-logo">
+      <a href="index.html">MAGANDA</a>
+    <span class="auth-logo__sub">Aramıza katıl</span>
+  </div>
+
+  <div class="auth-card">
+    <h1 class="auth-card__title">KAYIT OL</h1>
+    <p class="auth-card__sub">Üye avantajlarını kazan. Sipariş geçmişi, kayıtlı adres & kart.</p>
+
+    <div class="auth-alert" id="registerAlert" role="alert"></div>
+
+    <form id="registerForm" novalidate>
+      <div class="auth-field">
+        <label for="regName" class="auth-field__label">Ad Soyad <span class="auth-field__req">*</span></label>
+        <input type="text" id="regName" class="auth-field__input" placeholder="Seyit Altıntaş" autocomplete="name">
+        <span class="auth-field__error" id="regNameErr"></span>
+      </div>
+
+      <div class="auth-field">
+        <label for="regEmail" class="auth-field__label">E-posta <span class="auth-field__req">*</span></label>
+        <input type="email" id="regEmail" class="auth-field__input" placeholder="ornek@email.com" autocomplete="email">
+        <span class="auth-field__error" id="regEmailErr"></span>
+      </div>
+
+      <div class="auth-field">
+        <label for="regPassword" class="auth-field__label">Şifre <span class="auth-field__req">*</span></label>
+        <div class="auth-field__pw-wrap">
+          <input type="password" id="regPassword" class="auth-field__input" placeholder="En az 6 karakter" autocomplete="new-password">
+          <button type="button" class="auth-field__pw-toggle" id="regPwToggle" aria-label="Şifreyi göster/gizle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        <span class="auth-field__error" id="regPasswordErr"></span>
+      </div>
+
+      <div class="auth-field">
+        <label for="regPasswordConfirm" class="auth-field__label">Şifre Tekrar <span class="auth-field__req">*</span></label>
+        <div class="auth-field__pw-wrap">
+          <input type="password" id="regPasswordConfirm" class="auth-field__input" placeholder="Şifreni tekrar gir" autocomplete="new-password">
+          <button type="button" class="auth-field__pw-toggle" id="regPwToggle2" aria-label="Şifreyi göster/gizle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        <span class="auth-field__error" id="regPasswordConfirmErr"></span>
+      </div>
+
+      <button type="submit" class="auth-btn" id="registerSubmitBtn">
+        <span class="auth-btn__spinner"></span>
+        <span class="auth-btn__text">HESAP OLUŞTUR</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </form>
+
+    <div class="auth-links">
+      <span>Zaten üye misin?</span>
+      <a href="login.html"> Giriş Yap</a>
+    </div>
+    </div>
+  </div>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      document.addEventListener('DOMContentLoaded', function () {
+        if (window.MagandaAuth && window.MagandaAuth.isLoggedIn()) {
+          window.location.replace('hesabim.html');
+          return;
+        }
+        initRegisterForm();
+      });
+
+      function bindPwToggle(toggleId, inputId) {
+        var toggle = document.getElementById(toggleId);
+        var input  = document.getElementById(inputId);
+        if (!toggle || !input) return;
+        toggle.addEventListener('click', function () {
+          var show = input.type === 'password';
+          input.type = show ? 'text' : 'password';
+          toggle.setAttribute('aria-label', show ? 'Şifreyi gizle' : 'Şifreyi göster');
+        });
+      }
+
+      function bindLiveClear(inputId, errId) {
+        var inp = document.getElementById(inputId);
+        var err = document.getElementById(errId);
+        if (!inp || !err) return;
+        inp.addEventListener('input', function () {
+          inp.classList.remove('is-error');
+          err.textContent = '';
+        });
+      }
+
+      function initRegisterForm() {
+        bindPwToggle('regPwToggle', 'regPassword');
+        bindPwToggle('regPwToggle2', 'regPasswordConfirm');
+        bindLiveClear('regName', 'regNameErr');
+        bindLiveClear('regEmail', 'regEmailErr');
+        bindLiveClear('regPassword', 'regPasswordErr');
+        bindLiveClear('regPasswordConfirm', 'regPasswordConfirmErr');
+
+        var form      = document.getElementById('registerForm');
+        var submitBtn = document.getElementById('registerSubmitBtn');
+        var alertBox  = document.getElementById('registerAlert');
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (!validate()) return;
+
+          submitBtn.classList.add('is-loading');
+          submitBtn.disabled = true;
+          alertBox.classList.remove('is-visible', 'auth-alert--success');
+
+          setTimeout(function () {
+            var name     = document.getElementById('regName').value.trim();
+            var email    = document.getElementById('regEmail').value.trim();
+            var password = document.getElementById('regPassword').value;
+
+            var result = window.MagandaAuth.register(name, email, password);
+            submitBtn.classList.remove('is-loading');
+            submitBtn.disabled = false;
+
+            if (result.ok) {
+              alertBox.textContent = 'Hesabın oluşturuldu. Hoş geldin, ' + name.split(' ')[0] + '!';
+              alertBox.classList.add('is-visible', 'auth-alert--success');
+              setTimeout(function () { window.location.href = 'hesabim.html'; }, 900);
+            } else {
+              alertBox.textContent = result.error;
+              alertBox.classList.add('is-visible');
+            }
+          }, 700);
+        });
+
+        function validate() {
+          var ok = true;
+
+          var name = document.getElementById('regName').value.trim();
+          if (!name || name.split(' ').length < 2 || name.length < 4) {
+            mark('regName', 'regNameErr', 'Ad ve soyadınızı tam girin (en az 4 karakter).');
+            ok = false;
+          }
+
+          var email = document.getElementById('regEmail').value.trim();
+          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            mark('regEmail', 'regEmailErr', 'Geçerli bir e-posta adresi girin.');
+            ok = false;
+          }
+
+          var pw  = document.getElementById('regPassword').value;
+          var pw2 = document.getElementById('regPasswordConfirm').value;
+          if (!pw || pw.length < 6) {
+            mark('regPassword', 'regPasswordErr', 'Şifre en az 6 karakter olmalı.');
+            ok = false;
+          } else if (pw !== pw2) {
+            mark('regPasswordConfirm', 'regPasswordConfirmErr', 'Şifreler eşleşmiyor.');
+            ok = false;
+          }
+
+          return ok;
+        }
+
+        function mark(inputId, errId, msg) {
+          var inp = document.getElementById(inputId);
+          var err = document.getElementById(errId);
+          if (inp) inp.classList.add('is-error');
+          if (err) err.textContent = msg;
+        }
+      }
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAGANDA — Hesabım</title>
+  <meta name="description" content="MAGANDA hesap paneli. Sipariş geçmişi, kayıtlı adres ve kart bilgilerin.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body class="account-page force-scrolled-nav">
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <div class="account-layout">
+
+    <!-- SOL: SİDEBAR -->
+    <aside class="account-sidebar">
+      <div class="account-sidebar__header">
+        <p class="account-sidebar__name" id="sidebarName">—</p>
+        <p class="account-sidebar__email" id="sidebarEmail">—</p>
+      </div>
+      <nav>
+        <ul class="account-nav" role="tablist">
+          <li class="account-nav__item">
+            <button class="account-nav__link is-active" data-tab="orders" role="tab" aria-selected="true"
+              id="tabOrders">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                <rect x="9" y="3" width="6" height="4" rx="2" />
+              </svg>
+              Sipariş Geçmişi
+            </button>
+          </li>
+          <li class="account-nav__item">
+            <button class="account-nav__link" data-tab="profile" role="tab" aria-selected="false" id="tabProfile">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              Profil Bilgileri
+            </button>
+          </li>
+          <li class="account-nav__item">
+            <button class="account-nav__link" data-tab="address" role="tab" aria-selected="false" id="tabAddress">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              Kayıtlı Adres
+            </button>
+          </li>
+          <li class="account-nav__item">
+            <button class="account-nav__link" data-tab="card" role="tab" aria-selected="false" id="tabCard">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <rect x="1" y="4" width="22" height="16" rx="2" />
+                <line x1="1" y1="10" x2="23" y2="10" />
+              </svg>
+              Kayıtlı Kart
+            </button>
+          </li>
+          <li class="account-nav__item">
+            <button class="account-nav__link account-nav__logout" id="logoutBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+              Çıkış Yap
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- SAĞ: PANELLER -->
+    <main>
+
+      <!-- SİPARİŞ GEÇMİŞİ -->
+      <section class="account-panel is-active" id="panelOrders" role="tabpanel">
+        <h2 class="account-panel__title">SİPARİŞ GEÇMİŞİ</h2>
+        <div class="order-list" id="orderList">
+          <p class="order-empty">Henüz sipariş vermemişsin.</p>
+        </div>
+      </section>
+
+      <!-- PROFİL BİLGİLERİ -->
+      <section class="account-panel" id="panelProfile" role="tabpanel">
+        <h2 class="account-panel__title">PROFİL BİLGİLERİ</h2>
+        <form class="account-form" id="profileForm" novalidate>
+          <div class="auth-field">
+            <label for="profileName" class="auth-field__label">Ad Soyad</label>
+            <input type="text" id="profileName" class="auth-field__input" autocomplete="name">
+            <span class="auth-field__error" id="profileNameErr"></span>
+          </div>
+          <div class="auth-field">
+            <label for="profileEmail" class="auth-field__label">E-posta</label>
+            <input type="email" id="profileEmail" class="auth-field__input" autocomplete="email" disabled>
+          </div>
+          <div class="auth-field">
+            <label for="profileNewPassword" class="auth-field__label">Yeni Şifre <span
+                style="color:var(--color-muted);font-size:.7em">(boş bırakırsan değişmez)</span></label>
+            <input type="password" id="profileNewPassword" class="auth-field__input" placeholder="••••••••"
+              autocomplete="new-password">
+            <span class="auth-field__error" id="profileNewPasswordErr"></span>
+          </div>
+          <div class="auth-alert" id="profileAlert" role="alert"></div>
+          <button type="submit" class="account-form__save">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            KAYDET
+          </button>
+        </form>
+      </section>
+
+      <!-- KAYITLI ADRES -->
+      <section class="account-panel" id="panelAddress" role="tabpanel">
+        <div class="address-panel-head">
+          <h2 class="account-panel__title" style="margin:0;border:none;padding:0">KAYITLI ADRESLER</h2>
+          <button class="addr-add-btn" id="showAddAddrFormBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Adres Ekle
+          </button>
+        </div>
+
+        <!-- Adres Listesi -->
+        <div id="addressList" class="address-list"></div>
+
+        <!-- Adres Formu (başlangıçta gizli) -->
+        <div id="addressFormWrap" class="address-form-wrap" hidden>
+          <h3 class="address-form-wrap__title" id="addrFormTitle">Yeni Adres Ekle</h3>
+          <form class="account-form" id="addressForm" novalidate>
+            <input type="hidden" id="editingAddrId" value="">
+            <div class="auth-field">
+              <label for="addrName" class="auth-field__label">Ad Soyad <span class="auth-field__req">*</span></label>
+              <input type="text" id="addrName" class="auth-field__input" autocomplete="name">
+              <span class="auth-field__error" id="addrNameErr"></span>
+            </div>
+            <div class="auth-field">
+              <label for="addrPhone" class="auth-field__label">Telefon <span class="auth-field__req">*</span></label>
+              <input type="tel" id="addrPhone" class="auth-field__input" placeholder="05XX XXX XX XX" autocomplete="tel"
+                maxlength="11">
+              <span class="auth-field__error" id="addrPhoneErr"></span>
+            </div>
+            <div class="auth-field">
+              <label for="addrLine" class="auth-field__label">Açık Adres <span class="auth-field__req">*</span></label>
+              <textarea id="addrLine" class="auth-field__input" rows="3" placeholder="Mahalle, cadde, sokak, no, daire…"
+                autocomplete="street-address"></textarea>
+              <span class="auth-field__error" id="addrLineErr"></span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+              <div class="auth-field" style="margin-bottom:0">
+                <label for="addrCity" class="auth-field__label">İl <span class="auth-field__req">*</span></label>
+                <input type="text" id="addrCity" class="auth-field__input" autocomplete="address-level1">
+                <span class="auth-field__error" id="addrCityErr"></span>
+              </div>
+              <div class="auth-field" style="margin-bottom:0">
+                <label for="addrDistrict" class="auth-field__label">İlçe <span class="auth-field__req">*</span></label>
+                <input type="text" id="addrDistrict" class="auth-field__input" autocomplete="address-level2">
+                <span class="auth-field__error" id="addrDistrictErr"></span>
+              </div>
+            </div>
+            <div class="auth-alert" id="addressAlert" role="alert"></div>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap">
+              <button type="submit" class="account-form__save" id="addrSaveBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                KAYDET
+              </button>
+              <button type="button" class="account-form__cancel" id="addrCancelBtn">İPTAL</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+
+      <!-- KAYITLI KART -->
+      <section class="account-panel" id="panelCard" role="tabpanel">
+        <div class="address-panel-head">
+          <h2 class="account-panel__title" style="margin:0;border:none;padding:0">KAYITLI KARTLAR</h2>
+          <button class="addr-add-btn" id="showAddCardFormBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Kart Ekle
+          </button>
+        </div>
+
+        <!-- Kart Listesi -->
+        <div id="cardList" class="address-list"></div>
+
+        <!-- Kart Formu (başlangıçta gizli) -->
+        <div id="cardFormWrap" class="address-form-wrap" style="display:none">
+          <h3 class="address-form-wrap__title" id="cardFormTitle">Yeni Kart Ekle</h3>
+          <form class="account-form" id="cardForm" novalidate>
+            <input type="hidden" id="editingCardId" value="">
+            <div class="auth-field">
+              <label for="savedCardName" class="auth-field__label">Kart Üzerindeki İsim <span
+                  class="auth-field__req">*</span></label>
+              <input type="text" id="savedCardName" class="auth-field__input" placeholder="ADI SOYADI"
+                autocomplete="cc-name" style="text-transform:uppercase">
+              <span class="auth-field__error" id="savedCardNameErr"></span>
+            </div>
+            <div class="auth-field">
+              <label for="savedCardNum" class="auth-field__label">Kart Numarası <span
+                  class="auth-field__req">*</span></label>
+              <input type="text" id="savedCardNum" class="auth-field__input" placeholder="XXXX  XXXX  XXXX  XXXX"
+                autocomplete="cc-number" maxlength="19" inputmode="numeric">
+              <span class="auth-field__error" id="savedCardNumErr"></span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+              <div class="auth-field" style="margin-bottom:0">
+                <label for="savedCardExp" class="auth-field__label">Son Kullanma <span
+                    class="auth-field__req">*</span></label>
+                <input type="text" id="savedCardExp" class="auth-field__input" placeholder="AA/YY" autocomplete="cc-exp"
+                  maxlength="5" inputmode="numeric">
+                <span class="auth-field__error" id="savedCardExpErr"></span>
+              </div>
+              <div class="auth-field" style="margin-bottom:0">
+                <label class="auth-field__label" style="color:var(--color-muted)">CVV</label>
+                <input type="text" class="auth-field__input" placeholder="Saklanmaz" disabled>
+              </div>
+            </div>
+            <div class="auth-alert" id="cardAlert" role="alert"></div>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap">
+              <button type="submit" class="account-form__save" id="cardSaveBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                KAYDET
+              </button>
+              <button type="button" class="account-form__cancel" id="cardCancelBtn">İPTAL</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+
+
+    </main>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var auth = window.MagandaAuth;
+        if (!auth || !auth.isLoggedIn()) {
+          window.location.replace('login.html?redirect=hesabim.html');
+          return;
+        }
+        var user = auth.getCurrentUser();
+        loadUserData(user);
+        initTabs();
+        initLogout();
+        initProfileForm(user);
+        initAddressPanel();
+        initCardPanel();
+      });
+
+      /* ─── KULLANICI VERİSİ ─────────────── */
+      function loadUserData(user) {
+        document.getElementById('sidebarName').textContent = user.name.toUpperCase();
+        document.getElementById('sidebarEmail').textContent = user.email;
+        document.title = 'MAGANDA — ' + user.name.split(' ')[0];
+        renderOrders(user.orders || []);
+
+        var nameInp = document.getElementById('profileName');
+        var emailInp = document.getElementById('profileEmail');
+        if (nameInp) nameInp.value = user.name;
+        if (emailInp) emailInp.value = user.email;
+      }
+
+      function setVal(id, val) {
+        var el = document.getElementById(id);
+        if (el) el.value = val;
+      }
+
+      /* ─── SİPARİŞLER ─────────────────── */
+      function renderOrders(orders) {
+        var list = document.getElementById('orderList');
+        if (!list) return;
+        if (!orders.length) {
+          list.innerHTML = '<p class="order-empty">Henüz sipariş vermemişsin.<br><a href="drop.html" style="color:var(--color-accent);text-decoration:none">Koleksiyona göz at →</a></p>';
+          return;
+        }
+        list.innerHTML = orders.map(function (o) {
+          var date = new Date(o.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+          var itemList = (o.items || []).map(function (i) { return i.name + ' ×' + (i.quantity || 1); }).join(', ') || '—';
+          return '<div class="order-card">' +
+            '<div class="order-card__header">' +
+            '<span class="order-card__id">' + o.id + '</span>' +
+            '<span class="order-card__date">' + date + '</span>' +
+            '</div>' +
+            '<p class="order-card__items">' + itemList + '</p>' +
+            '<p class="order-card__total">Toplam: ₺' + (o.total || 0).toLocaleString('tr-TR') + '</p>' +
+            '</div>';
+        }).join('');
+      }
+
+      /* ─── KAYITLI KART ───────────────── */
+      function renderSavedCard(card) {
+        var el = document.getElementById('savedCardDisplay');
+        if (!el) return;
+        if (!card) {
+          el.innerHTML = '<span class="saved-info-box__none">Henüz kayıtlı kart yok.</span>';
+          return;
+        }
+        el.innerHTML =
+          '<span class="card-mask">' + (card.maskedNum || '•••• •••• •••• ••••') + '</span><br>' +
+          '<span>' + (card.name || '') + ' — SKT: ' + (card.exp || '') + '</span>';
+      }
+
+      /* ─── TAB YÖNETİMİ ───────────────── */
+      function initTabs() {
+        var tabs = document.querySelectorAll('[data-tab]');
+        var panels = document.querySelectorAll('.account-panel');
+        tabs.forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            var target = tab.getAttribute('data-tab');
+            tabs.forEach(function (t) { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); });
+            panels.forEach(function (p) { p.classList.remove('is-active'); });
+            tab.classList.add('is-active');
+            tab.setAttribute('aria-selected', 'true');
+            var panel = document.getElementById('panel' + target.charAt(0).toUpperCase() + target.slice(1));
+            if (panel) panel.classList.add('is-active');
+          });
+        });
+      }
+
+      /* ─── ÇIKIŞ ──────────────────────── */
+      function initLogout() {
+        var btn = document.getElementById('logoutBtn');
+        if (btn) btn.addEventListener('click', function () { window.MagandaAuth.logout(); });
+      }
+
+      /* ─── PROFİL FORMU ───────────────── */
+      function initProfileForm(user) {
+        var form = document.getElementById('profileForm');
+        var alertBox = document.getElementById('profileAlert');
+        if (!form) return;
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var name = document.getElementById('profileName').value.trim();
+          var newPass = document.getElementById('profileNewPassword').value;
+          alertBox.classList.remove('is-visible', 'auth-alert--success');
+          if (!name || name.length < 3) {
+            document.getElementById('profileName').classList.add('is-error');
+            document.getElementById('profileNameErr').textContent = 'Ad Soyad en az 3 karakter olmalı.';
+            return;
+          }
+          var updates = { name: name };
+          if (newPass && newPass.length >= 6) {
+            updates.password = newPass;
+          } else if (newPass && newPass.length > 0) {
+            document.getElementById('profileNewPassword').classList.add('is-error');
+            document.getElementById('profileNewPasswordErr').textContent = 'Şifre en az 6 karakter olmalı.';
+            return;
+          }
+          window.MagandaAuth.updateCurrentUser(updates);
+          document.getElementById('sidebarName').textContent = name.toUpperCase();
+          alertBox.textContent = 'Profil bilgilerin güncellendi.';
+          alertBox.classList.add('is-visible', 'auth-alert--success');
+          setTimeout(function () { alertBox.classList.remove('is-visible', 'auth-alert--success'); }, 3000);
+        });
+      }
+
+      /* ─── ADRES PANELİ ───────────────── */
+      function initAddressPanel() {
+        renderAddressList();
+
+        var showBtn = document.getElementById('showAddAddrFormBtn');
+        var cancelBtn = document.getElementById('addrCancelBtn');
+        var form = document.getElementById('addressForm');
+        var formWrap = document.getElementById('addressFormWrap');
+        var formTitle = document.getElementById('addrFormTitle');
+        var editingId = document.getElementById('editingAddrId');
+        var list = document.getElementById('addressList');
+
+        /* ── Adres Ekle butonu ─────────────── */
+        if (showBtn) {
+          showBtn.addEventListener('click', function () {
+            editingId.value = '';
+            formTitle.textContent = 'Yeni Adres Ekle';
+            form.reset();
+            clearAddrErrors();
+            formWrap.removeAttribute('hidden');
+            formWrap.style.display = 'block';
+          });
+        }
+
+        /* ── İptal butonu ──────────────────── */
+        if (cancelBtn) {
+          cancelBtn.addEventListener('click', function () {
+            formWrap.style.display = 'none';
+            form.reset();
+            clearAddrErrors();
+          });
+        }
+
+        /* ── Adres formu gönder ────────────── */
+        if (form) {
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var alertBox = document.getElementById('addressAlert');
+            alertBox.classList.remove('is-visible', 'auth-alert--success');
+
+            var name = document.getElementById('addrName').value.trim();
+            var phone = document.getElementById('addrPhone').value.replace(/\s/g, '');
+            var line = document.getElementById('addrLine').value.trim();
+            var city = document.getElementById('addrCity').value.trim();
+            var district = document.getElementById('addrDistrict').value.trim();
+            var ok = true;
+
+            if (name.length < 2) { markErr('addrName', 'addrNameErr', 'Ad Soyad gerekli.'); ok = false; }
+            if (!/^(05[0-9]{9}|5[0-9]{9})$/.test(phone)) { markErr('addrPhone', 'addrPhoneErr', 'Geçerli telefon girin.'); ok = false; }
+            if (line.length < 10) { markErr('addrLine', 'addrLineErr', 'Tam adresinizi girin.'); ok = false; }
+            if (city.length < 2) { markErr('addrCity', 'addrCityErr', 'İl gerekli.'); ok = false; }
+            if (district.length < 2) { markErr('addrDistrict', 'addrDistrictErr', 'İlçe gerekli.'); ok = false; }
+            if (!ok) return;
+
+            var addrData = { name: name, phone: phone, line: line, city: city, district: district };
+            var editId = parseInt(editingId.value, 10);
+
+            if (editId) {
+              window.MagandaAuth.updateAddress(editId, addrData);
+              alertBox.textContent = 'Adres güncellendi.';
+            } else {
+              window.MagandaAuth.addAddress(addrData);
+              alertBox.textContent = 'Adres eklendi.';
+            }
+
+            alertBox.classList.add('is-visible', 'auth-alert--success');
+            setTimeout(function () { alertBox.classList.remove('is-visible', 'auth-alert--success'); }, 2500);
+            formWrap.style.display = 'none';
+            form.reset();
+            renderAddressList();
+          });
+        }
+
+        /* ── Adres listesi: event delegation ─
+           Tek listener, tüm butonları kapsar.
+           innerHTML yenilense bile çalışır.    */
+        if (list) {
+          list.addEventListener('click', function (e) {
+            // SVG path, svg veya button olabilir — en yakın data-action'ı bul
+            var btn = e.target.closest('[data-action]');
+            if (!btn) return;
+
+            var card = btn.closest('[data-id]');
+            if (!card) return;
+
+            var id = parseInt(card.getAttribute('data-id'), 10);
+            var action = btn.getAttribute('data-action');
+
+            if (action === 'delete') {
+              if (!confirm('Bu adresi silmek istediğinden emin misin?')) return;
+              window.MagandaAuth.deleteAddress(id);
+              renderAddressList();
+
+            } else if (action === 'default') {
+              window.MagandaAuth.setDefaultAddress(id);
+              renderAddressList();
+
+            } else if (action === 'edit') {
+              var addresses = window.MagandaAuth.getAddresses();
+              var addr = addresses.find(function (a) { return a.id === id; });
+              if (!addr) return;
+
+              // Formu doldur
+              editingId.value = id;
+              formTitle.textContent = 'Adresi Düzenle';
+              setVal('addrName', addr.name || '');
+              setVal('addrPhone', addr.phone || '');
+              setVal('addrLine', addr.line || '');
+              setVal('addrCity', addr.city || '');
+              setVal('addrDistrict', addr.district || '');
+              clearAddrErrors();
+
+              // Formu göster — hem hidden kaldır hem de display:block zorla
+              formWrap.removeAttribute('hidden');
+              formWrap.style.display = 'block';
+            }
+          });
+        }
+
+      }
+
+      function renderAddressList() {
+        var list = document.getElementById('addressList');
+        if (!list) return;
+
+        var addresses = window.MagandaAuth.getAddresses();
+
+        if (!addresses.length) {
+          list.innerHTML = '<p class="order-empty">Henüz kayıtlı adresin yok.<br><small>Yukarıdaki butona bas ve ilk adresi ekle.</small></p>';
+          return;
+        }
+
+        list.innerHTML = addresses.map(function (a) {
+          return '<div class="addr-card" data-id="' + a.id + '">' +
+            '<div class="addr-card__body">' +
+            '<strong class="addr-card__name">' + escHtml(a.name) + '</strong>' +
+            (a.isDefault ? '<span class="addr-card__default">Varsayılan</span>' : '') +
+            '<span class="addr-card__line">' + escHtml(a.phone) + '</span>' +
+            '<span class="addr-card__line">' + escHtml(a.line) + '</span>' +
+            '<span class="addr-card__line">' + [escHtml(a.district), escHtml(a.city)].filter(Boolean).join(' / ') + '</span>' +
+            '</div>' +
+            '<div class="addr-card__actions">' +
+            (!a.isDefault
+              ? '<button class="addr-card__btn addr-card__btn--default" data-action="default" title="Varsayılan yap" type="button">★</button>'
+              : '') +
+            '<button class="addr-card__btn addr-card__btn--edit" data-action="edit" title="Düzenle" type="button">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="pointer-events:none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+            '</button>' +
+            '<button class="addr-card__btn addr-card__btn--del" data-action="delete" title="Sil" type="button">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="pointer-events:none"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>' +
+            '</button>' +
+            '</div>' +
+            '</div>';
+        }).join('');
+      }
+
+      function escHtml(str) {
+        return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+
+
+
+      function clearAddrErrors() {
+        ['addrName', 'addrPhone', 'addrLine', 'addrCity', 'addrDistrict'].forEach(function (id) {
+          var inp = document.getElementById(id);
+          var err = document.getElementById(id + 'Err');
+          if (inp) inp.classList.remove('is-error');
+          if (err) err.textContent = '';
+        });
+      }
+
+      /* ─── KART PANELİ ────────────────── */
+      function initCardPanel() {
+        renderCardList();
+
+        var showBtn = document.getElementById('showAddCardFormBtn');
+        var cancelBtn = document.getElementById('cardCancelBtn');
+        var form = document.getElementById('cardForm');
+        var formWrap = document.getElementById('cardFormWrap');
+        var formTitle = document.getElementById('cardFormTitle');
+        var editingId = document.getElementById('editingCardId');
+        var list = document.getElementById('cardList');
+
+        // Kart Ekle butonu
+        if (showBtn) {
+          showBtn.addEventListener('click', function () {
+            editingId.value = '';
+            formTitle.textContent = 'Yeni Kart Ekle';
+            form.reset();
+            clearCardErrors();
+            formWrap.style.display = 'block';
+          });
+        }
+
+        // İptal butonu
+        if (cancelBtn) {
+          cancelBtn.addEventListener('click', function () {
+            formWrap.style.display = 'none';
+            form.reset();
+            clearCardErrors();
+          });
+        }
+
+        // Kart numarası & SKT maskeleri
+        var cardNumInp = document.getElementById('savedCardNum');
+        if (cardNumInp) {
+          cardNumInp.addEventListener('input', function () {
+            var val = this.value.replace(/\D/g, '').substring(0, 16);
+            this.value = val.replace(/(.{4})/g, '$1 ').trim();
+          });
+        }
+        var cardExpInp = document.getElementById('savedCardExp');
+        if (cardExpInp) {
+          cardExpInp.addEventListener('input', function () {
+            var val = this.value.replace(/\D/g, '').substring(0, 4);
+            this.value = val.length >= 3 ? val.substring(0, 2) + '/' + val.substring(2) : val;
+          });
+        }
+
+        // Form gönder
+        if (form) {
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var alertBox = document.getElementById('cardAlert');
+            alertBox.classList.remove('is-visible', 'auth-alert--success');
+
+            var name = document.getElementById('savedCardName').value.trim();
+            var num = document.getElementById('savedCardNum').value.replace(/\s/g, '');
+            var exp = document.getElementById('savedCardExp').value;
+            var ok = true;
+
+            if (name.split(' ').length < 2 || name.length < 5) { markErr('savedCardName', 'savedCardNameErr', 'Tam adı girin.'); ok = false; }
+            if (!/^\d{16}$/.test(num)) { markErr('savedCardNum', 'savedCardNumErr', '16 haneli kart numarası girin.'); ok = false; }
+            if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(exp)) { markErr('savedCardExp', 'savedCardExpErr', 'Format: AA/YY'); ok = false; }
+            if (!ok) return;
+
+            var maskedNum = '•••• •••• •••• ' + num.slice(-4);
+            var cardData = { name: name, maskedNum: maskedNum, fullNum: num, exp: exp };
+            var editId = parseInt(editingId.value, 10);
+
+            if (editId) {
+              window.MagandaAuth.updateCard(editId, cardData);
+              alertBox.textContent = 'Kart güncellendi.';
+            } else {
+              window.MagandaAuth.addCard(cardData);
+              alertBox.textContent = 'Kart eklendi.';
+            }
+
+            alertBox.classList.add('is-visible', 'auth-alert--success');
+            setTimeout(function () { alertBox.classList.remove('is-visible', 'auth-alert--success'); }, 2500);
+            formWrap.style.display = 'none';
+            form.reset();
+            renderCardList();
+          });
+        }
+
+        // Event delegation — listede sil/düzenle/varsayılan
+        if (list) {
+          list.addEventListener('click', function (e) {
+            var btn = e.target.closest('[data-card-action]');
+            if (!btn) return;
+            var card = btn.closest('[data-card-id]');
+            if (!card) return;
+
+            var id = parseInt(card.getAttribute('data-card-id'), 10);
+            var action = btn.getAttribute('data-card-action');
+
+            if (action === 'delete') {
+              if (!confirm('Bu kartı silmek istediğinden emin misin?')) return;
+              window.MagandaAuth.deleteCard(id);
+              renderCardList();
+
+            } else if (action === 'default') {
+              window.MagandaAuth.setDefaultCard(id);
+              renderCardList();
+
+            } else if (action === 'edit') {
+              var cards = window.MagandaAuth.getCards();
+              var c = cards.find(function (x) { return x.id === id; });
+              if (!c) return;
+
+              editingId.value = id;
+              formTitle.textContent = 'Kartı Düzenle';
+
+              setVal('savedCardName', c.name || '');
+              // Düzenleme için maskesiz numara göster (eğer kayıtlıysa)
+              var numVal = c.fullNum
+                ? c.fullNum.replace(/(.{4})/g, '$1 ').trim()
+                : (c.maskedNum || '');
+              setVal('savedCardNum', numVal);
+              setVal('savedCardExp', c.exp || '');
+
+              clearCardErrors();
+              formWrap.style.display = 'block';
+            }
+          });
+        }
+      }
+
+      function renderCardList() {
+        var list = document.getElementById('cardList');
+        if (!list) return;
+        var cards = window.MagandaAuth.getCards();
+        if (!cards.length) {
+          list.innerHTML = '<p class="order-empty">Henüz kayıtlı kartın yok.<br><small>Yukarıdaki butona bas ve ilk kartı ekle.</small></p>';
+          return;
+        }
+        list.innerHTML = cards.map(function (c) {
+          var brand = detectCardBrand(c.maskedNum || '');
+          return '<div class="addr-card" data-card-id="' + c.id + '">' +
+            '<div class="addr-card__body">' +
+            '<strong class="addr-card__name">' + escHtml(c.name) + '</strong>' +
+            (c.isDefault ? '<span class="addr-card__default">Varsayılan</span>' : '') +
+            '<span class="addr-card__line card-num-display">' + escHtml(c.maskedNum || '') + '</span>' +
+            '<span class="addr-card__line">SKT: ' + escHtml(c.exp || '') + '</span>' +
+            (brand ? '<span class="addr-card__line card-brand">' + brand + '</span>' : '') +
+            '</div>' +
+            '<div class="addr-card__actions">' +
+            (!c.isDefault
+              ? '<button class="addr-card__btn addr-card__btn--default" data-card-action="default" title="Varsayılan yap" type="button">★</button>'
+              : '') +
+            '<button class="addr-card__btn addr-card__btn--edit" data-card-action="edit" title="Düzenle" type="button">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="pointer-events:none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+            '</button>' +
+            '<button class="addr-card__btn addr-card__btn--del" data-card-action="delete" title="Sil" type="button">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="pointer-events:none"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>' +
+            '</button>' +
+            '</div>' +
+            '</div>';
+        }).join('');
+      }
+
+      function detectCardBrand(masked) {
+        var num = (masked || '').replace(/[^0-9•]/g, '');
+        // Kart tipi son 4 haneden değil, tam sayıdan anlaşılır.
+        // Demo: sadece görsel etiket
+        return '';
+      }
+
+      function clearCardErrors() {
+        ['savedCardName', 'savedCardNum', 'savedCardExp'].forEach(function (id) {
+          var inp = document.getElementById(id);
+          var err = document.getElementById(id + 'Err');
+          if (inp) inp.classList.remove('is-error');
+          if (err) err.textContent = '';
+        });
+      }
+
+      function markErr(inputId, errId, msg) {
+        var inp = document.getElementById(inputId);
+        var err = document.getElementById(errId);
+        if (inp) inp.classList.add('is-error');
+        if (err) err.textContent = msg;
+      }
+
+    })();
+  </script>
+
+
+</body>
+
+</html>

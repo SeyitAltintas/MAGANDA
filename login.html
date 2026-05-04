@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAGANDA — Giriş Yap</title>
+  <meta name="description" content="MAGANDA hesabına giriş yap veya misafir olarak alışverişe devam et.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body class="auth-page force-scrolled-nav">
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <main class="auth-main">
+    <div class="auth-logo">
+    <a href="index.html">MAGANDA</a>
+    <span class="auth-logo__sub">Hesabına giriş yap</span>
+  </div>
+
+  <div class="auth-card">
+    <h1 class="auth-card__title">GİRİŞ YAP</h1>
+    <p class="auth-card__sub">Hoş geldin. Seni bekliyorduk.</p>
+
+    <div class="auth-alert" id="loginAlert" role="alert"></div>
+
+    <form id="loginForm" novalidate>
+      <div class="auth-field">
+        <label for="loginEmail" class="auth-field__label">E-posta <span class="auth-field__req">*</span></label>
+        <input type="email" id="loginEmail" class="auth-field__input" placeholder="ornek@email.com" autocomplete="email">
+        <span class="auth-field__error" id="loginEmailErr"></span>
+      </div>
+
+      <div class="auth-field">
+        <label for="loginPassword" class="auth-field__label">Şifre <span class="auth-field__req">*</span></label>
+        <div class="auth-field__pw-wrap">
+          <input type="password" id="loginPassword" class="auth-field__input" placeholder="••••••••" autocomplete="current-password">
+          <button type="button" class="auth-field__pw-toggle" id="loginPwToggle" aria-label="Şifreyi göster/gizle">
+            <svg id="loginEyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        <span class="auth-field__error" id="loginPasswordErr"></span>
+      </div>
+
+      <button type="submit" class="auth-btn" id="loginSubmitBtn">
+        <span class="auth-btn__spinner"></span>
+        <span class="auth-btn__text">GİRİŞ YAP</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </form>
+
+    <div class="auth-links">
+      <span>Hesabın yok mu?</span>
+      <a href="register.html"> Kayıt Ol</a>
+    </div>
+
+    <div class="auth-links__divider">veya</div>
+
+    <a href="checkout.html" class="auth-guest-btn" id="guestContinueBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      MİSAFİR OLARAK DEVAM ET
+    </a>
+  </div>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      // Zaten giriş yapmışsa doğrudan hesabım'a gönder
+      document.addEventListener('DOMContentLoaded', function () {
+        if (window.MagandaAuth && window.MagandaAuth.isLoggedIn()) {
+          var redirect = new URLSearchParams(window.location.search).get('redirect') || 'hesabim.html';
+          window.location.replace(redirect);
+          return;
+        }
+
+        initLoginForm();
+      });
+
+      function initLoginForm() {
+        var form        = document.getElementById('loginForm');
+        var emailInp    = document.getElementById('loginEmail');
+        var passwordInp = document.getElementById('loginPassword');
+        var submitBtn   = document.getElementById('loginSubmitBtn');
+        var alertBox    = document.getElementById('loginAlert');
+        var pwToggle    = document.getElementById('loginPwToggle');
+
+        // Şifre göster/gizle
+        if (pwToggle) {
+          pwToggle.addEventListener('click', function () {
+            var isPassword = passwordInp.type === 'password';
+            passwordInp.type = isPassword ? 'text' : 'password';
+            pwToggle.setAttribute('aria-label', isPassword ? 'Şifreyi gizle' : 'Şifreyi göster');
+          });
+        }
+
+        // Canlı hata temizleme
+        emailInp.addEventListener('input', function () {
+          emailInp.classList.remove('is-error');
+          document.getElementById('loginEmailErr').textContent = '';
+        });
+        passwordInp.addEventListener('input', function () {
+          passwordInp.classList.remove('is-error');
+          document.getElementById('loginPasswordErr').textContent = '';
+        });
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var valid = validate();
+          if (!valid) return;
+
+          submitBtn.classList.add('is-loading');
+          submitBtn.disabled = true;
+          alertBox.classList.remove('is-visible', 'auth-alert--success');
+
+          // Demo: 600ms gecikme ile login simüle et
+          setTimeout(function () {
+            var result = window.MagandaAuth.login(emailInp.value, passwordInp.value);
+            submitBtn.classList.remove('is-loading');
+            submitBtn.disabled = false;
+
+            if (result.ok) {
+              alertBox.textContent = 'Giriş başarılı. Yönlendiriliyorsun…';
+              alertBox.classList.add('is-visible', 'auth-alert--success');
+              var redirect = new URLSearchParams(window.location.search).get('redirect') || 'hesabim.html';
+              setTimeout(function () { window.location.href = redirect; }, 700);
+            } else {
+              alertBox.textContent = result.error;
+              alertBox.classList.add('is-visible');
+            }
+          }, 600);
+        });
+
+        function validate() {
+          var ok = true;
+          var email = emailInp.value.trim();
+          var password = passwordInp.value;
+
+          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            emailInp.classList.add('is-error');
+            document.getElementById('loginEmailErr').textContent = 'Geçerli bir e-posta adresi girin.';
+            ok = false;
+          }
+
+          if (!password || password.length < 6) {
+            passwordInp.classList.add('is-error');
+            document.getElementById('loginPasswordErr').textContent = 'Şifre en az 6 karakter olmalı.';
+            ok = false;
+          }
+
+          return ok;
+        }
+      }
+    })();
+  </script>
+</body>
+
+</html>

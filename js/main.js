@@ -106,40 +106,195 @@
   /* --- COLLECTION FILTERS ─────────────── */
   function initFilters() {
     var filterBtns = document.querySelectorAll('.filter-btn');
-    var productCards = document.querySelectorAll('.product-card');
+    var grid = document.querySelector('.collection__grid');
+    var filters = document.querySelector('.collection__filters');
+    var productCards = grid ? Array.prototype.slice.call(grid.querySelectorAll('.product-card')) : [];
     
-    if (!filterBtns.length || !productCards.length) return;
+    if (!filterBtns.length || !productCards.length || !grid || !filters) return;
+
+    var state = {
+      category: 'all',
+      minPrice: '',
+      maxPrice: '',
+      sort: 'featured'
+    };
+
+    var parsePrice = function (card) {
+      var priceEl = card.querySelector('.product-card__price');
+      if (!priceEl) return 0;
+      return Number(priceEl.textContent.replace(/[^\d]/g, '')) || 0;
+    };
+
+    productCards.forEach(function (card, index) {
+      card.dataset.originalIndex = String(index);
+      card.dataset.priceValue = String(parsePrice(card));
+    });
+
+    if (!document.querySelector('.collection-filter-panel')) {
+      filters.insertAdjacentHTML('afterend',
+        '<div class="collection-filter-panel" data-animate>' +
+          '<div class="collection-filter-panel__controls">' +
+            '<div class="collection-filter-panel__dropdown">' +
+              '<button class="collection-filter-panel__dropdown-toggle" type="button" aria-expanded="false">Fiyat</button>' +
+              '<div class="collection-filter-panel__dropdown-menu">' +
+                '<label class="collection-filter-panel__price">' +
+                  '<span>₺</span>' +
+                  '<input class="collection-filter-panel__input" id="priceMin" type="text" inputmode="numeric" autocomplete="off" placeholder="En düşük">' +
+                '</label>' +
+                '<label class="collection-filter-panel__price">' +
+                  '<span>₺</span>' +
+                  '<input class="collection-filter-panel__input" id="priceMax" type="text" inputmode="numeric" autocomplete="off" placeholder="En yüksek">' +
+                '</label>' +
+                '<button class="collection-filter-panel__price-reset" type="button" aria-label="Fiyat filtresini temizle">×</button>' +
+              '</div>' +
+            '</div>' +
+            '<label class="collection-filter-panel__sort">' +
+              '<span>Sıralama ölçütü:</span>' +
+              '<select class="collection-filter-panel__select" id="collectionSort">' +
+                '<option value="featured">Öne çıkan</option>' +
+                '<option value="relevance">En alakalı</option>' +
+                '<option value="best-selling">En çok satan</option>' +
+                '<option value="alpha-asc">Alfabetik olarak, A-Z</option>' +
+                '<option value="alpha-desc">Alfabetik olarak, Z-A</option>' +
+                '<option value="price-asc">Fiyat, düşükten yükseğe</option>' +
+                '<option value="price-desc">Fiyat, yüksekten düşüğe</option>' +
+                '<option value="date-asc">Tarih, eskiden yeniye</option>' +
+                '<option value="date-desc">Tarih, yeniden eskiye</option>' +
+              '</select>' +
+            '</label>' +
+          '</div>' +
+        '</div>');
+    }
+
+    var minInput = document.getElementById('priceMin');
+    var maxInput = document.getElementById('priceMax');
+    var sortSelect = document.getElementById('collectionSort');
+    var resetBtn = document.querySelector('.collection-filter-panel__price-reset');
+    var priceDropdown = document.querySelector('.collection-filter-panel__dropdown');
+    var priceToggle = document.querySelector('.collection-filter-panel__dropdown-toggle');
+
+    var cleanPriceValue = function (value) {
+      return String(value || '').replace(/[^\d]/g, '');
+    };
+
+    var formatPriceInput = function (input) {
+      var digits = cleanPriceValue(input.value);
+      input.value = digits ? Number(digits).toLocaleString('tr-TR') : '';
+      return digits;
+    };
+
+    var getName = function (card) {
+      var nameEl = card.querySelector('.product-card__name');
+      return nameEl ? nameEl.textContent.trim().toLocaleLowerCase('tr-TR') : '';
+    };
+
+    var getOriginalIndex = function (card) {
+      return Number(card.dataset.originalIndex) || 0;
+    };
+
+    var getBestSellingScore = function (card) {
+      var badge = (card.getAttribute('data-badge') || '').toLocaleLowerCase('tr-TR');
+      return badge.indexOf('çok satan') !== -1 ? 1 : 0;
+    };
+
+    var sortCards = function (cards) {
+      return cards.slice().sort(function (a, b) {
+        var priceA = Number(a.dataset.priceValue) || 0;
+        var priceB = Number(b.dataset.priceValue) || 0;
+
+        if (state.sort === 'best-selling') {
+          return getBestSellingScore(b) - getBestSellingScore(a) || getOriginalIndex(a) - getOriginalIndex(b);
+        }
+        if (state.sort === 'alpha-asc') return getName(a).localeCompare(getName(b), 'tr');
+        if (state.sort === 'alpha-desc') return getName(b).localeCompare(getName(a), 'tr');
+        if (state.sort === 'price-asc') return priceA - priceB || getOriginalIndex(a) - getOriginalIndex(b);
+        if (state.sort === 'price-desc') return priceB - priceA || getOriginalIndex(a) - getOriginalIndex(b);
+        if (state.sort === 'date-desc') return getOriginalIndex(b) - getOriginalIndex(a);
+        return getOriginalIndex(a) - getOriginalIndex(b);
+      });
+    };
+
+    var applyFilters = function () {
+      var min = state.minPrice === '' ? null : Number(state.minPrice);
+      var max = state.maxPrice === '' ? null : Number(state.maxPrice);
+
+      sortCards(productCards).forEach(function (card) {
+        var price = Number(card.dataset.priceValue) || 0;
+        var categoryMatches = state.category === 'all' || card.getAttribute('data-category') === state.category;
+        var minMatches = min === null || price >= min;
+        var maxMatches = max === null || price <= max;
+        var visible = categoryMatches && minMatches && maxMatches;
+
+        grid.appendChild(card);
+        card.style.display = visible ? 'block' : 'none';
+        if (visible) {
+          card.style.animation = 'none';
+          card.offsetHeight;
+          card.style.animation = null;
+        }
+      });
+    };
 
     filterBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        // Remove active class from all
         filterBtns.forEach(function (b) { b.classList.remove('active'); });
-        // Add active to clicked
         this.classList.add('active');
-
-        var filterValue = this.getAttribute('data-filter');
-
-        productCards.forEach(function (card) {
-          if (filterValue === 'all') {
-            card.style.display = 'block';
-            // trigger small animation reflow
-            card.style.animation = 'none';
-            card.offsetHeight; /* trigger reflow */
-            card.style.animation = null;
-          } else {
-            var cat = card.getAttribute('data-category');
-            if (cat === filterValue) {
-              card.style.display = 'block';
-              card.style.animation = 'none';
-              card.offsetHeight; 
-              card.style.animation = null;
-            } else {
-              card.style.display = 'none';
-            }
-          }
-        });
+        state.category = this.getAttribute('data-filter') || 'all';
+        applyFilters();
       });
     });
+
+    if (minInput) {
+      minInput.addEventListener('input', function () {
+        state.minPrice = formatPriceInput(minInput);
+        applyFilters();
+      });
+    }
+
+    if (maxInput) {
+      maxInput.addEventListener('input', function () {
+        state.maxPrice = formatPriceInput(maxInput);
+        applyFilters();
+      });
+    }
+
+    if (sortSelect) {
+      sortSelect.addEventListener('change', function () {
+        state.sort = sortSelect.value;
+        applyFilters();
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function () {
+        state.minPrice = '';
+        state.maxPrice = '';
+        if (minInput) minInput.value = '';
+        if (maxInput) maxInput.value = '';
+        applyFilters();
+      });
+    }
+
+    if (priceDropdown && priceToggle) {
+      var setPriceDropdown = function (open) {
+        priceDropdown.classList.toggle('is-open', open);
+        priceToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      };
+
+      priceToggle.addEventListener('click', function () {
+        setPriceDropdown(!priceDropdown.classList.contains('is-open'));
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!priceDropdown.contains(e.target)) setPriceDropdown(false);
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') setPriceDropdown(false);
+      });
+    }
+
+    applyFilters();
   }
 
   /* ─── SCROLL ANIMATIONS ─────────────── */
@@ -385,7 +540,7 @@
         + '<div class="cart-upsell__img" style="' + imgStyle + '"></div>'
         + '<div class="cart-upsell__info">'
         + '<span class="cart-upsell__name">' + p.name + '</span>'
-        + '<button class="cart-upsell__add" onclick="(function(){window.addToCartGlobal(\'' + safeName + '\',' + p.price + ',\'' + p.image + '\')})()">EKLE +₺' + p.price.toLocaleString('tr-TR') + '</button>'
+        + '<button class="cart-upsell__add" onclick="(function(){window.addToCartGlobal(\'' + safeName + '\',' + p.price + ',\'' + p.image + '\')})()">Ekle +₺' + p.price.toLocaleString('tr-TR') + '</button>'
         + '</div></div>';
     });
     html += '</div></div>';
@@ -418,9 +573,9 @@
             '<line x1="3" y1="6" x2="21" y2="6"/>',
             '<path d="M16 10a4 4 0 0 1-8 0"/>',
           '</svg>',
-          '<p class="cart-drawer__empty-title">HENÜz HİÇBİR ŞEY YOK</p>',
+          '<p class="cart-drawer__empty-title">Henüz hiçbir şey yok</p>',
           '<p class="cart-drawer__empty-sub">Sınırlı stoklar seni bekliyor.<br>Koleksiyona bir göz at.</p>',
-          '<a href="drop.html" class="cart-drawer__empty-cta">KOLEKSİYONA GÖZAT →</a>',
+          '<a href="drop.html" class="cart-drawer__empty-cta">Koleksiyona göz at →</a>',
         '</div>'
       ].join('');
       if (totalEl) totalEl.textContent = '₺0';
@@ -1094,14 +1249,23 @@
             '<li><a href="araba.html" class="navbar__link">ARABA</a></li>' +
             '<li><a href="motor.html" class="navbar__link">MOTOSİKLET</a></li>' +
             '<li><a href="drop.html" class="navbar__link">DROP ÜRÜNLER</a></li>' +
-            '<li><a href="hakkimizda.html" class="navbar__link">HAKKIMIZDA</a></li>' +
-            '<li><a href="iletisim.html" class="navbar__link">BİZE ULAŞIN</a></li>' +
+            '<li class="navbar__dropdown">' +
+              '<button type="button" class="navbar__link navbar__dropdown-toggle" aria-haspopup="true" aria-expanded="false">BİZE ULAŞIN</button>' +
+              '<div class="navbar__dropdown-menu" role="menu">' +
+                '<a href="iletisim.html" class="navbar__dropdown-link" role="menuitem">İLETİŞİM</a>' +
+                '<a href="hakkimizda.html" class="navbar__dropdown-link" role="menuitem">HAKKIMIZDA</a>' +
+              '</div>' +
+            '</li>' +
           '</ul>' +
           '<div class="navbar__actions">' +
           '<button class="navbar__theme-btn" id="themeToggle" aria-label="Temayı değiştir">' +
             '<span class="theme-icon-dark" aria-hidden="true">🌙</span>' +
             '<span class="theme-icon-light" aria-hidden="true">☀️</span>' +
           '</button>' +
+          '<a href="login.html" class="navbar__icon-btn navbar__auth-btn" id="navAuthLink" aria-label="Hesabım">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' +
+            '<span class="navbar__auth-name" id="navAuthName"></span>' +
+          '</a>' +
           '<a href="favoriler.html" class="navbar__icon-btn navbar__favorite-btn" aria-label="Favorilerim">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="23" height="23">' +
               '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"></path>' +
@@ -1124,6 +1288,42 @@
       noise.insertAdjacentHTML('afterend', html);
     } else {
       document.body.insertAdjacentHTML('afterbegin', html);
+    }
+
+    // auth.js script'ini dinamik yükle (henüz yüklenmemişse)
+    if (!document.querySelector('script[src*="auth.js"]')) {
+      var authScript = document.createElement('script');
+      authScript.src = 'js/auth.js';
+      document.head.appendChild(authScript);
+    }
+
+    var dropdown = document.querySelector('.navbar__dropdown');
+    var dropdownToggle = document.querySelector('.navbar__dropdown-toggle');
+
+    if (dropdown && dropdownToggle) {
+      var setDropdown = function (open) {
+        dropdown.classList.toggle('is-open', open);
+        dropdownToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      };
+
+      dropdown.addEventListener('mouseenter', function () { setDropdown(true); });
+      dropdown.addEventListener('mouseleave', function () { setDropdown(false); });
+      dropdown.addEventListener('focusin', function () { setDropdown(true); });
+      dropdown.addEventListener('focusout', function () {
+        setTimeout(function () {
+          setDropdown(dropdown.contains(document.activeElement));
+        }, 0);
+      });
+      dropdownToggle.addEventListener('click', function (e) {
+        e.preventDefault();
+        setDropdown(!dropdown.classList.contains('is-open'));
+      });
+      document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target)) setDropdown(false);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') setDropdown(false);
+      });
     }
   }
 
@@ -1201,28 +1401,28 @@
       '<div class="cart-drawer" id="cartDrawer">' +
         '<div class="cart-drawer__header">' +
           '<div>' +
-            '<span class="cart-drawer__title">SEPET</span>' +
+            '<span class="cart-drawer__title">Sepet</span>' +
             '<span class="cart-drawer__count" id="cartDrawerCount"></span>' +
           '</div>' +
           '<button class="cart-drawer__close" id="cartCloseBtn" type="button" aria-label="Sepeti kapat">&times;</button>' +
         '</div>' +
         '<div class="cart-shipping-bar" id="cartShippingBar">' +
           '<div class="cart-shipping-bar__label">' +
-            '<span>&#220;CRETS&#304;Z KARGO</span>' +
+            '<span>Ücretsiz kargo</span>' +
             '<strong>&#8378;<span class="cart-shipping-bar__remain">1000</span> kald&#305;</strong>' +
           '</div>' +
           '<div class="cart-shipping-bar__track">' +
             '<div class="cart-shipping-bar__fill cart-shipping-bar__fill--red" style="width:0%"></div>' +
           '</div>' +
-          '<p class="cart-shipping-bar__achieved">&#220;CRETS&#304;Z KARGO KAZANDIN!</p>' +
+          '<p class="cart-shipping-bar__achieved">Ücretsiz kargo kazandın!</p>' +
         '</div>' +
         '<div class="cart-drawer__body" id="cartItems"></div>' +
         '<div class="cart-drawer__footer">' +
           '<div class="cart-drawer__total">' +
-            '<span>ARA TOPLAM</span>' +
+            '<span>Tahmini toplam:</span>' +
             '<span class="cart-drawer__total-amount" id="cartTotal">&#8378;0</span>' +
           '</div>' +
-          '<button class="cart-drawer__checkout" id="checkoutBtn" type="button">&#214;DEMEYE GE&#199; &rarr;</button>' +
+          '<button class="cart-drawer__checkout" id="checkoutBtn" type="button">Ödemeye geç →</button>' +
         '</div>' +
       '</div>';
 

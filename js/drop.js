@@ -94,6 +94,16 @@
     return BADGE_MAP[badge.trim()] || DEFAULT_STOCK;
   }
 
+  function getStockText(badge) {
+    const cleanBadge = badge.trim();
+    const limitedMatch = cleanBadge.match(/^SON\s+(\d+)\s+ADET$/i);
+    if (limitedMatch) return `Son ${limitedMatch[1]} ürün`;
+    if (cleanBadge === 'TÜKENMEK ÜZERE') return 'Tükenmek üzere';
+    if (cleanBadge === 'SINIRLI') return 'Sınırlı stok';
+    if (cleanBadge === 'TÜKENDİ') return 'Tükendi';
+    return 'Stokta';
+  }
+
   function buildStockBar(card) {
     const badge  = card.getAttribute('data-badge') || '';
     const config = resolveBadge(badge);
@@ -104,6 +114,7 @@
     const stockEl = document.createElement('div');
     stockEl.className = 'product-card__stock';
     stockEl.innerHTML = `
+      <div class="product-card__stock-row">
       <div class="product-card__stock-bar-wrap">
         <div
           class="product-card__stock-bar product-card__stock-bar--${config.cls}"
@@ -114,6 +125,8 @@
           aria-valuemax="100"
           aria-label="Stok doluluk oranı: ${config.pct}%"
         ></div>
+      </div>
+      <span class="product-card__stock-label">${getStockText(badge)}</span>
       </div>
       <div class="product-card__stock-meta">
         <span class="product-card__stock-viewers" id="viewers-${Math.random().toString(36).slice(2)}">
