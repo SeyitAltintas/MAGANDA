@@ -164,6 +164,16 @@
     }
   }
 
+  function updateSequenceNavbar(section) {
+    var navbar = document.getElementById('navbar');
+    if (!navbar) return;
+
+    var rect = section.getBoundingClientRect();
+    var navHeight = navbar.offsetHeight || 0;
+    var isSequenceActive = rect.top <= navHeight && rect.bottom > navHeight;
+    navbar.classList.toggle('navbar--sequence', isSequenceActive);
+  }
+
   /* ─── PRELOAD ───────────────────────────── */
   function preloadImages(onProgress, onComplete) {
     document.body.classList.add('no-scroll');
@@ -200,6 +210,8 @@
         var scrollable = section.scrollHeight - window.innerHeight;
         if (scrollable <= 0) return;
 
+        updateSequenceNavbar(section);
+
         var scrolled = Math.max(0, -rect.top);
         var progress = Math.min(1, Math.max(0, scrolled / scrollable));
 
@@ -229,9 +241,12 @@
 
     var textNodes = buildOverlays(section);
 
+    updateSequenceNavbar(section);
+
     window.addEventListener('resize', function () {
       resizeCanvas(canvas);
       renderFrame(canvas, currentFrame);
+      updateSequenceNavbar(section);
     });
 
     preloadImages(
