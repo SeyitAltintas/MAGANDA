@@ -97,27 +97,28 @@
   var OVERLAYS = [
     {
       rangeStart: 0.0,
-      rangeEnd: 0.22,
-      html: '<p class="seq-text__title">SINIRI YOK.</p>' +
-        '<p class="seq-text__sub">Sadece tutkunlar anlar.</p>'
+      rangeEnd: 0.31,
+      className: 'seq-text--center',
+      html: '<p class="seq-text__title">&Ouml;ZEL SERI</p>' +
+        '<p class="seq-text__sub">MAGANDA imzasiyla sinirli uretim.</p>'
     },
     {
-      rangeStart: 0.24,
-      rangeEnd: 0.46,
-      html: '<p class="seq-text__title">GARAJda sabahlayanlar</p>' +
-        '<p class="seq-text__sub">Asfaltı yakmadan duramayanlar için.</p>'
+      rangeStart: 0.34,
+      rangeEnd: 0.54,
+      html: '<p class="seq-text__title">AT&Ouml;LYE KESIMI</p>' +
+        '<p class="seq-text__sub">Keskin siluet. Temiz durus.</p>'
     },
     {
-      rangeStart: 0.50,
-      rangeEnd: 0.72,
-      html: '<p class="seq-text__title">DEVİR SAATİ</p>' +
-        '<p class="seq-text__sub">Sürekli kırmızıda. Her zaman.</p>'
+      rangeStart: 0.58,
+      rangeEnd: 0.76,
+      html: '<p class="seq-text__title">GECE FORMU</p>' +
+        '<p class="seq-text__sub">Siyah zemin. Net karakter.</p>'
     },
     {
-      rangeStart: 0.76,
+      rangeStart: 0.80,
       rangeEnd: 0.95,
-      html: '<p class="seq-text__title">MAGANDA.</p>' +
-        '<p class="seq-text__sub seq-text__sub--accent">Sıradan değil.</p>'
+      html: '<p class="seq-text__title">IMZA DROP</p>' +
+        '<p class="seq-text__sub seq-text__sub--accent">Az adet. Uzun etki.</p>'
     }
   ];
 
@@ -127,7 +128,7 @@
 
     OVERLAYS.forEach(function (ov) {
       var el = document.createElement('div');
-      el.className = 'seq-text';
+      el.className = 'seq-text' + (ov.className ? ' ' + ov.className : '');
       el.dataset.rangeStart = String(ov.rangeStart);
       el.dataset.rangeEnd = String(ov.rangeEnd);
       el.innerHTML = ov.html;
