@@ -720,6 +720,7 @@
     // Görsel
     var imgEl = document.getElementById('pp-img');
     if (imgEl && imgUrl) imgEl.style.backgroundImage = 'url(' + imgUrl + ')';
+    initProductGallery(imgUrl, name);
 
     // Badge
     var badgeEl = document.getElementById('pp-badge');
@@ -757,37 +758,39 @@
 
       var content = {
         desc: {
-          title: 'AÇIKLAMA',
+          title: 'ÜRÜN AÇIKLAMASI',
           body: [
+            '<div class="pp-desc-section pp-desc-section--intro">',
+            '<span class="pp-desc-eyebrow">MAGANDA DROP</span>',
             '<p><strong>' + name + '</strong>, MAGANDA ruhunu günlük kullanıma taşıyan sınırlı üretim bir parça olarak tasarlandı.</p>',
             '<p>' + activeDescription + '</p>',
-            '<p>Kesimi rahat hareket alanı verir; baskı, kumaş ve form dengesi uzun süreli kullanım için seçilmiştir. Garajdan şehir içine, gece sürüşünden günlük kombinlere kadar net bir duruş verir.</p>'
-          ].join('')
-        },
-        material: {
-          title: 'MATERYAL',
-          body: [
-            '<p>Üründe tok tutumlu, orta ağırlıkta premium kumaş yapısı kullanılır. İç yüzey yumuşak, dış yüzey formunu koruyacak şekilde dayanıklıdır.</p>',
-            '<ul>',
-            '<li>%100 pamuk hissi veren nefes alabilir yapı</li>',
-            '<li>Günlük kullanıma uygun dayanıklı dikiş</li>',
-            '<li>Baskı yüzeyinde uzun ömürlü tutunma</li>',
-            '<li>Türkiye üretimi kalite standardı</li>',
+            '</div>',
+            '<div class="pp-desc-section pp-desc-section--model">',
+            '<h3>Model Bilgisi</h3>',
+            '<p>' + getProductModelInfo(series) + '</p>',
+            '</div>',
+            '<div class="pp-desc-section">',
+            '<h3>Ürün İçeriği ve Özellikleri</h3>',
+            '<ul class="pp-desc-list">',
+            '<li><span>Ana kumaş</span><strong>%100 pamuk hissi veren tok ve premium yapı</strong></li>',
+            '<li><span>Üretim</span><strong>Türkiye üretimi kalite standardı</strong></li>',
+            '<li><span>Kalıp</span><strong>Rahat hareket alanı sunan regular/oversize duruş</strong></li>',
+            '<li><span>Dış yüzey</span><strong>Orta ağırlıkta kumaş, formunu koruyan premium tutuş</strong></li>',
+            '<li><span>Dikiş</span><strong>Günlük kullanıma uygun dayanıklı konstrüksiyon</strong></li>',
+            '<li><span>Baskı</span><strong>Uzun ömürlü tutunma için seçilmiş yüzey uygulaması</strong></li>',
             '</ul>',
-            '<p>Ürün tipine göre kumaş karışımı ve gramaj farklılık gösterebilir; her parçada konfor ve dayanıklılık önceliklidir.</p>'
-          ].join('')
-        },
-        care: {
-          title: 'BAKIM',
-          body: [
-            '<p>Ürünün formunu, rengini ve baskı kalitesini uzun süre korumak için bakım adımlarını takip etmeni öneririz.</p>',
-            '<ul>',
-            '<li>30 derecede, ters çevirerek yıka</li>',
-            '<li>Ağartıcı ve sert kimyasal kullanma</li>',
-            '<li>Kurutma makinesi yerine doğal kurutma tercih et</li>',
-            '<li>Baskı üzerine direkt ütü uygulama</li>',
-            '<li>Benzer renklerle birlikte yıka</li>',
-            '</ul>'
+            '</div>',
+            '<div class="pp-desc-section">',
+            '<h3>Bakım Bilgileri</h3>',
+            '<ul class="pp-care-list">',
+            getCareIconItem('max30derece', 'Maksimum 30 °C sıcaklıkta yıkayın'),
+            getCareIconItem('kurutemizlemeyapma', 'Kuru temizleme yaptırmayın'),
+            getCareIconItem('sererekkurut', 'Sererek kurut'),
+            getCareIconItem('tamburlukurutmayapma', 'Tamburlu kurutma yapmayın'),
+            getCareIconItem('ortasicakliktautule', 'Orta sıcaklıkta ütüleyin'),
+            getCareIconItem('agarticikullanma', 'Ağartıcı kullanmayın'),
+            '</ul>',
+            '</div>'
           ].join('')
         },
         shipping: {
@@ -795,8 +798,8 @@
           body: [
             '<p>Siparişler ödeme onayından sonra genellikle <strong>1-2 iş günü</strong> içinde hazırlanır ve kargoya teslim edilir.</p>',
             '<ul>',
-            '<li>1000&#8378; ve &#252;zeri sipari&#351;lerde &#252;cretsiz kargo</li>',
-            '<li>Kargo takip bilgisi sipariş sonrası paylaşılır</li>',
+            '<li>1000₺ ve üzeri siparişlerde ücretsiz kargo</li>',
+            '<li>Kargo takip bilgisi sipariş sonrasında paylaşılır</li>',
             '<li>Kullanılmamış ve etiketi çıkarılmamış ürünlerde 14 gün içinde iade</li>',
             '<li>İade edilecek ürünün orijinal paketinde gönderilmesi gerekir</li>',
             '</ul>',
@@ -811,14 +814,31 @@
             '<tr><th>BEDEN</th><th>GÖĞÜS (cm)</th><th>BEL (cm)</th><th>BOY (cm)</th></tr>',
             '</thead>',
             '<tbody>',
-            '<tr><td>XS</td><td>82–86</td><td>66–70</td><td>160–165</td></tr>',
-            '<tr><td>S</td><td>88–92</td><td>72–76</td><td>165–170</td></tr>',
-            '<tr><td>M</td><td>94–98</td><td>78–82</td><td>170–175</td></tr>',
-            '<tr><td>L</td><td>100–104</td><td>84–88</td><td>175–180</td></tr>',
-            '<tr><td>XL</td><td>106–110</td><td>90–94</td><td>180–185</td></tr>',
-            '<tr><td>XXL</td><td>112–118</td><td>96–102</td><td>185–190</td></tr>',
+            '<tr><td>XS</td><td>82-86</td><td>66-70</td><td>160-165</td></tr>',
+            '<tr><td>S</td><td>88-92</td><td>72-76</td><td>165-170</td></tr>',
+            '<tr><td>M</td><td>94-98</td><td>78-82</td><td>170-175</td></tr>',
+            '<tr><td>L</td><td>100-104</td><td>84-88</td><td>175-180</td></tr>',
+            '<tr><td>XL</td><td>106-110</td><td>90-94</td><td>180-185</td></tr>',
+            '<tr><td>XXL</td><td>112-118</td><td>96-102</td><td>185-190</td></tr>',
             '</tbody>',
             '</table>'
+          ].join('')
+        },
+        fitFinder: {
+          title: 'BEDEN ÖNERİCİ',
+          body: [
+            '<div class="pp-fit-finder">',
+            '<div class="pp-fit-finder__head">',
+            '<span class="pp-fit-finder__label">BEDEN ÖNERİCİ</span>',
+            '<span class="pp-fit-finder__result" id="pp-fit-result">Bilgilerini seç</span>',
+            '</div>',
+            '<div class="pp-fit-finder__controls">',
+            '<label class="pp-fit-field">BOY<select id="pp-fit-height"><option value="">Seç</option><option value="short">160-170</option><option value="mid">171-180</option><option value="tall">181+</option></select></label>',
+            '<label class="pp-fit-field">KİLO<select id="pp-fit-weight"><option value="">Seç</option><option value="light">55-70</option><option value="regular">71-85</option><option value="heavy">86+</option></select></label>',
+            '<label class="pp-fit-field">KALIP<select id="pp-fit-preference"><option value="regular">Regular</option><option value="oversize">Oversize</option></select></label>',
+            '</div>',
+            '<p class="pp-fit-finder__note">Öneri, seçilen beden butonunu otomatik işaretler. Daha bol duruş için oversize seç.</p>',
+            '</div>'
           ].join('')
         }
       };
@@ -827,6 +847,7 @@
         var item = content[type] || content.desc;
         titleEl.textContent = item.title;
         bodyEl.innerHTML = item.body;
+        if (type === 'fitFinder') initFitFinder();
         panel.classList.add('pp-info-panel--active');
         overlay.classList.add('pp-info-panel-overlay--active');
         panel.setAttribute('aria-hidden', 'false');
@@ -933,9 +954,9 @@
         { name: 'RIDE OR DIE LEATHER JACKET', price: '\u20BA3499', series: 'Motosiklet Serisi', img: 'assets/products/leather_jacket.png' },
         { name: 'STREET FIGHTER HOODIE', price: '\u20BA1499', series: 'Motosiklet Serisi', img: 'assets/products/street_fighter_hoodie.png' },
         { name: 'APEX CHASER LONG SLEEVE', price: '\u20BA899', series: 'Motosiklet Serisi', img: 'assets/products/apex_longsleeve.png' },
-        { name: 'DROP #01: THE MANIFESTO HOODIE', price: '\u20BA1999', series: 'Drop Ozel', img: 'assets/products/manifesto_hoodie.png', badge: 'DROP' },
-        { name: 'DROP #02: REDLINE TECHNICAL PANTS', price: '\u20BA1599', series: 'Drop Ozel', img: 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=600&q=80', badge: 'DROP' },
-        { name: 'DROP #03: SHADOW REFLECTIVE JACKET', price: '\u20BA2499', series: 'Drop Ozel', img: 'https://images.unsplash.com/photo-1485230405346-71acb9518d9c?auto=format&fit=crop&w=600&q=80', badge: 'DROP' }
+        { name: 'DROP #01: THE MANIFESTO HOODIE', price: '\u20BA1999', series: 'Drop Özel', img: 'assets/products/manifesto_hoodie.png', badge: 'DROP' },
+        { name: 'DROP #02: REDLINE TECHNICAL PANTS', price: '\u20BA1599', series: 'Drop Özel', img: 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=600&q=80', badge: 'DROP' },
+        { name: 'DROP #03: SHADOW REFLECTIVE JACKET', price: '\u20BA2499', series: 'Drop Özel', img: 'https://images.unsplash.com/photo-1485230405346-71acb9518d9c?auto=format&fit=crop&w=600&q=80', badge: 'DROP' }
       ];
 
       var normalizedSeries = (productSeries || '').toLowerCase();
@@ -966,6 +987,146 @@
     }
 
     // Breadcrumb — referrer'a göre geri link
+    function getCareIconItem(name, label) {
+      return '<li>' +
+        '<span class="pp-care-icon-wrap">' +
+        '<img class="pp-care-icon pp-care-icon--light" src="assets/img/' + name + '.png" alt="">' +
+        '<img class="pp-care-icon pp-care-icon--dark" src="assets/img/' + name + 'siyah.png" alt="">' +
+        '</span>' +
+        '<span>' + label + '</span>' +
+        '</li>';
+    }
+
+    function productHash(value) {
+      var hash = 0;
+      String(value || '').split('').forEach(function (char) {
+        hash = ((hash << 5) - hash) + char.charCodeAt(0);
+        hash |= 0;
+      });
+      return Math.abs(hash);
+    }
+
+    function buildProductGallery(primaryImage, productName) {
+      var fallbackImages = [
+        'assets/products/maganda_hoodie_black_1777846105084.png',
+        'assets/products/maganda_tshirt_car_1777846004490.png',
+        'assets/products/maganda_hoodie_acid_1777846208954.png',
+        'assets/products/maganda_sweatpants_redline_1777846482324.png'
+      ];
+      var base = primaryImage || fallbackImages[productHash(productName) % fallbackImages.length];
+      var alternates = fallbackImages.filter(function (image) { return image !== base; });
+      return [
+        { label: 'Ana', image: base },
+        { label: 'Doku', image: alternates[0] || base },
+        { label: 'Model', image: alternates[1] || base }
+      ];
+    }
+
+    function setProductImage(imageUrl) {
+      if (imgEl && imageUrl) imgEl.style.backgroundImage = 'url(' + imageUrl + ')';
+      var zoomImage = document.getElementById('pp-zoom-image');
+      if (zoomImage && imageUrl) zoomImage.style.backgroundImage = 'url(' + imageUrl + ')';
+    }
+
+    function initProductGallery(primaryImage, productName) {
+      var thumbsEl = document.getElementById('pp-gallery-thumbs');
+      var zoomTrigger = document.getElementById('pp-zoom-trigger');
+      var zoomModal = document.getElementById('pp-zoom-modal');
+      var zoomClose = document.getElementById('pp-zoom-close');
+      if (!thumbsEl) return;
+
+      var gallery = buildProductGallery(primaryImage, productName);
+      var activeImage = gallery[0].image;
+      setProductImage(activeImage);
+
+      thumbsEl.innerHTML = gallery.map(function (item, index) {
+        return '<button class="pp-gallery-thumb' + (index === 0 ? ' pp-gallery-thumb--active' : '') + '" type="button" data-img="' + item.image + '">' +
+          '<span class="pp-gallery-thumb__img" style="background-image:url(&quot;' + item.image + '&quot;)"></span>' +
+          '<span class="pp-gallery-thumb__label">' + item.label + '</span>' +
+          '</button>';
+      }).join('');
+
+      thumbsEl.querySelectorAll('.pp-gallery-thumb').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          activeImage = btn.dataset.img;
+          thumbsEl.querySelectorAll('.pp-gallery-thumb').forEach(function (item) {
+            item.classList.remove('pp-gallery-thumb--active');
+          });
+          btn.classList.add('pp-gallery-thumb--active');
+          setProductImage(activeImage);
+        });
+      });
+
+      function closeZoom() {
+        if (!zoomModal) return;
+        zoomModal.classList.remove('pp-zoom-modal--active');
+        zoomModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('no-scroll');
+      }
+
+      if (zoomTrigger && zoomModal) {
+        zoomTrigger.addEventListener('click', function () {
+          setProductImage(activeImage);
+          zoomModal.classList.add('pp-zoom-modal--active');
+          zoomModal.setAttribute('aria-hidden', 'false');
+          document.body.classList.add('no-scroll');
+        });
+      }
+      if (zoomClose) zoomClose.addEventListener('click', closeZoom);
+      if (zoomModal) {
+        zoomModal.addEventListener('click', function (event) {
+          if (event.target === zoomModal) closeZoom();
+        });
+      }
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && zoomModal && zoomModal.classList.contains('pp-zoom-modal--active')) closeZoom();
+      });
+    }
+
+    function getProductSizeStock(productName) {
+      var seed = productHash(productName);
+      var stockMap = {};
+      sizes.forEach(function (size, index) {
+        stockMap[size] = (seed + index * 3) % 7;
+      });
+      if (Object.keys(stockMap).every(function (size) { return stockMap[size] === 0; })) stockMap.M = 3;
+      return stockMap;
+    }
+
+    function getProductModelInfo(productSeries) {
+      var isMoto = String(productSeries || '').toLowerCase().indexOf('moto') !== -1;
+      return isMoto ? 'Model 178 cm / 74 kg / M beden giyiyor.' : 'Model 183 cm / 78 kg / L beden giyiyor.';
+    }
+
+    function initFitFinder() {
+      var heightEl = document.getElementById('pp-fit-height');
+      var weightEl = document.getElementById('pp-fit-weight');
+      var prefEl = document.getElementById('pp-fit-preference');
+      var resultEl = document.getElementById('pp-fit-result');
+      if (!heightEl || !weightEl || !prefEl || !resultEl) return;
+
+      function recommendSize() {
+        if (!heightEl.value || !weightEl.value) {
+          resultEl.textContent = 'Bilgilerini seç';
+          return;
+        }
+        var score = 1;
+        if (heightEl.value === 'mid') score += 1;
+        if (heightEl.value === 'tall') score += 2;
+        if (weightEl.value === 'regular') score += 1;
+        if (weightEl.value === 'heavy') score += 2;
+        if (prefEl.value === 'oversize') score += 1;
+        var recommended = sizes[Math.min(sizes.length - 1, Math.max(0, score))];
+        resultEl.textContent = '\u00d6nerilen beden: ' + recommended;
+        var matchBtn = sizesEl && sizesEl.querySelector('[data-size="' + recommended + '"]');
+        if (matchBtn && !matchBtn.disabled) matchBtn.click();
+      }
+
+      [heightEl, weightEl, prefEl].forEach(function (select) {
+        select.addEventListener('change', recommendSize);
+      });
+    }
+
     var backLink = document.getElementById('pp-back');
     if (backLink) {
       var ref = document.referrer || '';
@@ -984,13 +1145,20 @@
     var sizesEl = document.getElementById('pp-sizes');
     var selectedSize = '';
     var currentQty = 1;
+    var sizeStock = getProductSizeStock(name);
 
     if (sizesEl) {
       sizes.forEach(function (s) {
+        var stock = sizeStock[s];
         var btn = document.createElement('button');
         btn.className = 'pp-size-btn';
-        btn.textContent = s;
+        btn.dataset.size = s;
+        btn.disabled = stock <= 0;
+        if (stock > 0 && stock <= 2) btn.classList.add('pp-size-btn--low');
+        btn.innerHTML = '<span class="pp-size-btn__label">' + s + '</span>' +
+          '<span class="pp-size-stock">' + (stock <= 0 ? 'Tükendi' : stock <= 2 ? 'Son ' + stock : 'Stokta') + '</span>';
         btn.addEventListener('click', function () {
+          if (btn.disabled) return;
           selectedSize = s;
           sizesEl.querySelectorAll('.pp-size-btn').forEach(function (b) {
             b.classList.remove('pp-size-btn--active');
@@ -1489,7 +1657,7 @@
 
     var logoGroups = [
       {
-        label: 'Kart ve guvenli odeme logolari',
+        label: 'Kart ve güvenli ödeme logoları',
         logos: [
           ['masterpass.png', 'Masterpass'],
           ['visa.png', 'Visa'],
@@ -1497,7 +1665,7 @@
         ]
       },
       {
-        label: 'Banka ve taksit logolari',
+        label: 'Banka ve taksit logoları',
         logos: [
           ['qnb.png', 'QNB'],
           ['paraf.png', 'Paraf'],
@@ -1513,7 +1681,7 @@
 
     var strip = document.createElement('div');
     strip.className = 'footer-payment-strip';
-    strip.setAttribute('aria-label', 'Odeme ve banka logolari');
+    strip.setAttribute('aria-label', 'Ödeme ve banka logoları');
 
     var logoGroup = document.createElement('div');
     logoGroup.className = 'footer-payment-strip__group';

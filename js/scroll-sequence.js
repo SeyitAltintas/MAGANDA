@@ -99,14 +99,14 @@
       rangeStart: 0.0,
       rangeEnd: 0.31,
       className: 'seq-text--center',
-      html: '<p class="seq-text__title">&Ouml;ZEL SERI</p>' +
-        '<p class="seq-text__sub">MAGANDA imzasiyla sinirli uretim.</p>'
+      html: '<p class="seq-text__title">ÖZEL SERİ</p>' +
+        '<p class="seq-text__sub">MAGANDA imzasıyla sınırlı üretim.</p>'
     },
     {
       rangeStart: 0.34,
       rangeEnd: 0.54,
-      html: '<p class="seq-text__title">AT&Ouml;LYE KESIMI</p>' +
-        '<p class="seq-text__sub">Keskin siluet. Temiz durus.</p>'
+      html: '<p class="seq-text__title">ATÖLYE KESİMİ</p>' +
+        '<p class="seq-text__sub">Keskin siluet. Temiz duruş.</p>'
     },
     {
       rangeStart: 0.58,
@@ -117,7 +117,7 @@
     {
       rangeStart: 0.80,
       rangeEnd: 0.95,
-      html: '<p class="seq-text__title">IMZA DROP</p>' +
+      html: '<p class="seq-text__title">İMZA DROP</p>' +
         '<p class="seq-text__sub seq-text__sub--accent">Az adet. Uzun etki.</p>'
     }
   ];

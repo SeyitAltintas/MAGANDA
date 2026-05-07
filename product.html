@@ -29,6 +29,8 @@
     <div class="pp-visual">
       <div class="pp-img" id="pp-img" role="img" aria-label="Ürün görseli"></div>
       <span class="pp-badge" id="pp-badge" style="display:none"></span>
+      <button class="pp-zoom-trigger" id="pp-zoom-trigger" type="button">YAKINDAN BAK</button>
+      <div class="pp-gallery-thumbs" id="pp-gallery-thumbs" aria-label="&#220;r&#252;n g&#246;rsel galerisi"></div>
     </div>
 
     <!-- SAĞ: Bilgi Paneli -->
@@ -64,13 +66,13 @@
         <span class="pp-size-warn" id="pp-size-warn">⚠ ÖNCE BEDEN SEÇ</span>
       </div>
 
-      <div class="pp-sizes" id="pp-sizes">
-        <!-- JS tarafından doldurulur -->
+      <div class="pp-size-tools">
+        <button class="pp-size-tool pp-size-tool--fit" type="button" data-info-panel="fitFinder">Beden &Ouml;nerici</button>
+        <button class="pp-size-tool pp-size-tool--guide" id="pp-size-guide-toggle" type="button" data-info-panel="sizeGuide">Beden Rehberi</button>
       </div>
 
-      <!-- Beden Rehberi -->
-      <div>
-        <button class="pp-size-guide-toggle" id="pp-size-guide-toggle" type="button" data-info-panel="sizeGuide">Beden Rehberi →</button>
+      <div class="pp-sizes" id="pp-sizes">
+        <!-- JS tarafından doldurulur -->
       </div>
 
       <div class="pp-divider"></div>
@@ -91,14 +93,6 @@
       <div class="pp-info-links" id="pp-info-links" aria-label="&#220;r&#252;n bilgi detaylar&#305;">
         <button class="pp-info-link" type="button" data-info-panel="desc">
           <span>A&#199;IKLAMA</span>
-          <span class="pp-info-link__arrow" aria-hidden="true">&rarr;</span>
-        </button>
-        <button class="pp-info-link" type="button" data-info-panel="material">
-          <span>MATERYAL</span>
-          <span class="pp-info-link__arrow" aria-hidden="true">&rarr;</span>
-        </button>
-        <button class="pp-info-link" type="button" data-info-panel="care">
-          <span>BAKIM</span>
           <span class="pp-info-link__arrow" aria-hidden="true">&rarr;</span>
         </button>
         <button class="pp-info-link" type="button" data-info-panel="shipping">
@@ -131,6 +125,10 @@
   </section>
 
   <div class="pp-info-panel-overlay" id="ppInfoPanelOverlay"></div>
+  <div class="pp-zoom-modal" id="pp-zoom-modal" aria-hidden="true">
+    <button class="pp-zoom-modal__close" id="pp-zoom-close" type="button" aria-label="Kapat">&times;</button>
+    <div class="pp-zoom-modal__image" id="pp-zoom-image" role="img" aria-label="&#220;r&#252;n yak&#305;n g&#246;rseli"></div>
+  </div>
   <aside class="pp-info-panel" id="ppInfoPanel" aria-hidden="true" aria-labelledby="ppInfoPanelTitle">
     <div class="pp-info-panel__header">
       <span class="pp-info-panel__eyebrow">&#220;R&#220;N B&#304;LG&#304;S&#304;</span>

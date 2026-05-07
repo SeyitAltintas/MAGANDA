@@ -74,6 +74,114 @@
 .pp-visual:hover .pp-img {
   transform: scale(1.04);
 }
+
+.pp-zoom-trigger {
+  position: absolute;
+  right: 18px;
+  bottom: 88px;
+  z-index: 3;
+  padding: 10px 14px;
+  border: 1px solid rgba(10, 10, 10, 0.16);
+  background: rgba(255, 255, 255, 0.76);
+  color: #0A0A0A;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.pp-zoom-trigger:hover {
+  background: #FFF;
+  transform: translateY(-2px);
+}
+
+.pp-gallery-thumbs {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.pp-gallery-thumb {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 6px;
+  border: 1px solid rgba(10, 10, 10, 0.14);
+  background: rgba(255, 255, 255, 0.72);
+  color: #0A0A0A;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.pp-gallery-thumb--active {
+  border-color: var(--color-red);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.pp-gallery-thumb__img {
+  width: 42px;
+  aspect-ratio: 1;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--bg-surface);
+}
+
+.pp-gallery-thumb__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-align: left;
+}
+
+.pp-zoom-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  display: none;
+  place-items: center;
+  padding: clamp(20px, 5vw, 60px);
+  background: rgba(0, 0, 0, 0.88);
+}
+
+.pp-zoom-modal--active {
+  display: grid;
+}
+
+.pp-zoom-modal__image {
+  width: min(980px, 92vw);
+  height: min(760px, 82vh);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.pp-zoom-modal__close {
+  position: fixed;
+  top: 22px;
+  right: 28px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255,255,255,0.24);
+  background: transparent;
+  color: #FFF;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
 /* Badge */
 .pp-badge {
   position: absolute;
@@ -333,6 +441,115 @@
   color: var(--text-primary);
 }
 
+.pp-desc-section {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pp-desc-section:first-child {
+  padding-top: 0;
+}
+
+.pp-desc-section:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.pp-desc-section h3 {
+  margin: 0 0 14px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.pp-desc-section p {
+  margin: 0;
+}
+
+.pp-desc-section p + p {
+  margin-top: 12px;
+}
+
+.pp-desc-eyebrow {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--color-red);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.pp-desc-section--model {
+  padding: 15px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.pp-desc-list {
+  padding-left: 0 !important;
+}
+
+.pp-desc-list li {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.8fr) 1.2fr;
+  gap: 14px;
+  align-items: baseline;
+  list-style: none;
+}
+
+.pp-desc-list span {
+  color: var(--text-muted);
+}
+
+.pp-desc-list strong {
+  font-weight: 600;
+}
+
+.pp-care-list {
+  padding-left: 0 !important;
+}
+
+.pp-care-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  list-style: none;
+}
+
+.pp-care-icon-wrap {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+}
+
+.pp-care-icon {
+  position: absolute;
+  inset: 0;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.pp-care-icon--light {
+  display: none;
+}
+
+.pp-care-icon--dark {
+  display: block;
+}
+
+html[data-theme="light"] .pp-care-icon--light {
+  display: block;
+}
+
+html[data-theme="light"] .pp-care-icon--dark {
+  display: none;
+}
+
 /* Malzeme chip'leri */
 .pp-chips {
   display: flex;
@@ -357,6 +574,73 @@
 }
 .pp-chip:hover { border-color: var(--color-red); color: var(--text-primary); }
 .pp-chip-icon { font-size: 13px; }
+
+.pp-fit-finder {
+  padding: 15px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+}
+
+.pp-fit-finder__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.pp-fit-finder__label,
+.pp-fit-finder__result {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.pp-fit-finder__label {
+  color: var(--text-muted);
+}
+
+.pp-fit-finder__result {
+  color: var(--color-red);
+  text-align: right;
+}
+
+.pp-fit-finder__controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.pp-fit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.pp-fit-field select {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--border-mid);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  padding: 0 9px;
+  font: inherit;
+  letter-spacing: 0.04em;
+}
+
+.pp-fit-finder__note {
+  margin: 12px 0 0;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.6;
+}
 
 /* ─── BEDEN SEÇİCİ ───────────────────── */
 .pp-size-header {
@@ -419,6 +703,29 @@
   transition: border-color 0.18s, color 0.18s, background 0.18s, transform 0.15s;
 }
 
+.pp-size-btn__label,
+.pp-size-stock {
+  display: block;
+}
+
+.pp-size-stock {
+  margin-top: 3px;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.pp-size-btn--low .pp-size-stock {
+  color: var(--color-red);
+}
+
+.pp-size-btn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
 .pp-size-btn:hover {
   border-color: var(--color-red);
   color: var(--text-primary);
@@ -431,8 +738,19 @@
   color: #FFF;
 }
 
-/* Beden Rehberi Toggle */
-.pp-size-guide-toggle {
+.pp-size-btn--active .pp-size-stock {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.pp-size-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: -12px;
+}
+
+.pp-size-tool {
   font-family: var(--font-body);
   font-size: 11px;
   font-weight: 600;
@@ -445,7 +763,13 @@
   text-decoration: underline;
   transition: opacity 0.2s;
 }
-.pp-size-guide-toggle:hover { opacity: 0.7; }
+
+.pp-size-tool:hover { opacity: 0.7; }
+
+.pp-size-tool--guide {
+  margin-left: auto;
+  text-align: right;
+}
 
 /* Beden Rehberi Panel (accordion) */
 .pp-size-guide-panel {
