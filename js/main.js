@@ -1617,8 +1617,10 @@
     initSmoothScroll();
     initFilters();
     initScrollAnimations();
-    initManifestoStagger();
     initParallax();
+    if (document.getElementById('maganda-sequence') && typeof window.initScrollSequence === 'function') {
+      window.initScrollSequence();
+    }
     initDropForm();
     initProductCards();
     initProductPage();
