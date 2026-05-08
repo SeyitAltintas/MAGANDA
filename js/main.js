@@ -1442,8 +1442,6 @@
       '<div class="navbar__inner">' +
       '<a href="index.html" class="navbar__logo">' +
       '<span class="navbar__logo-text">MAGANDA</span>' +
-      '<span class="navbar__logo-divider"></span>' +
-      '<span class="navbar__logo-est">KUR. 2026</span>' +
       '</a>' +
       '<ul class="navbar__links" id="navLinks">' +
       '<li><a href="index.html" class="navbar__link">ANA SAYFA</a></li>' +
