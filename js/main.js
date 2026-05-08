@@ -1568,6 +1568,10 @@
       '<div class="footer__col">' +
       '<span class="footer__logo">MAGANDA</span>' +
       '<p class="footer__tagline">SINIR TANIMAYANLARA..</p>' +
+      '<button class="footer__audio-btn is-playing" id="siteAudioToggle" type="button" aria-label="Muzigi kapat" aria-pressed="true">' +
+      '<span class="footer__audio-dot" aria-hidden="true"></span>' +
+      '<span class="footer__audio-label">MUSIC ON</span>' +
+      '</button>' +
       '</div>' +
       '<div class="footer__col">' +
       '<a href="index.html" class="footer__link">Ana Sayfa</a>' +
