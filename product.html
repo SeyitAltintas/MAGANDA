@@ -27,10 +27,15 @@
 
     <!-- SOL: Sticky Görsel -->
     <div class="pp-visual">
-      <div class="pp-img" id="pp-img" role="img" aria-label="Ürün görseli"></div>
-      <span class="pp-badge" id="pp-badge" style="display:none"></span>
-      <button class="pp-zoom-trigger" id="pp-zoom-trigger" type="button">YAKINDAN BAK</button>
-      <div class="pp-gallery-thumbs" id="pp-gallery-thumbs" aria-label="&#220;r&#252;n g&#246;rsel galerisi"></div>
+      <div class="pp-image-frame">
+        <div class="pp-img" id="pp-img" role="img" aria-label="Ürün görseli"></div>
+        <span class="pp-badge" id="pp-badge" style="display:none"></span>
+        <div class="pp-gallery-nav" id="pp-gallery-nav" aria-label="&#220;r&#252;n g&#246;rsel galerisi">
+          <button class="pp-gallery-arrow pp-gallery-arrow--prev" type="button" data-gallery-nav="prev" aria-label="&#214;nceki g&#246;rsel">&lsaquo;</button>
+          <button class="pp-gallery-arrow pp-gallery-arrow--next" type="button" data-gallery-nav="next" aria-label="Sonraki g&#246;rsel">&rsaquo;</button>
+        </div>
+      </div>
+      <div class="pp-gallery-thumbs" id="pp-gallery-thumbs" aria-label="&#220;r&#252;n k&#252;&#231;&#252;k g&#246;rselleri"></div>
     </div>
 
     <!-- SAĞ: Bilgi Paneli -->
@@ -60,6 +65,22 @@
 
       <div class="pp-divider"></div>
 
+      <div class="pp-color-options" id="pp-color-options" hidden>
+        <span class="pp-color-label">RENK SEÇ</span>
+        <div class="pp-color-swatches" id="pp-color-swatches">
+          <button class="pp-color-swatch" type="button" data-product-color="siyah" aria-pressed="false">
+            <span class="pp-color-swatch__dot pp-color-swatch__dot--black"></span>
+            <span>Siyah</span>
+          </button>
+          <button class="pp-color-swatch" type="button" data-product-color="beyaz" aria-pressed="false">
+            <span class="pp-color-swatch__dot pp-color-swatch__dot--white"></span>
+            <span>Beyaz</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="pp-divider pp-color-divider" id="pp-color-divider" hidden></div>
+
       <!-- Beden Seçici -->
       <div class="pp-size-header">
         <span class="pp-size-label">BEDEN SEÇ</span>
@@ -87,8 +108,11 @@
         </div>
       </div>
 
-      <!-- Sepete Ekle -->
-      <button class="pp-add-btn" id="pp-add-btn">SEPETE EKLE</button>
+      <!-- Satın Alma Aksiyonları -->
+      <div class="pp-buy-actions">
+        <button class="pp-add-btn" id="pp-add-btn" type="button">SEPETE EKLE</button>
+        <button class="pp-buy-now-btn" id="pp-buy-now-btn" type="button">ŞİMDİ AL</button>
+      </div>
 
       <div class="pp-info-links" id="pp-info-links" aria-label="&#220;r&#252;n bilgi detaylar&#305;">
         <button class="pp-info-link" type="button" data-info-panel="desc">
@@ -115,6 +139,90 @@
 
     </div>
   </main>
+
+  <section class="pp-reviews" id="pp-reviews" aria-labelledby="pp-reviews-title">
+    <div class="pp-section-head">
+      <span class="pp-section-eyebrow">MÜŞTERİ DENEYİMİ</span>
+      <h2 class="pp-section-title" id="pp-reviews-title">Ürün Değerlendirmeleri</h2>
+    </div>
+
+    <div class="pp-review-shell">
+      <aside class="pp-review-summary" id="pp-review-summary" aria-label="Ürün puan özeti"></aside>
+      <div class="pp-review-content">
+        <div class="pp-review-toolbar" aria-label="Yorum filtreleri">
+          <div class="pp-review-filters" id="pp-review-filters">
+            <button class="pp-review-filter is-active" type="button" data-rating-filter="all">Tümü</button>
+            <button class="pp-review-filter" type="button" data-rating-filter="5">5 yıldız</button>
+            <button class="pp-review-filter" type="button" data-rating-filter="4">4 yıldız</button>
+            <button class="pp-review-filter" type="button" data-rating-filter="low">3 yıldız ve altı</button>
+            <button class="pp-review-filter" type="button" data-rating-filter="photo">Görselli</button>
+          </div>
+          <label class="pp-review-sort">
+            <span>Sırala</span>
+            <select id="pp-review-sort">
+              <option value="featured">Öne çıkan</option>
+              <option value="newest">En yeni</option>
+              <option value="highest">En yüksek puan</option>
+              <option value="lowest">En düşük puan</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="pp-review-list" id="pp-review-list" aria-live="polite"></div>
+
+        <form class="pp-review-form" id="pp-review-form">
+          <div class="pp-review-form__head">
+            <span class="pp-review-form__eyebrow">DENEYİMİNİ PAYLAŞ</span>
+            <h3 class="pp-review-form__title">Yorum ekle</h3>
+          </div>
+          <div class="pp-review-form__grid">
+            <label>Puan
+              <select id="pp-review-rating" required>
+                <option value="5">5 yıldız</option>
+                <option value="4">4 yıldız</option>
+                <option value="3">3 yıldız</option>
+                <option value="2">2 yıldız</option>
+                <option value="1">1 yıldız</option>
+              </select>
+            </label>
+            <label>Beden
+              <select id="pp-review-size" required>
+                <option value="M">M</option>
+                <option value="S">S</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+              </select>
+            </label>
+            <label>Kullanım
+              <select id="pp-review-fit" required>
+                <option value="Tam kalip">Tam kalip</option>
+                <option value="Biraz bol">Biraz bol</option>
+                <option value="Dar kalip">Dar kalip</option>
+              </select>
+            </label>
+          </div>
+          <label class="pp-review-form__text">Yorum
+            <textarea id="pp-review-text" rows="4" maxlength="360" placeholder="Ürünle ilgili deneyimini yaz..." required></textarea>
+          </label>
+          <button class="pp-review-submit" type="submit">YORUMU EKLE</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-questions" id="pp-questions" aria-labelledby="pp-questions-title">
+    <div class="pp-section-head pp-section-head--split">
+      <div>
+        <span class="pp-section-eyebrow">SATICI SORU-CEVAP</span>
+        <h2 class="pp-section-title" id="pp-questions-title">Satıcı Soru-Cevap</h2>
+      </div>
+      <label class="pp-question-search">
+        <span>Arama</span>
+        <input id="pp-question-search" type="search" placeholder="Beden, kargo, kumaş..." autocomplete="off">
+      </label>
+    </div>
+    <div class="pp-question-list" id="pp-question-list" aria-live="polite"></div>
+  </section>
 
   <section class="pp-related" id="pp-related" aria-label="Benzer ürünler">
     <div class="pp-related__head">

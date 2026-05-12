@@ -44,7 +44,7 @@ const styleCss = fs.readFileSync(path.join(root, 'css', 'style.css'), 'utf8');
   '{ once: true',
   'toggleAudio',
   'siteAudioToggle',
-  'let wantsAudio = true',
+  'let wantsAudio = false',
   'MUSIC ON',
   'MUSIC OFF',
   'aria-pressed'
@@ -53,7 +53,7 @@ const styleCss = fs.readFileSync(path.join(root, 'css', 'style.css'), 'utf8');
 [
   'footer__audio-btn',
   'id="siteAudioToggle"',
-  'MUSIC ON'
+  'MUSIC OFF'
 ].forEach((needle) => assert(mainJs.includes(needle), `main.js missing audio control hook: ${needle}`));
 
 assert(!mainJs.includes('navbar__audio-btn'), 'main.js should not render the audio control in the navbar');

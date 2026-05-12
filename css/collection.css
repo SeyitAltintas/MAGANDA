@@ -52,6 +52,21 @@
       rgba(10, 10, 10, 0.1) 100%);
 }
 
+.collection-page--drop .col-hero__overlay {
+  background: rgba(10, 10, 10, 0.28);
+}
+
+.collection-page--drop .col-hero__content {
+  width: 100%;
+}
+
+.col-hero__headline-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(24px, 5vw, 72px);
+}
+
 .col-hero__content {
   position: relative;
   z-index: 2;
@@ -309,6 +324,85 @@
   text-transform: uppercase;
 }
 
+.collection__grid .product-card__image {
+  position: relative;
+}
+
+.product-card-gallery-nav {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  pointer-events: none;
+}
+
+.product-card-gallery__arrow {
+  width: 34px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(10, 10, 10, 0.16);
+  background: rgba(255, 255, 255, 0.76);
+  color: #0A0A0A;
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s, transform 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.product-card:hover .product-card-gallery__arrow,
+.product-card:focus-within .product-card-gallery__arrow {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-card-gallery__arrow:hover {
+  border-color: var(--color-red);
+  background: #fff;
+}
+
+.product-card-gallery {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 5px;
+  padding: 0;
+  background: transparent;
+  overflow: hidden;
+}
+
+.product-card-gallery__thumb {
+  width: 30px;
+  flex: 0 0 30px;
+  aspect-ratio: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 0;
+  background-color: var(--bg-secondary);
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.product-card-gallery__thumb:hover,
+.product-card-gallery__thumb--active {
+  box-shadow: inset 0 0 0 3px var(--color-red);
+}
+
 /* ─── SWITCH BANNER ──────────────────────── */
 .switch-banner {
   background: var(--color-gray);
@@ -354,6 +448,28 @@
 @media (max-width: 767px) {
   .col-hero {
     height: 45vh;
+  }
+
+  .col-hero__headline-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .collection-page--drop .drop-countdown {
+    min-width: 0;
+  }
+
+  .collection-page--drop .drop-countdown__unit {
+    min-width: 44px;
+  }
+
+  .collection-page--drop .drop-countdown__num {
+    font-size: 36px;
+  }
+
+  .collection-page--drop .drop-countdown__sep {
+    font-size: 26px;
+    padding-bottom: 16px;
   }
 
   .collection-filter-panel__controls {
@@ -425,16 +541,20 @@
 
 /* ─── COUNTDOWN TIMER ────────────────────── */
 .drop-countdown {
-  background: linear-gradient(
-    to bottom,
-    var(--bg-primary) 0%,
-    var(--bg-secondary) 52%,
-    var(--color-gray) 100%
-  );
+  background: var(--color-gray);
   border-top: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   padding: clamp(48px, 7vw, 88px) clamp(20px, 6vw, 80px) clamp(32px, 5vw, 56px);
   text-align: center;
+}
+
+.collection-page--drop .drop-countdown {
+  flex: 0 0 auto;
+  min-width: min(46vw, 620px);
+  background: transparent;
+  border: 0;
+  padding: 0 0 6px;
+  text-align: right;
 }
 
 .drop-countdown__label {
@@ -454,11 +574,20 @@
   flex-wrap: wrap;
 }
 
+.collection-page--drop .drop-countdown__units {
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+}
+
 .drop-countdown__unit {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: clamp(72px, 14vw, 130px);
+}
+
+.collection-page--drop .drop-countdown__unit {
+  min-width: clamp(54px, 6vw, 82px);
 }
 
 .drop-countdown__num {
@@ -470,6 +599,10 @@
   transition: color 0.3s;
 }
 
+.collection-page--drop .drop-countdown__num {
+  font-size: clamp(42px, 5.4vw, 78px);
+}
+
 .drop-countdown__name {
   font-family: var(--font-body);
   font-size: 10px;
@@ -477,6 +610,10 @@
   color: var(--color-gray-text);
   margin-top: 6px;
   text-transform: uppercase;
+}
+
+.collection-page--drop .drop-countdown__name {
+  font-size: 9px;
 }
 
 .drop-countdown__sep {
@@ -487,6 +624,11 @@
   line-height: 1;
   padding-bottom: clamp(20px, 3vw, 36px);
   user-select: none;
+}
+
+.collection-page--drop .drop-countdown__sep {
+  font-size: clamp(32px, 4vw, 58px);
+  padding-bottom: clamp(15px, 2.2vw, 25px);
 }
 
 /* Süre doldu state */

@@ -9,8 +9,9 @@
   /* ─── ÜRÜN KATALOĞu (static, tüm koleksiyonlar) ─── */
   var CATALOG = [
     // Araba
+    { name: 'V8 OBSESSION HOODIE', price: 1799, category: 'Araba', page: 'araba.html', img: 'assets/img/V8 OBSESSION HOODIE/siyah/ön.png', badge: 'YENİ DROP', gallery: 'assets/img/V8 OBSESSION HOODIE/siyah/ön.png|assets/img/V8 OBSESSION HOODIE/siyah/arka.png|assets/img/V8 OBSESSION HOODIE/siyah/arkaveön.png|assets/img/V8 OBSESSION HOODIE/siyah/doku.png|assets/img/V8 OBSESSION HOODIE/siyah/model.png|assets/img/V8 OBSESSION HOODIE/siyah/modelarka.png' },
     { name: 'V8 OBSESSION HOODIE — SİYAH', price: 1499, category: 'Araba', page: 'araba.html', img: 'assets/products/maganda_hoodie_black_1777846105084.png', badge: 'YENİ' },
-    { name: 'DRIFT KING OVERSIZE T-SHIRT', price: 699, category: 'Araba', page: 'araba.html', img: 'assets/products/maganda_tshirt_car_1777846004490.png', badge: 'ÇOK SATAN' },
+    { name: 'DRIFT KING OVERSIZE T-SHIRT', price: 699, category: 'Araba', page: 'araba.html', img: 'assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/ön.png', badge: 'ÇOK SATAN', gallery: 'assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/ön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arka.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arkaveön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/kumasdetay.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelarka.png' },
     { name: 'MIDNIGHT RUN SWEATPANTS', price: 1899, category: 'Araba', page: 'araba.html', img: 'assets/products/maganda_sweatpants_neon_1777846349061.png', badge: '' },
     { name: 'GEARHEAD JOGGERS', price: 1299, category: 'Araba', page: 'araba.html', img: 'assets/products/maganda_sweatpants_redline_1777846482324.png', badge: 'SINIRLI' },
     { name: 'TOKYO NIGHTS LONG SLEEVE', price: 899, category: 'Araba', page: 'araba.html', img: 'assets/products/maganda_longsleeve_tokyo_1777846775576.png', badge: '' },
@@ -101,13 +102,15 @@
 
   /* ─── ÜRÜN LINKI ─── */
   function buildProductUrl(p) {
-    return 'product.html?' + new URLSearchParams({
+    var params = new URLSearchParams({
       name: p.name,
       price: '₺' + p.price.toLocaleString('tr-TR'),
       series: p.category + ' Serisi',
       badge: p.badge || '',
       img: p.img
-    }).toString();
+    });
+    if (p.gallery) params.set('gallery', p.gallery);
+    return 'product.html?' + params.toString();
   }
 
   /* ─── SONUÇLARI RENDER ET ─── */
