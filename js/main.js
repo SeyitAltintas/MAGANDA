@@ -650,6 +650,87 @@
   }
 
   /* ─── ÜRÜN KARTLARI → product.html yönlendirme ── */
+  function getCardImageUrl(card) {
+    var imgEl = card ? card.querySelector('.product-card__image') : null;
+    if (!imgEl) return '';
+    return (imgEl.style.backgroundImage || '').replace(/url\(["']?/, '').replace(/["']?\)$/, '');
+  }
+
+  function setCardImage(card, imageUrl) {
+    var imgEl = card ? card.querySelector('.product-card__image') : null;
+    if (!imgEl || !imageUrl) return;
+    imgEl.style.backgroundImage = 'url("' + String(imageUrl).replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '")';
+  }
+
+  function buildCardGallery(card, pageImages) {
+    var primary = getCardImageUrl(card);
+    var fromData = (card.getAttribute('data-gallery') || '').split('|').filter(Boolean);
+    var gallery = fromData.length > 1 ? fromData : [primary].concat(pageImages.filter(function (image) {
+      return image && image !== primary;
+    }).slice(0, 3));
+
+    return gallery.filter(function (image, index, list) {
+      return image && list.indexOf(image) === index;
+    });
+  }
+
+  function initCollectionCardGalleries() {
+    var cards = Array.from(document.querySelectorAll('.collection__grid .product-card'));
+    if (!cards.length) return;
+
+    var pageImages = cards.map(getCardImageUrl).filter(Boolean);
+
+    cards.forEach(function (card) {
+      var imageEl = card.querySelector('.product-card__image');
+      var infoEl = card.querySelector('.product-card__info');
+      if (!imageEl || !infoEl || card.querySelector('.product-card-gallery')) return;
+
+      var gallery = buildCardGallery(card, pageImages);
+      if (gallery.length < 2) return;
+
+      var activeIndex = 0;
+      card.setAttribute('data-gallery', gallery.join('|'));
+
+      imageEl.insertAdjacentHTML('beforeend',
+        '<div class="product-card-gallery-nav" data-stop-card aria-label="Kart gorsel gecisi">' +
+        '<button class="product-card-gallery__arrow product-card-gallery__arrow--prev" type="button" data-stop-card data-card-gallery-dir="prev" aria-label="Onceki gorsel">&lsaquo;</button>' +
+        '<button class="product-card-gallery__arrow product-card-gallery__arrow--next" type="button" data-stop-card data-card-gallery-dir="next" aria-label="Sonraki gorsel">&rsaquo;</button>' +
+        '</div>'
+      );
+
+      imageEl.insertAdjacentHTML('beforeend',
+        '<div class="product-card-gallery" data-stop-card aria-label="Urun kucuk gorselleri">' +
+        gallery.map(function (image, index) {
+          return '<button class="product-card-gallery__thumb' + (index === 0 ? ' product-card-gallery__thumb--active' : '') + '" type="button" data-stop-card data-card-gallery-thumb="' + index + '" aria-label="Kart gorseli ' + (index + 1) + '" aria-current="' + (index === 0 ? 'true' : 'false') + '" style="background-image:url(&quot;' + escapeAttr(image) + '&quot;)"></button>';
+        }).join('') +
+        '</div>'
+      );
+
+      function syncCardGallery() {
+        setCardImage(card, gallery[activeIndex]);
+        card.querySelectorAll('[data-card-gallery-thumb]').forEach(function (thumb, index) {
+          thumb.classList.toggle('product-card-gallery__thumb--active', index === activeIndex);
+          thumb.setAttribute('aria-current', index === activeIndex ? 'true' : 'false');
+        });
+      }
+
+      card.querySelectorAll('[data-card-gallery-dir]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var direction = btn.getAttribute('data-card-gallery-dir') === 'prev' ? -1 : 1;
+          activeIndex = (activeIndex + direction + gallery.length) % gallery.length;
+          syncCardGallery();
+        });
+      });
+
+      card.querySelectorAll('[data-card-gallery-thumb]').forEach(function (thumb) {
+        thumb.addEventListener('click', function () {
+          activeIndex = Number(thumb.getAttribute('data-card-gallery-thumb')) || 0;
+          syncCardGallery();
+        });
+      });
+    });
+  }
+
   function initProductCards() {
     document.addEventListener('click', function (e) {
       if (e.target.closest('[data-stop-card]')) return;
@@ -664,6 +745,7 @@
       var price = (card.querySelector('.product-card__price') || {}).textContent || '';
       var series = (card.querySelector('.product-card__tag') || {}).textContent || '';
       var badge = card.getAttribute('data-badge') || '';
+      var gallery = card.getAttribute('data-gallery') || '';
 
       var params = new URLSearchParams({
         name: name.trim(),
@@ -672,6 +754,7 @@
         badge: badge,
         img: imgUrl
       });
+      if (gallery) params.set('gallery', gallery);
 
       window.location.href = 'product.html?' + params.toString();
     });
@@ -705,6 +788,7 @@
     var series = params.get('series') || '';
     var badge = params.get('badge') || '';
     var imgUrl = params.get('img') || '';
+    var galleryImages = (params.get('gallery') || '').split('|').filter(Boolean);
 
     var sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
     var descriptions = [
@@ -719,8 +803,8 @@
 
     // Görsel
     var imgEl = document.getElementById('pp-img');
-    if (imgEl && imgUrl) imgEl.style.backgroundImage = 'url(' + imgUrl + ')';
-    initProductGallery(imgUrl, name);
+    setBackgroundImage(imgEl, imgUrl);
+    var productGalleryApi = initProductGallery(imgUrl, name, galleryImages);
 
     // Badge
     var badgeEl = document.getElementById('pp-badge');
@@ -744,7 +828,10 @@
     initProductFavorite(name, price);
     updateProductLimitedBadge(name, series, badge);
     updateProductDeliveryDate();
+    renderProductReviews(name, series, imgUrl);
+    renderProductQuestions(name, series);
     renderRelatedProducts(name, series);
+    initProductColorOptions(name, productGalleryApi);
 
 
     function initProductInfoTabs(activeDescription) {
@@ -943,11 +1030,294 @@
       deliveryEl.textContent = formatter.format(start) + ' - ' + formatter.format(end) + ' arası teslim';
     }
 
+    function renderProductReviews(productName, productSeries, productImage) {
+      var summaryEl = document.getElementById('pp-review-summary');
+      var listEl = document.getElementById('pp-review-list');
+      var formEl = document.getElementById('pp-review-form');
+      if (!summaryEl || !listEl) return;
+
+      var filterState = { rating: 'all', sort: 'featured' };
+      var demoReviews = buildDemoReviews(productName, productSeries, productImage);
+
+      function sync() {
+        var allReviews = demoReviews.concat(getStoredReviews(productName));
+        renderReviewSummary(allReviews);
+        renderReviewList(applyReviewState(allReviews));
+      }
+
+      function renderReviewSummary(reviews) {
+        var total = reviews.length;
+        var average = total ? reviews.reduce(function (sum, item) { return sum + item.rating; }, 0) / total : 0;
+        var rounded = Math.round(average * 10) / 10;
+        var counts = [5, 4, 3, 2, 1].map(function (rating) {
+          return {
+            rating: rating,
+            count: reviews.filter(function (item) { return item.rating === rating; }).length
+          };
+        });
+
+        summaryEl.innerHTML =
+          '<span class="pp-review-summary__eyebrow">Müşteri Değerlendirmeleri</span>' +
+          '<div class="pp-review-score">' + rounded.toFixed(1).replace('.', ',') + '</div>' +
+          '<div class="pp-review-stars" aria-label="' + rounded.toFixed(1) + ' puan">' + renderStars(Math.round(average)) + '</div>' +
+          '<p class="pp-review-count">' + total + ' değerlendirme · ' + reviews.filter(function (item) { return item.text; }).length + ' yorum</p>' +
+          '<div class="pp-review-ai-summary">' +
+          '<span>Yapay zeka özeti</span>' +
+          '<p>Yorumlarda en çok kumaş kalitesi, kalıbın rahatlığı ve ürünün fotoğraflardaki gibi gelmesi öne çıkıyor. Beden konusunda kararsız kalanlar genelde normal bedeninden memnun kalmış.</p>' +
+          '</div>' +
+          '<div class="pp-rating-bars">' + counts.map(function (item) {
+            var width = total ? Math.round((item.count / total) * 100) : 0;
+            return '<div class="pp-rating-row">' +
+              '<span>' + item.rating + ' yıldız</span>' +
+              '<div class="pp-rating-bar"><span style="width:' + width + '%"></span></div>' +
+              '<strong>' + item.count + '</strong>' +
+              '</div>';
+          }).join('') + '</div>';
+      }
+
+      function renderReviewList(reviews) {
+        if (!reviews.length) {
+          listEl.innerHTML = '<div class="pp-review-empty">Bu filtrede yorum bulunamadı.</div>';
+          return;
+        }
+
+        listEl.innerHTML = reviews.map(function (item) {
+          var imageHtml = item.image ? '<button class="pp-review-photo" type="button" style="background-image:url(&quot;' + escapeAttr(item.image) + '&quot;)" aria-label="Yorum görseli"></button>' : '';
+          return '<article class="pp-review-card">' +
+            '<div class="pp-review-card__top">' +
+            '<div>' +
+            '<strong class="pp-review-user">' + escapeHtml(item.user) + '</strong>' +
+            '<span class="pp-review-meta">' + escapeHtml(item.date) + ' · Beden ' + escapeHtml(item.size) + ' · ' + escapeHtml(item.fit) + '</span>' +
+            '</div>' +
+            '<span class="pp-review-card__stars">' + renderStars(item.rating) + '</span>' +
+            '</div>' +
+            '<p class="pp-review-text">' + escapeHtml(item.text) + '</p>' +
+            imageHtml +
+            '<div class="pp-review-votes" aria-label="Yorum oylama">' +
+            '<button class="pp-review-vote" type="button" data-review-vote="like" aria-pressed="false" aria-label="Yorumu beğen">👍</button>' +
+            '<button class="pp-review-vote" type="button" data-review-vote="dislike" aria-pressed="false" aria-label="Yorumu beğenme">👎</button>' +
+            '</div>' +
+            '</article>';
+        }).join('');
+
+        listEl.querySelectorAll('.pp-review-vote').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var active = btn.getAttribute('aria-pressed') === 'true';
+            var group = btn.closest('.pp-review-votes');
+            if (group) {
+              group.querySelectorAll('.pp-review-vote').forEach(function (item) {
+                item.setAttribute('aria-pressed', 'false');
+                item.classList.remove('is-active');
+              });
+            }
+            if (!active) {
+              btn.setAttribute('aria-pressed', 'true');
+              btn.classList.add('is-active');
+            }
+          });
+        });
+      }
+
+      function applyReviewState(reviews) {
+        var filtered = reviews.filter(function (item) {
+          if (filterState.rating === 'all') return true;
+          if (filterState.rating === 'photo') return Boolean(item.image);
+          if (filterState.rating === 'low') return item.rating <= 3;
+          return item.rating === Number(filterState.rating);
+        });
+
+        return filtered.sort(function (a, b) {
+          if (filterState.sort === 'newest') return b.timestamp - a.timestamp;
+          if (filterState.sort === 'highest') return b.rating - a.rating;
+          if (filterState.sort === 'lowest') return a.rating - b.rating;
+          return (b.featuredScore || 0) - (a.featuredScore || 0);
+        });
+      }
+
+      initReviewFilters(filterState, sync);
+      initReviewForm(productName, sync);
+      sync();
+
+      if (formEl) formEl.setAttribute('data-ready', 'true');
+    }
+
+    function initReviewFilters(filterState, onChange) {
+      var filters = Array.from(document.querySelectorAll('[data-rating-filter]'));
+      var sortEl = document.getElementById('pp-review-sort');
+
+      filters.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          filterState.rating = btn.getAttribute('data-rating-filter') || 'all';
+          filters.forEach(function (item) { item.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+          onChange();
+        });
+      });
+
+      if (sortEl) {
+        sortEl.addEventListener('change', function () {
+          filterState.sort = sortEl.value;
+          onChange();
+        });
+      }
+    }
+
+    function initReviewForm(productName, onSubmit) {
+      var form = document.getElementById('pp-review-form');
+      var ratingEl = document.getElementById('pp-review-rating');
+      var sizeEl = document.getElementById('pp-review-size');
+      var fitEl = document.getElementById('pp-review-fit');
+      var textEl = document.getElementById('pp-review-text');
+      if (!form || !ratingEl || !sizeEl || !fitEl || !textEl) return;
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var text = textEl.value.trim();
+        if (!text) return;
+
+        var reviews = getStoredReviews(productName);
+        reviews.unshift({
+          id: 'user-' + Date.now(),
+          user: 'MAGANDA Müşterisi',
+          rating: Number(ratingEl.value) || 5,
+          size: sizeEl.value,
+          fit: fitEl.value,
+          text: text,
+          date: 'Az önce',
+          timestamp: Date.now(),
+          featuredScore: 90,
+          image: ''
+        });
+        localStorage.setItem(getReviewStorageKey(productName), JSON.stringify(reviews));
+        textEl.value = '';
+        ratingEl.value = '5';
+        window.toast && window.toast('Yorumun eklendi', 'success');
+        onSubmit();
+      });
+    }
+
+    function getReviewStorageKey(productName) {
+      return 'maganda_product_reviews_' + productHash(productName);
+    }
+
+    function getStoredReviews(productName) {
+      try {
+        return JSON.parse(localStorage.getItem(getReviewStorageKey(productName))) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function buildDemoReviews(productName, productSeries, productImage) {
+      var seed = productHash(productName);
+      var names = ['Emir K.', 'Berk A.', 'Deniz T.', 'Mert S.', 'Can Y.'];
+      var texts = [
+        'Kumaşı beklediğimden tok duruyor, yıkama sonrası formu bozulmadı.',
+        'Kalıp tam istediğim gibi. Günlük kullanımda rahat, görüntüsü sert.',
+        'Paketleme özenliydi. Ürün fotoğraftakinden daha premium hissettiriyor.',
+        'Beden konusunda kararsızdım ama önerilen beden doğru geldi.',
+        'Drop hissi güçlü, detayları sade ama dikkat çekiyor.'
+      ];
+      var fallbackImages = [
+        productImage,
+        'assets/products/maganda_hoodie_black_1777846105084.png',
+        'assets/products/maganda_tshirt_car_1777846004490.png'
+      ].filter(Boolean);
+
+      return names.map(function (user, index) {
+        var rating = Math.max(3, 5 - ((seed + index) % 3 === 0 ? 1 : 0));
+        return {
+          id: 'demo-' + index,
+          user: user,
+          rating: rating,
+          size: ['S', 'M', 'L', 'XL'][index % 4],
+          fit: index % 2 === 0 ? 'Tam kalıp' : 'Biraz bol',
+          text: texts[(seed + index) % texts.length],
+          date: (index + 2) + ' gün önce',
+          timestamp: Date.now() - ((index + 2) * 86400000),
+          featuredScore: 100 - index * 8,
+          image: index < 2 ? fallbackImages[index % fallbackImages.length] : ''
+        };
+      });
+    }
+
+    function renderStars(rating) {
+      var full = Math.max(0, Math.min(5, Number(rating) || 0));
+      var html = '';
+      for (var i = 1; i <= 5; i++) {
+        html += '<span class="' + (i <= full ? 'is-filled' : '') + '">★</span>';
+      }
+      return html;
+    }
+
+    function renderProductQuestions(productName, productSeries) {
+      var listEl = document.getElementById('pp-question-list');
+      var searchEl = document.getElementById('pp-question-search');
+      if (!listEl) return;
+
+      var isMoto = String(productSeries || productName || '').toLowerCase().indexOf('moto') !== -1;
+      var questions = [
+        {
+          q: 'Kalıp regular mı oversize mı?',
+          a: isMoto ? 'Motosiklet serisinde rahat hareket için regular ile hafif oversize arası bir duruş kullanıyoruz.' : 'Ürün regular duruşlu; daha bol görünüm için bir beden büyük tercih edebilirsiniz.',
+          date: '3 gün önce'
+        },
+        {
+          q: 'Kumaş kalınlığı mevsimlik mi?',
+          a: 'Orta ağırlıkta, günlük kullanıma uygun tok pamuk hissi veren kumaş yapısına sahiptir.',
+          date: '5 gün önce'
+        },
+        {
+          q: 'Kargo kaç günde gelir?',
+          a: 'Siparişler genellikle 1-2 iş günü içinde hazırlanır, teslimat adresine göre 2-4 iş günü aralığında ulaşır.',
+          date: '1 hafta önce'
+        },
+        {
+          q: 'Beden değişimi yapabiliyor muyum?',
+          a: 'Kullanılmamış ve etiketi çıkarılmamış ürünlerde 14 gün içinde iade veya stok uygunsa beden değişimi yapılabilir.',
+          date: '2 hafta önce'
+        }
+      ];
+
+      function draw(items) {
+        if (!items.length) {
+          listEl.innerHTML = '<div class="pp-question-empty">Aramana uygun soru bulunamadı.</div>';
+          return;
+        }
+
+        listEl.innerHTML = items.map(function (item) {
+          return '<article class="pp-question-card">' +
+            '<div class="pp-question-card__q">' +
+            '<span>Soru</span>' +
+            '<p>' + escapeHtml(item.q) + '</p>' +
+            '</div>' +
+            '<div class="pp-question-card__a">' +
+            '<span>MAGANDA Satıcısı · ' + escapeHtml(item.date) + '</span>' +
+            '<p>' + escapeHtml(item.a) + '</p>' +
+            '</div>' +
+            '</article>';
+        }).join('');
+      }
+
+      if (searchEl) {
+        searchEl.addEventListener('input', function () {
+          var term = searchEl.value.trim().toLocaleLowerCase('tr-TR');
+          draw(questions.filter(function (item) {
+            return !term || (item.q + ' ' + item.a).toLocaleLowerCase('tr-TR').indexOf(term) !== -1;
+          }));
+        });
+      }
+
+      draw(questions);
+    }
+
     function renderRelatedProducts(productName, productSeries) {
       var relatedGrid = document.getElementById('pp-related-grid');
       if (!relatedGrid) return;
 
       var catalog = [
+        { name: 'V8 OBSESSION HOODIE', price: '\u20BA1799', series: 'Araba Serisi', img: 'assets/img/V8 OBSESSION HOODIE/siyah/ön.png', badge: 'YENI DROP', gallery: 'assets/img/V8 OBSESSION HOODIE/siyah/ön.png|assets/img/V8 OBSESSION HOODIE/siyah/arka.png|assets/img/V8 OBSESSION HOODIE/siyah/arkaveön.png|assets/img/V8 OBSESSION HOODIE/siyah/doku.png|assets/img/V8 OBSESSION HOODIE/siyah/model.png|assets/img/V8 OBSESSION HOODIE/siyah/modelarka.png' },
+        { name: 'DRIFT KING OVERSIZE T-SHIRT', price: '\u20BA699', series: 'Araba Serisi', img: 'assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/ön.png', badge: 'COK SATAN', gallery: 'assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/ön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arka.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arkaveön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/kumasdetay.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelarka.png' },
         { name: 'V8 OBSESSION HOODIE - SIYAH', price: '\u20BA1499', series: 'Araba Serisi', img: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=600&q=80' },
         { name: 'MIDNIGHT RUN TRACK JACKET', price: '\u20BA1899', series: 'Araba Serisi', img: 'assets/products/track_jacket.png' },
         { name: 'GEARHEAD CARGO PANTS', price: '\u20BA1299', series: 'Araba Serisi', img: 'assets/products/cargo_pants.png' },
@@ -974,6 +1344,7 @@
           badge: item.badge || '',
           img: item.img
         });
+        if (item.gallery) params.set('gallery', item.gallery);
 
         return '<a class="pp-related-card" href="product.html?' + params.toString() + '">' +
           '<div class="pp-related-card__img" style="background-image:url(&quot;' + item.img + '&quot;)"></div>' +
@@ -1006,54 +1377,138 @@
       return Math.abs(hash);
     }
 
-    function buildProductGallery(primaryImage, productName) {
+    function getNamedProductGallery(productName) {
+      var normalizedName = String(productName || '').trim().toLocaleUpperCase('tr-TR');
+      if (normalizedName === 'V8 OBSESSION HOODIE') {
+        return getProductColorGalleries(productName).siyah || [];
+      }
+      if (normalizedName === 'DRIFT KING OVERSIZE T-SHIRT') {
+        return getProductColorGalleries(productName).siyah || [];
+      }
+      return [];
+    }
+
+    function getProductColorGalleries(productName) {
+      var normalizedName = String(productName || '').trim().toLocaleUpperCase('tr-TR');
+      if (normalizedName === 'V8 OBSESSION HOODIE') {
+        var v8Base = 'assets/img/V8 OBSESSION HOODIE/';
+        return {
+          siyah: [
+            v8Base + 'siyah/ön.png',
+            v8Base + 'siyah/arka.png',
+            v8Base + 'siyah/arkaveön.png',
+            v8Base + 'siyah/doku.png',
+            v8Base + 'siyah/model.png',
+            v8Base + 'siyah/modelarka.png'
+          ],
+          beyaz: [
+            v8Base + 'beyaz/ChatGPT Image 11 May 2026 14_03_56.png',
+            v8Base + 'beyaz/ChatGPT Image 11 May 2026 14_16_31.png',
+            v8Base + 'beyaz/ChatGPT Image 11 May 2026 14_18_00.png',
+            v8Base + 'beyaz/ChatGPT Image 11 May 2026 14_20_37.png',
+            v8Base + 'beyaz/ChatGPT Image 11 May 2026 14_21_50.png',
+            v8Base + 'beyaz/ChatGPT Image 11 May 2026 14_26_53.png'
+          ]
+        };
+      }
+      if (normalizedName !== 'DRIFT KING OVERSIZE T-SHIRT') return {};
+
+      var base = 'assets/img/DRIFT KING OVERSİZE T-SHIRT/';
+      return {
+        siyah: [
+          base + 'siyah/ön.png',
+          base + 'siyah/arka.png',
+          base + 'siyah/arkaveön.png',
+          base + 'siyah/kumasdetay.png',
+          base + 'siyah/modelön.png',
+          base + 'siyah/modelarka.png'
+        ],
+        beyaz: [
+          base + 'beyaz/ChatGPT Image 11 May 2026 13_48_20.png',
+          base + 'beyaz/ChatGPT Image 11 May 2026 13_49_51.png',
+          base + 'beyaz/ChatGPT Image 11 May 2026 13_53_19.png',
+          base + 'beyaz/ChatGPT Image 11 May 2026 13_55_33.png',
+          base + 'beyaz/ChatGPT Image 11 May 2026 13_57_08.png',
+          base + 'beyaz/ChatGPT Image 11 May 2026 13_59_21.png'
+        ]
+      };
+    }
+
+    function buildProductGallery(primaryImage, productName, galleryImages) {
       var fallbackImages = [
         'assets/products/maganda_hoodie_black_1777846105084.png',
         'assets/products/maganda_tshirt_car_1777846004490.png',
         'assets/products/maganda_hoodie_acid_1777846208954.png',
         'assets/products/maganda_sweatpants_redline_1777846482324.png'
       ];
+      var customGallery = (galleryImages && galleryImages.length ? galleryImages : getNamedProductGallery(productName)).filter(Boolean);
+      if (customGallery.length) return customGallery;
       var base = primaryImage || fallbackImages[productHash(productName) % fallbackImages.length];
       var alternates = fallbackImages.filter(function (image) { return image !== base; });
       return [
-        { label: 'Ana', image: base },
-        { label: 'Doku', image: alternates[0] || base },
-        { label: 'Model', image: alternates[1] || base }
+        base,
+        alternates[0] || base,
+        alternates[1] || base
       ];
     }
 
-    function setProductImage(imageUrl) {
-      if (imgEl && imageUrl) imgEl.style.backgroundImage = 'url(' + imageUrl + ')';
-      var zoomImage = document.getElementById('pp-zoom-image');
-      if (zoomImage && imageUrl) zoomImage.style.backgroundImage = 'url(' + imageUrl + ')';
+    function setBackgroundImage(element, imageUrl) {
+      if (!element || !imageUrl) return;
+      element.style.backgroundImage = 'url("' + String(imageUrl).replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '")';
     }
 
-    function initProductGallery(primaryImage, productName) {
+    function setProductImage(imageUrl) {
+      setBackgroundImage(imgEl, imageUrl);
+      var zoomImage = document.getElementById('pp-zoom-image');
+      setBackgroundImage(zoomImage, imageUrl);
+    }
+
+    function initProductGallery(primaryImage, productName, galleryImages) {
+      var navEl = document.getElementById('pp-gallery-nav');
       var thumbsEl = document.getElementById('pp-gallery-thumbs');
-      var zoomTrigger = document.getElementById('pp-zoom-trigger');
       var zoomModal = document.getElementById('pp-zoom-modal');
       var zoomClose = document.getElementById('pp-zoom-close');
-      if (!thumbsEl) return;
+      if (!navEl) return null;
 
-      var gallery = buildProductGallery(primaryImage, productName);
-      var activeImage = gallery[0].image;
+      var gallery = buildProductGallery(primaryImage, productName, galleryImages);
+      var activeIndex = 0;
+      var activeImage = gallery[activeIndex];
       setProductImage(activeImage);
 
-      thumbsEl.innerHTML = gallery.map(function (item, index) {
-        return '<button class="pp-gallery-thumb' + (index === 0 ? ' pp-gallery-thumb--active' : '') + '" type="button" data-img="' + item.image + '">' +
-          '<span class="pp-gallery-thumb__img" style="background-image:url(&quot;' + item.image + '&quot;)"></span>' +
-          '<span class="pp-gallery-thumb__label">' + item.label + '</span>' +
-          '</button>';
-      }).join('');
+      function updateGalleryThumbs() {
+        if (!thumbsEl) return;
+        thumbsEl.querySelectorAll('[data-gallery-thumb]').forEach(function (thumb, index) {
+          thumb.classList.toggle('pp-gallery-thumb--active', index === activeIndex);
+          thumb.setAttribute('aria-current', index === activeIndex ? 'true' : 'false');
+        });
+      }
 
-      thumbsEl.querySelectorAll('.pp-gallery-thumb').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          activeImage = btn.dataset.img;
-          thumbsEl.querySelectorAll('.pp-gallery-thumb').forEach(function (item) {
-            item.classList.remove('pp-gallery-thumb--active');
+      if (thumbsEl) {
+        function renderGalleryThumbs() {
+          thumbsEl.innerHTML = gallery.map(function (image, index) {
+          return '<button class="pp-gallery-thumb' + (index === activeIndex ? ' pp-gallery-thumb--active' : '') + '" type="button" data-gallery-thumb="' + index + '" aria-label="Ürün görseli ' + (index + 1) + '" aria-current="' + (index === activeIndex ? 'true' : 'false') + '" style="background-image:url(&quot;' + escapeAttr(image) + '&quot;)"></button>';
+          }).join('');
+
+          thumbsEl.querySelectorAll('[data-gallery-thumb]').forEach(function (thumb) {
+            thumb.addEventListener('click', function () {
+              activeIndex = Number(thumb.getAttribute('data-gallery-thumb')) || 0;
+              activeImage = gallery[activeIndex];
+              setProductImage(activeImage);
+              updateGalleryThumbs();
+            });
           });
-          btn.classList.add('pp-gallery-thumb--active');
+        }
+
+        renderGalleryThumbs();
+      }
+
+      navEl.querySelectorAll('[data-gallery-nav]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var direction = btn.getAttribute('data-gallery-nav') === 'prev' ? -1 : 1;
+          activeIndex = (activeIndex + direction + gallery.length) % gallery.length;
+          activeImage = gallery[activeIndex];
           setProductImage(activeImage);
+          updateGalleryThumbs();
         });
       });
 
@@ -1064,14 +1519,6 @@
         document.body.classList.remove('no-scroll');
       }
 
-      if (zoomTrigger && zoomModal) {
-        zoomTrigger.addEventListener('click', function () {
-          setProductImage(activeImage);
-          zoomModal.classList.add('pp-zoom-modal--active');
-          zoomModal.setAttribute('aria-hidden', 'false');
-          document.body.classList.add('no-scroll');
-        });
-      }
       if (zoomClose) zoomClose.addEventListener('click', closeZoom);
       if (zoomModal) {
         zoomModal.addEventListener('click', function (event) {
@@ -1081,6 +1528,62 @@
       document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape' && zoomModal && zoomModal.classList.contains('pp-zoom-modal--active')) closeZoom();
       });
+
+      return {
+        setGallery: function (nextGallery) {
+          gallery = (nextGallery || []).filter(Boolean);
+          activeIndex = 0;
+          activeImage = gallery[activeIndex];
+          setProductImage(activeImage);
+          if (thumbsEl) {
+            thumbsEl.innerHTML = gallery.map(function (image, index) {
+              return '<button class="pp-gallery-thumb' + (index === activeIndex ? ' pp-gallery-thumb--active' : '') + '" type="button" data-gallery-thumb="' + index + '" aria-label="Ürün görseli ' + (index + 1) + '" aria-current="' + (index === activeIndex ? 'true' : 'false') + '" style="background-image:url(&quot;' + escapeAttr(image) + '&quot;)"></button>';
+            }).join('');
+
+            thumbsEl.querySelectorAll('[data-gallery-thumb]').forEach(function (thumb) {
+              thumb.addEventListener('click', function () {
+                activeIndex = Number(thumb.getAttribute('data-gallery-thumb')) || 0;
+                activeImage = gallery[activeIndex];
+                setProductImage(activeImage);
+                updateGalleryThumbs();
+              });
+            });
+          }
+        }
+      };
+    }
+
+    function initProductColorOptions(productName, galleryApi) {
+      var colorOptions = document.getElementById('pp-color-options');
+      var colorDivider = document.getElementById('pp-color-divider');
+      var colorButtons = Array.from(document.querySelectorAll('[data-product-color]'));
+      var galleries = getProductColorGalleries(productName);
+      var colors = Object.keys(galleries);
+      if (!colorOptions || !galleryApi || !colors.length) return;
+
+      colorOptions.hidden = false;
+      if (colorDivider) colorDivider.hidden = false;
+
+      function setActiveColor(color) {
+        colorButtons.forEach(function (button) {
+          var isActive = button.getAttribute('data-product-color') === color;
+          button.classList.toggle('pp-color-swatch--active', isActive);
+          button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
+
+      colorButtons.forEach(function (button) {
+        var color = button.getAttribute('data-product-color');
+        button.hidden = !galleries[color];
+        button.addEventListener('click', function () {
+          if (!galleries[color]) return;
+          galleryApi.setGallery(galleries[color]);
+          setActiveColor(color);
+        });
+      });
+
+      galleryApi.setGallery(galleries.siyah || galleries[colors[0]]);
+      setActiveColor(galleries.siyah ? 'siyah' : colors[0]);
     }
 
     function getProductSizeStock(productName) {
@@ -1199,24 +1702,39 @@
       });
     }
 
-    // Sepete Ekle
+    // Sepete Ekle / Simdi Al
     var addBtn = document.getElementById('pp-add-btn');
+    var buyNowBtn = document.getElementById('pp-buy-now-btn');
     var sizeWarn = document.getElementById('pp-size-warn');
+    function warnMissingSize() {
+      if (sizesEl) {
+        sizesEl.classList.add('pp-sizes--warn');
+        setTimeout(function () { sizesEl.classList.remove('pp-sizes--warn'); }, 700);
+      }
+      if (sizeWarn) {
+        sizeWarn.style.opacity = '1';
+        setTimeout(function () { sizeWarn.style.opacity = '0'; }, 2500);
+      }
+    }
+
+    function createProductCartItem() {
+      return {
+        id: Date.now(),
+        name: name,
+        price: parsePriceValue(price),
+        size: selectedSize,
+        quantity: currentQty,
+        image: imgUrl
+      };
+    }
     if (addBtn) {
       addBtn.addEventListener('click', function () {
         if (!selectedSize) {
-          if (sizesEl) {
-            sizesEl.classList.add('pp-sizes--warn');
-            setTimeout(function () { sizesEl.classList.remove('pp-sizes--warn'); }, 700);
-          }
-          if (sizeWarn) {
-            sizeWarn.style.opacity = '1';
-            setTimeout(function () { sizeWarn.style.opacity = '0'; }, 2500);
-          }
+          warnMissingSize();
           return;
         }
 
-        var priceNum = parsePriceValue(price);
+        var productCartItem = createProductCartItem();
         var existingItem = cart.find(function (item) {
           return item.name === name && item.size === selectedSize;
         });
@@ -1224,14 +1742,7 @@
         if (existingItem) {
           existingItem.quantity = Math.min(existingItem.quantity + currentQty, 10);
         } else {
-          cart.push({
-            id: Date.now(),
-            name: name,
-            price: priceNum,
-            size: selectedSize,
-            quantity: currentQty,
-            image: imgUrl
-          });
+          cart.push(productCartItem);
         }
 
         saveCart();
@@ -1246,6 +1757,18 @@
         }, 1800);
       });
 
+      if (buyNowBtn) {
+        buyNowBtn.addEventListener('click', function () {
+          if (!selectedSize) {
+            warnMissingSize();
+            return;
+          }
+
+          localStorage.setItem('maganda_buy_now', JSON.stringify([createProductCartItem()]));
+          window.location.href = 'checkout.html?buyNow=1';
+        });
+      }
+
       // TÜKENDİ durumu kontrolü (Ürün zaten bitmişse buton tıklanamaz)
       if (badge && badge.toUpperCase() === 'TÜKENDİ') {
         addBtn.disabled = true;
@@ -1253,6 +1776,11 @@
         addBtn.style.backgroundColor = 'var(--color-gray-dark)';
         addBtn.style.color = 'var(--color-gray-light)';
         addBtn.style.cursor = 'not-allowed';
+        if (buyNowBtn) {
+          buyNowBtn.disabled = true;
+          buyNowBtn.style.opacity = '0.45';
+          buyNowBtn.style.cursor = 'not-allowed';
+        }
       }
     }
 
@@ -1566,9 +2094,9 @@
       '<div class="footer__col">' +
       '<span class="footer__logo">MAGANDA</span>' +
       '<p class="footer__tagline">SINIR TANIMAYANLARA..</p>' +
-      '<button class="footer__audio-btn is-playing" id="siteAudioToggle" type="button" aria-label="Muzigi kapat" aria-pressed="true">' +
+      '<button class="footer__audio-btn" id="siteAudioToggle" type="button" aria-label="Muzigi ac" aria-pressed="false">' +
       '<span class="footer__audio-dot" aria-hidden="true"></span>' +
-      '<span class="footer__audio-label">MUSIC ON</span>' +
+      '<span class="footer__audio-label">MUSIC OFF</span>' +
       '</button>' +
       '</div>' +
       '<div class="footer__col">' +
@@ -1792,6 +2320,7 @@
       window.initScrollSequence();
     }
     initDropForm();
+    initCollectionCardGalleries();
     initProductCards();
     initProductPage();
     initFavoritesPage();

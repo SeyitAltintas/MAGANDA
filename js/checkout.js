@@ -10,18 +10,49 @@
 (function () {
   'use strict';
 
-  var cart        = JSON.parse(localStorage.getItem('maganda_cart')) || [];
+  var checkoutUsesBuyNow = new URLSearchParams(window.location.search).get('buyNow') === '1' && getBuyNowItems().length > 0;
+  var cart        = getCheckoutItems();
   var currentStep = 0;
   var isGuest     = false;
   var selectedAddressId = null;
 
+  function getBuyNowItems() {
+    try {
+      return JSON.parse(localStorage.getItem('maganda_buy_now')) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function hasBuyNowItem() {
+    return getBuyNowItems().length > 0;
+  }
+
+  function getCheckoutItems() {
+    if (checkoutUsesBuyNow) return getBuyNowItems();
+
+    try {
+      return JSON.parse(localStorage.getItem('maganda_cart')) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function clearBuyNowItem() {
+    localStorage.removeItem('maganda_buy_now');
+  }
+
   function saveCart() {
-    localStorage.setItem('maganda_cart', JSON.stringify(cart));
+    if (checkoutUsesBuyNow) {
+      localStorage.setItem('maganda_buy_now', JSON.stringify(cart));
+    } else {
+      localStorage.setItem('maganda_cart', JSON.stringify(cart));
+    }
     window.dispatchEvent(new Event('maganda_cart_updated'));
   }
 
   window.addEventListener('maganda_cart_updated', function() {
-    cart = JSON.parse(localStorage.getItem('maganda_cart')) || [];
+    cart = getCheckoutItems();
     if (typeof renderCart === 'function') {
       renderCart();
     }
@@ -567,7 +598,11 @@
       });
     }
 
-    localStorage.removeItem('maganda_cart');
+    if (checkoutUsesBuyNow) {
+      clearBuyNowItem();
+    } else {
+      localStorage.removeItem('maganda_cart');
+    }
     var successEl = document.getElementById('successScreen');
     if (successEl) successEl.classList.add('active');
   }

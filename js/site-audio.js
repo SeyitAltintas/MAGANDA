@@ -3,7 +3,7 @@
   const startAtSeconds = 20;
   let hasStarted = false;
   let isPlaying = false;
-  let wantsAudio = true;
+  let wantsAudio = false;
   let toggleButton = null;
   let toggleLabel = null;
 

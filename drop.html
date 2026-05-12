@@ -15,14 +15,11 @@
 
 <body>
   <div class="noise-overlay" aria-hidden="true"></div>
-<main class="collection-page">
+<main class="collection-page collection-page--drop">
 
     <!-- PAGE HERO -->
     <section class="col-hero col-hero--moto">
       <div class="col-hero__bg">
-        <video class="col-hero__video" autoplay muted loop playsinline>
-          <source src="assets/video/moto-side.mp4" type="video/mp4">
-        </video>
         <div class="col-hero__overlay"></div>
       </div>
       <div class="col-hero__content">
@@ -30,37 +27,37 @@
           <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
           SINIRLI ÜRETİM
         </span>
-        <h1 class="col-hero__title">DROP</h1>
+        <div class="col-hero__headline-row">
+          <h1 class="col-hero__title">DROP</h1>
+          <section class="drop-countdown" id="dropCountdown" aria-label="Sonraki drop'a kalan sure">
+            <p class="drop-countdown__label">SONRAK&#304; DROP'A KALAN S&#220;RE</p>
+            <div class="drop-countdown__units">
+              <div class="drop-countdown__unit">
+                <span class="drop-countdown__num" id="cdDays">undefined7 ?</span>
+                <span class="drop-countdown__name">G&#220;N</span>
+              </div>
+              <span class="drop-countdown__sep" aria-hidden="true">:</span>
+              <div class="drop-countdown__unit">
+                <span class="drop-countdown__num" id="cdHours">undefined0 ?</span>
+                <span class="drop-countdown__name">SAAT</span>
+              </div>
+              <span class="drop-countdown__sep" aria-hidden="true">:</span>
+              <div class="drop-countdown__unit">
+                <span class="drop-countdown__num" id="cdMinutes">undefined0 ?</span>
+                <span class="drop-countdown__name">DAK&#304;KA</span>
+              </div>
+              <span class="drop-countdown__sep" aria-hidden="true">:</span>
+              <div class="drop-countdown__unit">
+                <span class="drop-countdown__num" id="cdSeconds">undefined0 ?</span>
+                <span class="drop-countdown__name">SAN&#304;YE</span>
+              </div>
+            </div>
+            <p class="drop-countdown__fired" role="alert">DROP BA&#350;LADI - ACELE ET</p>
+          </section>
+        </div>
         <p class="col-hero__sub">Sadece en hızlı olanlar kapar. Tekrar üretilmeyecek özel parçalar.</p>
       </div>
     </section>
-
-  <!-- COUNTDOWN TIMER -->
-  <section class="drop-countdown" id="dropCountdown" aria-label="Sonraki drop'a kalan süre">
-    <p class="drop-countdown__label">SONRAKİ DROP'A KALAN SÜRE</p>
-    <div class="drop-countdown__units">
-      <div class="drop-countdown__unit">
-        <span class="drop-countdown__num" id="cdDays">undefined7 ?</span>
-        <span class="drop-countdown__name">GÜN</span>
-      </div>
-      <span class="drop-countdown__sep" aria-hidden="true">:</span>
-      <div class="drop-countdown__unit">
-        <span class="drop-countdown__num" id="cdHours">undefined0 ?</span>
-        <span class="drop-countdown__name">SAAT</span>
-      </div>
-      <span class="drop-countdown__sep" aria-hidden="true">:</span>
-      <div class="drop-countdown__unit">
-        <span class="drop-countdown__num" id="cdMinutes">undefined0 ?</span>
-        <span class="drop-countdown__name">DAKİKA</span>
-      </div>
-      <span class="drop-countdown__sep" aria-hidden="true">:</span>
-      <div class="drop-countdown__unit">
-        <span class="drop-countdown__num" id="cdSeconds">undefined0 ?</span>
-        <span class="drop-countdown__name">SANİYE</span>
-      </div>
-    </div>
-    <p class="drop-countdown__fired" role="alert">DROP BAŞLADI — ACELE ET</p>
-  </section>
 
 <!-- PRODUCTS -->
     <section class="collection" id="koleksiyon">
@@ -195,5 +192,3 @@
   <script src="js/site-audio.js"></script>
 </body>
 </html>
-
-
