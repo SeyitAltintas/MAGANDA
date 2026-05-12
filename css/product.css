@@ -9,6 +9,10 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+body.no-scroll {
+  overflow: hidden;
+}
+
 /* ─── BREADCRUMB ─────────────────────── */
 .pp-breadcrumb {
   position: fixed;
@@ -144,41 +148,223 @@
   transform: translateY(-2px);
 }
 
-.pp-zoom-modal {
+/* ─── ZOOM TETİKLEYİCİ ────────────────── */
+.pp-zoom-trigger {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  cursor: zoom-in;
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.22s, background 0.2s, border-color 0.2s, transform 0.18s;
+}
+
+.pp-image-frame:hover .pp-zoom-trigger {
+  opacity: 1;
+}
+
+.pp-zoom-trigger:hover {
+  background: var(--color-red);
+  border-color: var(--color-red);
+  transform: scale(1.08);
+}
+
+/* Hover'da main image'e cursor zoom-in ver */
+.pp-image-frame {
+  cursor: zoom-in;
+}
+
+/* ─── LIGHTBOX ───────────────────────── */
+.pp-lightbox {
   position: fixed;
   inset: 0;
-  z-index: 2500;
-  display: none;
-  place-items: center;
-  padding: clamp(20px, 5vw, 60px);
-  background: rgba(0, 0, 0, 0.88);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.pp-zoom-modal--active {
-  display: grid;
+.pp-lightbox--active {
+  visibility: visible;
+  pointer-events: auto;
 }
 
-.pp-zoom-modal__image {
-  width: min(980px, 92vw);
-  height: min(760px, 82vh);
+.pp-lightbox__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 6, 8, 0.94);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pp-lightbox--active .pp-lightbox__overlay {
+  opacity: 1;
+}
+
+.pp-lightbox__stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.pp-lightbox--active .pp-lightbox__stage {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Kapat butonu */
+.pp-lightbox__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.18s;
+}
+
+.pp-lightbox__close:hover {
+  background: var(--color-red);
+  border-color: var(--color-red);
+  transform: rotate(90deg);
+}
+
+/* Sayaç */
+.pp-lightbox__counter {
+  position: absolute;
+  top: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Ana görsel */
+.pp-lightbox__image {
+  flex: 1;
+  width: 100%;
+  max-width: min(900px, 90vw);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  margin-top: 50px;
 }
 
-.pp-zoom-modal__close {
-  position: fixed;
-  top: 22px;
-  right: 28px;
-  width: 42px;
-  height: 42px;
-  border: 1px solid rgba(255,255,255,0.24);
-  background: transparent;
-  color: #FFF;
-  font-size: 28px;
-  line-height: 1;
+/* Navigasyon okları */
+.pp-lightbox__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
   cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.18s;
+  margin-top: 25px; /* Compensate for counter */
 }
+
+.pp-lightbox__nav--prev {
+  left: max(20px, calc(50% - min(450px, 45vw) - 70px));
+}
+
+.pp-lightbox__nav--next {
+  right: max(20px, calc(50% - min(450px, 45vw) - 70px));
+}
+
+.pp-lightbox__nav:hover {
+  background: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.pp-lightbox__nav--prev:hover {
+  transform: translateY(-50%) translateX(-3px);
+}
+
+.pp-lightbox__nav--next:hover {
+  transform: translateY(-50%) translateX(3px);
+}
+
+.pp-lightbox__nav:disabled {
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+/* Thumbnail şeridi */
+.pp-lightbox__thumbs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  max-width: min(900px, 90vw);
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.pp-lightbox__thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.pp-lightbox__thumb {
+  flex: 0 0 64px;
+  height: 64px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  transition: border-color 0.18s, transform 0.18s, opacity 0.18s;
+  opacity: 0.55;
+}
+
+.pp-lightbox__thumb:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.pp-lightbox__thumb--active {
+  border-color: var(--color-red);
+  opacity: 1;
+  transform: translateY(-3px);
+}
+
 /* Badge */
 .pp-badge {
   position: absolute;
@@ -617,6 +803,18 @@ html[data-theme="light"] .pp-care-icon--dark {
 
 .pp-color-swatch--active {
   transform: translateY(-1px);
+}
+
+.pp-color-swatch:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+  border-color: var(--border-color);
+  color: var(--text-muted);
+}
+
+.pp-color-swatch:disabled span:not(.pp-color-swatch__dot) {
+  text-decoration: line-through;
 }
 
 .pp-color-swatch__dot {

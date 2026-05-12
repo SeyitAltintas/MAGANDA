@@ -23,6 +23,14 @@ function assertNotIncludes(source, needle, label) {
   }
 }
 
+function assertBefore(source, first, second, label) {
+  const firstIndex = source.indexOf(first);
+  const secondIndex = source.indexOf(second);
+  if (firstIndex === -1 || secondIndex === -1 || firstIndex > secondIndex) {
+    throw new Error(`${label} expected "${first}" before "${second}"`);
+  }
+}
+
 [
   ['araba.html', carHtml, 'V8 OBSESSION HOODIE'],
   ['araba.html', carHtml, 'assets/img/V8 OBSESSION HOODIE/siyah/ön.png'],
@@ -71,6 +79,10 @@ function assertNotIncludes(source, needle, label) {
   ['product.html', productHtml, 'ŞİMDİ AL'],
   ['js/main.js', mainJs, 'initProductGallery'],
   ['js/main.js', mainJs, 'getProductSizeStock'],
+  ['js/main.js', mainJs, 'getSelectedSizeStock'],
+  ['js/main.js', mainJs, 'stock > 2 ? 10 : stock'],
+  ['js/main.js', mainJs, 'syncProductQtyControls'],
+  ['js/main.js', mainJs, 'Math.min(10, getSelectedSizeStock())'],
   ['js/main.js', mainJs, 'initFitFinder'],
   ['js/main.js', mainJs, 'renderProductReviews'],
   ['js/main.js', mainJs, 'initReviewFilters'],
@@ -88,12 +100,17 @@ function assertNotIncludes(source, needle, label) {
   ['js/main.js', mainJs, 'buyNowBtn'],
   ['js/main.js', mainJs, 'maganda_buy_now'],
   ['js/main.js', mainJs, "window.location.href = 'checkout.html?buyNow=1'"],
+  ['js/main.js', mainJs, "backLink.addEventListener('click'"],
+  ['js/main.js', mainJs, 'window.history.back()'],
   ['js/checkout.js', checkoutJs, 'maganda_buy_now'],
   ['js/checkout.js', checkoutJs, "get('buyNow') === '1'"],
   ['js/checkout.js', checkoutJs, 'getCheckoutItems'],
   ['js/checkout.js', checkoutJs, 'clearBuyNowItem'],
   ['js/main.js', mainJs, 'fitFinder:'],
   ['js/main.js', mainJs, "params.get('gallery')"],
+  ['js/main.js', mainJs, 'getCollectionBackHref'],
+  ['js/main.js', mainJs, "params.set('from', collectionBackHref)"],
+  ['js/main.js', mainJs, "params.get('from')"],
   ['js/main.js', mainJs, 'setBackgroundImage'],
   ['js/main.js', mainJs, 'url(&quot;'],
   ['js/main.js', mainJs, 'data-gallery-nav'],
@@ -102,7 +119,9 @@ function assertNotIncludes(source, needle, label) {
   ['js/main.js', mainJs, 'updateGalleryThumbs'],
   ['js/main.js', mainJs, 'V8 OBSESSION HOODIE'],
   ['js/main.js', mainJs, 'DRIFT KING OVERSIZE T-SHIRT'],
+  ['js/main.js', mainJs, 'var MAGANDA_PRODUCT_CATALOG = [];'],
   ['js/main.js', mainJs, 'var MAGANDA_PRODUCT_CATALOG = ['],
+  ['js/main.js', mainJs, 'MAGANDA_PRODUCT_CATALOG || []'],
   ['js/main.js', mainJs, 'APEX Predator Hoodie'],
   ['js/main.js', mainJs, 'SPEED HUNTER BEANIE'],
   ['js/main.js', mainJs, 'CBR 600RR Baskılı Regular Fit Motorcu Tişörtü'],
@@ -183,5 +202,7 @@ function assertNotIncludes(source, needle, label) {
   ['js/main.js', mainJs, 'Bilgilerini sec'],
   ['js/main.js', mainJs, 'Tukendi']
 ].forEach(([file, source, needle]) => assertNotIncludes(source, needle, file));
+
+assertBefore(mainJs, 'syncProductBackLink();', 'initProductGallery(imgUrl, name, galleryImages)', 'js/main.js');
 
 console.log('product detail feature hooks present');

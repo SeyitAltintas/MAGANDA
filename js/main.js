@@ -755,9 +755,26 @@
         img: imgUrl
       });
       if (gallery) params.set('gallery', gallery);
+      var collectionBackHref = getCollectionBackHref();
+      if (collectionBackHref) params.set('from', collectionBackHref);
 
       window.location.href = 'product.html?' + params.toString();
     });
+  }
+
+  function getCollectionBackHref(value) {
+    var source = String(value || window.location.pathname || '').toLowerCase();
+    if (source.indexOf('araba.html') !== -1) return 'araba.html';
+    if (source.indexOf('motor.html') !== -1) return 'motor.html';
+    if (source.indexOf('drop.html') !== -1) return 'drop.html';
+    return '';
+  }
+
+  function getCollectionBackLabel(href) {
+    if (href.indexOf('araba') !== -1) return 'ARABA KOLEKSİYONU';
+    if (href.indexOf('motor') !== -1) return 'MOTOSİKLET KOLEKSİYONU';
+    if (href.indexOf('drop') !== -1) return 'DROP KOLEKSİYONU';
+    return 'KOLEKSİYON';
   }
 
   function parsePriceValue(value) {
@@ -789,6 +806,29 @@
     var badge = params.get('badge') || '';
     var imgUrl = params.get('img') || '';
     var galleryImages = (params.get('gallery') || '').split('|').filter(Boolean);
+    var MAGANDA_PRODUCT_CATALOG = [];
+
+    function syncProductBackLink() {
+      var backLink = document.getElementById('pp-back');
+      if (!backLink) return;
+
+      var ref = document.referrer || '';
+      var fromHref = getCollectionBackHref(params.get('from'));
+      var refHref = getCollectionBackHref(ref);
+      var colHref = fromHref || refHref || 'index.html';
+      backLink.href = colHref;
+      backLink.addEventListener('click', function (event) {
+        if (!fromHref && !refHref && window.history.length > 1) {
+          event.preventDefault();
+          window.history.back();
+        }
+      });
+
+      var colEl = document.getElementById('pp-back-label');
+      if (colEl) colEl.textContent = getCollectionBackLabel(colHref);
+    }
+
+    syncProductBackLink();
 
     var sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
     var descriptions = [
@@ -831,7 +871,7 @@
     renderProductReviews(name, series, imgUrl);
     renderProductQuestions(name, series);
     renderRelatedProducts(name, series);
-    initProductColorOptions(name, productGalleryApi, imgUrl);
+    // initProductColorOptions is called AFTER MAGANDA_PRODUCT_CATALOG is populated (below)
 
 
     function initProductInfoTabs(activeDescription) {
@@ -1311,7 +1351,7 @@
       draw(questions);
     }
 
-    var MAGANDA_PRODUCT_CATALOG = [
+    MAGANDA_PRODUCT_CATALOG = [
           {
                 "name": "V8 OBSESSION HOODIE",
                 "price": "₺1799",
@@ -1598,7 +1638,12 @@
                 "img": "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_27_27.png",
                 "gallery": [
                       "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_27_27.png",
-                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_29_42.png"
+                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_29_42.png",
+                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_41_39.png",
+                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_44_27.png",
+                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_52_48 (1).png",
+                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_52_49 (2).png",
+                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_52_49 (3).png"
                 ],
                 "aliases": [
                       "DROP #07: ALTIN ELBİSELİ ADAM HOODIE"
@@ -1606,7 +1651,12 @@
                 "colors": {
                       "siyah": [
                             "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_27_27.png",
-                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_29_42.png"
+                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_29_42.png",
+                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_41_39.png",
+                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_44_27.png",
+                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_52_48 (1).png",
+                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_52_49 (2).png",
+                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_52_49 (3).png"
                       ]
                 }
           },
@@ -1646,10 +1696,10 @@
                             "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/beyaz/ChatGPT Image 12 May 2026 12_18_04.png"
                       ],
                       "krem-bej": [
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/krem-bej/ChatGPT Image 12 May 2026 12_31_16 (1).png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/krem-bej/ChatGPT Image 12 May 2026 12_31_16 (2).png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/krem-bej/ChatGPT Image 12 May 2026 12_31_17 (3).png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/krem-bej/ChatGPT Image 12 May 2026 12_31_17 (4).png"
+                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/krem-bej/ChatGPT Image 12 May 2026 12_31_16_1.png",
+                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/krem-bej/ChatGPT Image 12 May 2026 12_31_16_2.png",
+                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/krem-bej/ChatGPT Image 12 May 2026 12_31_17_3.png",
+                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/krem-bej/ChatGPT Image 12 May 2026 12_31_17_4.png"
                       ]
                 }
           },
@@ -1767,6 +1817,8 @@
           }
     ];
 
+    initProductColorOptions(name, productGalleryApi, imgUrl);
+
     function renderRelatedProducts(productName, productSeries) {
       var relatedGrid = document.getElementById('pp-related-grid');
       if (!relatedGrid) return;
@@ -1833,7 +1885,7 @@
 
     function findCatalogProduct(productName) {
       var normalizedName = normalizeCatalogName(productName);
-      return MAGANDA_PRODUCT_CATALOG.find(function (item) {
+      return (MAGANDA_PRODUCT_CATALOG || []).find(function (item) {
         if (normalizeCatalogName(item.name) === normalizedName) return true;
         return (item.aliases || []).some(function (alias) {
           return normalizeCatalogName(alias) === normalizedName || normalizedName.indexOf(normalizeCatalogName(alias)) !== -1;
@@ -1874,7 +1926,8 @@
 
     function setBackgroundImage(element, imageUrl) {
       if (!element || !imageUrl) return;
-      element.style.backgroundImage = 'url("' + String(imageUrl).replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '")';
+      var bustedUrl = String(imageUrl) + '?v=' + new Date().getTime();
+      element.style.backgroundImage = 'url("' + bustedUrl.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '")';
     }
 
     function setProductImage(imageUrl) {
@@ -1932,21 +1985,83 @@
         });
       });
 
-      function closeZoom() {
-        if (!zoomModal) return;
-        zoomModal.classList.remove('pp-zoom-modal--active');
-        zoomModal.setAttribute('aria-hidden', 'true');
+      // ─── LIGHTBOX ────────────────────────────────────────────────
+      var lightboxModal   = document.getElementById('pp-zoom-modal');
+      var lightboxImage   = document.getElementById('pp-zoom-image');
+      var lightboxClose   = document.getElementById('pp-zoom-close');
+      var lightboxPrev    = document.getElementById('pp-lightbox-prev');
+      var lightboxNext    = document.getElementById('pp-lightbox-next');
+      var lightboxThumbs  = document.getElementById('pp-lightbox-thumbs');
+      var lightboxCounter = document.getElementById('pp-lightbox-counter');
+      var lightboxOverlay = document.getElementById('pp-lightbox-overlay');
+      var zoomTrigger     = document.getElementById('pp-zoom-trigger');
+      var lightboxIndex   = 0;
+
+      function openLightbox(startIndex) {
+        if (!lightboxModal) return;
+        lightboxIndex = startIndex != null ? startIndex : activeIndex;
+        if (lightboxThumbs) lightboxThumbs.dataset.gallery = '';
+        lightboxModal.classList.add('pp-lightbox--active');
+        lightboxModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('no-scroll');
+        renderLightbox();
+      }
+
+      function closeLightbox() {
+        if (!lightboxModal) return;
+        lightboxModal.classList.remove('pp-lightbox--active');
+        lightboxModal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('no-scroll');
       }
 
-      if (zoomClose) zoomClose.addEventListener('click', closeZoom);
-      if (zoomModal) {
-        zoomModal.addEventListener('click', function (event) {
-          if (event.target === zoomModal) closeZoom();
-        });
+      function renderLightbox() {
+        var img = gallery[lightboxIndex];
+        if (!img) return;
+        if (lightboxImage) {
+          lightboxImage.style.backgroundImage = 'url("' + escapeAttr(img) + '")';
+        }
+        if (lightboxCounter) {
+          lightboxCounter.textContent = (lightboxIndex + 1) + ' / ' + gallery.length;
+        }
+        if (lightboxThumbs) {
+          if (lightboxThumbs.dataset.gallery !== gallery.join('|')) {
+            lightboxThumbs.dataset.gallery = gallery.join('|');
+            lightboxThumbs.innerHTML = gallery.map(function (image, idx) {
+              return '<button class="pp-lightbox__thumb' + (idx === lightboxIndex ? ' pp-lightbox__thumb--active' : '') + '" type="button" data-lb-thumb="' + idx + '" aria-label="Gorsel ' + (idx + 1) + '" style="background-image:url(&quot;' + escapeAttr(image) + '&quot;)"></button>';
+            }).join('');
+            lightboxThumbs.querySelectorAll('[data-lb-thumb]').forEach(function (t) {
+              t.addEventListener('click', function () {
+                lightboxIndex = Number(t.getAttribute('data-lb-thumb'));
+                renderLightbox();
+              });
+            });
+          } else {
+            lightboxThumbs.querySelectorAll('[data-lb-thumb]').forEach(function (t, i) {
+              t.classList.toggle('pp-lightbox__thumb--active', i === lightboxIndex);
+            });
+          }
+          var activeThumb = lightboxThumbs.querySelector('.pp-lightbox__thumb--active');
+          if (activeThumb) activeThumb.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+        }
       }
-      document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape' && zoomModal && zoomModal.classList.contains('pp-zoom-modal--active')) closeZoom();
+
+      function lightboxNavigate(direction) {
+        lightboxIndex = (lightboxIndex + direction + gallery.length) % gallery.length;
+        renderLightbox();
+      }
+
+      if (imgEl) imgEl.addEventListener('click', function () { openLightbox(activeIndex); });
+      if (zoomTrigger) zoomTrigger.addEventListener('click', function (e) { e.stopPropagation(); openLightbox(activeIndex); });
+      if (lightboxClose)   lightboxClose.addEventListener('click', closeLightbox);
+      if (lightboxOverlay) lightboxOverlay.addEventListener('click', closeLightbox);
+      if (lightboxPrev)    lightboxPrev.addEventListener('click', function () { lightboxNavigate(-1); });
+      if (lightboxNext)    lightboxNext.addEventListener('click', function () { lightboxNavigate(1); });
+
+      document.addEventListener('keydown', function (e) {
+        if (!lightboxModal || !lightboxModal.classList.contains('pp-lightbox--active')) return;
+        if (e.key === 'Escape')     closeLightbox();
+        if (e.key === 'ArrowLeft')  lightboxNavigate(-1);
+        if (e.key === 'ArrowRight') lightboxNavigate(1);
       });
 
       return {
@@ -1955,11 +2070,12 @@
           activeIndex = 0;
           activeImage = gallery[activeIndex];
           setProductImage(activeImage);
+          if (lightboxThumbs) lightboxThumbs.dataset.gallery = '';
           if (thumbsEl) {
             thumbsEl.innerHTML = gallery.map(function (image, index) {
-              return '<button class="pp-gallery-thumb' + (index === activeIndex ? ' pp-gallery-thumb--active' : '') + '" type="button" data-gallery-thumb="' + index + '" aria-label="Ürün görseli ' + (index + 1) + '" aria-current="' + (index === activeIndex ? 'true' : 'false') + '" style="background-image:url(&quot;' + escapeAttr(image) + '&quot;)"></button>';
+              var bustedImage = String(image) + '?v=' + new Date().getTime();
+              return '<button class="pp-gallery-thumb' + (index === activeIndex ? ' pp-gallery-thumb--active' : '') + '" type="button" data-gallery-thumb="' + index + '" aria-label="Urun gorseli ' + (index + 1) + '" aria-current="' + (index === activeIndex ? 'true' : 'false') + '" style="background-image:url(&quot;' + escapeAttr(bustedImage) + '&quot;)"></button>';
             }).join('');
-
             thumbsEl.querySelectorAll('[data-gallery-thumb]').forEach(function (thumb) {
               thumb.addEventListener('click', function () {
                 activeIndex = Number(thumb.getAttribute('data-gallery-thumb')) || 0;
@@ -1994,9 +2110,9 @@
 
       colorButtons.forEach(function (button) {
         var color = button.getAttribute('data-product-color');
-        button.hidden = !galleries[color];
+        button.disabled = !galleries[color];
         button.addEventListener('click', function () {
-          if (!galleries[color]) return;
+          if (!galleries[color] || button.disabled) return;
           galleryApi.setGallery(galleries[color]);
           setActiveColor(color);
         });
@@ -2053,25 +2169,25 @@
       });
     }
 
-    var backLink = document.getElementById('pp-back');
-    if (backLink) {
-      var ref = document.referrer || '';
-      var colName = ref.indexOf('araba') !== -1 ? 'ARABA KOLEKSİYONU'
-        : ref.indexOf('motor') !== -1 ? 'MOTOSİKLET KOLEKSİYONU'
-          : ref.indexOf('drop') !== -1 ? 'DROP KOLEKSİYONU'
-            : 'KOLEKSİYON';
-      var colHref = ref && (ref.indexOf('araba') !== -1 || ref.indexOf('motor') !== -1 || ref.indexOf('drop') !== -1)
-        ? ref : 'index.html';
-      backLink.href = colHref;
-      var colEl = document.getElementById('pp-back-label');
-      if (colEl) colEl.textContent = colName;
-    }
-
     // Beden seçici
     var sizesEl = document.getElementById('pp-sizes');
     var selectedSize = '';
     var currentQty = 1;
     var sizeStock = getProductSizeStock(name);
+
+    function getSelectedSizeStock() {
+      if (!selectedSize) return 10;
+      var stock = sizeStock[selectedSize] || 0;
+      return stock > 2 ? 10 : stock;
+    }
+
+    function syncProductQtyControls() {
+      var maxQty = Math.min(10, getSelectedSizeStock());
+      if (currentQty > maxQty) currentQty = Math.max(1, maxQty);
+      if (qtyValEl) qtyValEl.textContent = currentQty;
+      if (qtyMinus) qtyMinus.disabled = currentQty <= 1;
+      if (qtyPlus) qtyPlus.disabled = currentQty >= maxQty;
+    }
 
     if (sizesEl) {
       sizes.forEach(function (s) {
@@ -2086,10 +2202,12 @@
         btn.addEventListener('click', function () {
           if (btn.disabled) return;
           selectedSize = s;
+          currentQty = 1;
           sizesEl.querySelectorAll('.pp-size-btn').forEach(function (b) {
             b.classList.remove('pp-size-btn--active');
           });
           btn.classList.add('pp-size-btn--active');
+          syncProductQtyControls();
           sizesEl.classList.remove('pp-sizes--warn');
           var warn = document.getElementById('pp-size-warn');
           if (warn) warn.style.opacity = '0';
@@ -2102,25 +2220,22 @@
     var qtyValEl = document.getElementById('pp-qty-val');
     var qtyMinus = document.getElementById('pp-qty-minus');
     var qtyPlus = document.getElementById('pp-qty-plus');
-    if (qtyMinus) qtyMinus.disabled = true;
+    syncProductQtyControls();
 
     if (qtyMinus) {
       qtyMinus.addEventListener('click', function () {
         if (currentQty > 1) {
           currentQty--;
-          if (qtyValEl) qtyValEl.textContent = currentQty;
-          qtyMinus.disabled = currentQty <= 1;
-          if (qtyPlus) qtyPlus.disabled = false;
+          syncProductQtyControls();
         }
       });
     }
     if (qtyPlus) {
       qtyPlus.addEventListener('click', function () {
-        if (currentQty < 10) {
+        var maxQty = Math.min(10, getSelectedSizeStock());
+        if (currentQty < maxQty) {
           currentQty++;
-          if (qtyValEl) qtyValEl.textContent = currentQty;
-          qtyPlus.disabled = currentQty >= 10;
-          if (qtyMinus) qtyMinus.disabled = false;
+          syncProductQtyControls();
         }
       });
     }
@@ -2163,7 +2278,7 @@
         });
 
         if (existingItem) {
-          existingItem.quantity = Math.min(existingItem.quantity + currentQty, 10);
+          existingItem.quantity = Math.min(existingItem.quantity + currentQty, Math.min(10, getSelectedSizeStock()));
         } else {
           cart.push(productCartItem);
         }
