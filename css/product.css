@@ -635,6 +635,14 @@ html[data-theme="light"] .pp-care-icon--dark {
   background: #F5F5F5;
 }
 
+.pp-color-swatch__dot--gray {
+  background: #777777;
+}
+
+.pp-color-swatch__dot--cream {
+  background: #D9C7A5;
+}
+
 .pp-fit-finder {
   padding: 15px;
   border: 1px solid var(--border-color);

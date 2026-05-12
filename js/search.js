@@ -8,28 +8,205 @@
 
   /* ─── ÜRÜN KATALOĞu (static, tüm koleksiyonlar) ─── */
   var CATALOG = [
-    // Araba
-    { name: 'V8 OBSESSION HOODIE', price: 1799, category: 'Araba', page: 'araba.html', img: 'assets/img/V8 OBSESSION HOODIE/siyah/ön.png', badge: 'YENİ DROP', gallery: 'assets/img/V8 OBSESSION HOODIE/siyah/ön.png|assets/img/V8 OBSESSION HOODIE/siyah/arka.png|assets/img/V8 OBSESSION HOODIE/siyah/arkaveön.png|assets/img/V8 OBSESSION HOODIE/siyah/doku.png|assets/img/V8 OBSESSION HOODIE/siyah/model.png|assets/img/V8 OBSESSION HOODIE/siyah/modelarka.png' },
-    { name: 'V8 OBSESSION HOODIE — SİYAH', price: 1499, category: 'Araba', page: 'araba.html', img: 'assets/products/maganda_hoodie_black_1777846105084.png', badge: 'YENİ' },
-    { name: 'DRIFT KING OVERSIZE T-SHIRT', price: 699, category: 'Araba', page: 'araba.html', img: 'assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/ön.png', badge: 'ÇOK SATAN', gallery: 'assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/ön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arka.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arkaveön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/kumasdetay.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelarka.png' },
-    { name: 'MIDNIGHT RUN SWEATPANTS', price: 1899, category: 'Araba', page: 'araba.html', img: 'assets/products/maganda_sweatpants_neon_1777846349061.png', badge: '' },
-    { name: 'GEARHEAD JOGGERS', price: 1299, category: 'Araba', page: 'araba.html', img: 'assets/products/maganda_sweatpants_redline_1777846482324.png', badge: 'SINIRLI' },
-    { name: 'TOKYO NIGHTS LONG SLEEVE', price: 899, category: 'Araba', page: 'araba.html', img: 'assets/products/maganda_longsleeve_tokyo_1777846775576.png', badge: '' },
-    { name: 'TRACK DAY CARBON CAP', price: 499, category: 'Araba', page: 'araba.html', img: 'assets/products/maganda_cap_carbon_1777846506524.png', badge: '' },
-    { name: 'APEX PREDATOR HOODIE', price: 1699, category: 'Araba', page: 'araba.html', img: 'assets/products/maganda_hoodie_acid_1777846208954.png', badge: '' },
-    { name: 'SPEED HUNTER BEANIE', price: 399, category: 'Araba', page: 'araba.html', img: 'assets/products/maganda_beanie_skull_1777846540448.png', badge: '' },
-    // Motor
-    { name: 'IRON RIDER HOODIE — ANTRASIT', price: 1599, category: 'Motor', page: 'motor.html', img: 'assets/products/maganda_hoodie_acid_1777846208954.png', badge: 'YENİ' },
-    { name: 'ASPHALT ANGEL T-SHIRT', price: 749, category: 'Motor', page: 'motor.html', img: 'assets/products/maganda_tshirt_car_1777846004490.png', badge: '' },
-    { name: 'NIGHT SHIFT JOGGERS', price: 1199, category: 'Motor', page: 'motor.html', img: 'assets/products/maganda_sweatpants_redline_1777846482324.png', badge: '' },
-    { name: 'CAFÉ RACER SNAPBACK', price: 549, category: 'Motor', page: 'motor.html', img: 'assets/products/maganda_cap_carbon_1777846506524.png', badge: 'ÇOK SATAN' },
-    { name: 'THROTTLE QUEEN CREWNECK', price: 1399, category: 'Motor', page: 'motor.html', img: 'assets/products/maganda_hoodie_black_1777846105084.png', badge: '' },
-    // Drop
-    { name: 'DROP #01: THE MANIFESTO HOODIE', price: 1999, category: 'Drop', page: 'drop.html', img: 'assets/products/maganda_hoodie_black_1777846105084.png', badge: 'SON 5 ADET' },
-    { name: 'DROP #02: REDLINE TRACKSUIT', price: 1599, category: 'Drop', page: 'drop.html', img: 'assets/products/maganda_sweatpants_redline_1777846482324.png', badge: 'TÜKENMEK ÜZERE' },
-    { name: 'DROP #03: SHADOW REFLECTIVE HOODIE', price: 2499, category: 'Drop', page: 'drop.html', img: 'assets/products/maganda_hoodie_acid_1777846208954.png', badge: 'SINIRLI' },
-    { name: 'DROP #04: OBSESSED ACID WASH TEE', price: 899, category: 'Drop', page: 'drop.html', img: 'assets/products/maganda_tshirt_car_1777846004490.png', badge: 'SON 2 ADET' }
-  ];
+    {
+        "name": "V8 OBSESSION HOODIE",
+        "price": 1799,
+        "category": "Araba",
+        "page": "araba.html",
+        "img": "assets/img/V8 OBSESSION HOODIE/siyah/ön.png",
+        "badge": "YENİ DROP",
+        "gallery": "assets/img/V8 OBSESSION HOODIE/siyah/ön.png|assets/img/V8 OBSESSION HOODIE/siyah/arka.png|assets/img/V8 OBSESSION HOODIE/siyah/arkaveön.png|assets/img/V8 OBSESSION HOODIE/siyah/doku.png|assets/img/V8 OBSESSION HOODIE/siyah/model.png|assets/img/V8 OBSESSION HOODIE/siyah/modelarka.png"
+    },
+    {
+        "name": "DRIFT KING OVERSIZE T-SHIRT",
+        "price": 699,
+        "category": "Araba",
+        "page": "araba.html",
+        "img": "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/ön.png",
+        "badge": "ÇOK SATAN",
+        "gallery": "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/ön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arka.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arkaveön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/kumasdetay.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelarka.png"
+    },
+    {
+        "name": "MIDNIGHT RUN SWEATPANTS",
+        "price": 1899,
+        "category": "Araba",
+        "page": "araba.html",
+        "img": "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_39_41.png",
+        "badge": "",
+        "gallery": "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_39_41.png|assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_40_41.png|assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_42_36.png|assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_44_36.png|assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_45_48.png|assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_48_27.png"
+    },
+    {
+        "name": "GEARHEAD JOGGERS",
+        "price": 1299,
+        "category": "Araba",
+        "page": "araba.html",
+        "img": "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 16_48_00.png",
+        "badge": "SINIRLI",
+        "gallery": "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 16_48_00.png|assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 16_49_46.png|assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 16_51_22.png|assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 17_09_27.png|assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 17_19_13.png|assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 23_12_28.png"
+    },
+    {
+        "name": "TOKYO NIGHTS LONG SLEEVE",
+        "price": 899,
+        "category": "Araba",
+        "page": "araba.html",
+        "img": "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_19_02.png",
+        "badge": "",
+        "gallery": "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_19_02.png|assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_20_20.png|assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_21_31.png|assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_24_36.png|assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_27_26.png|assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_31_24.png"
+    },
+    {
+        "name": "TRACK DAY CARBON CAP",
+        "price": 499,
+        "category": "Araba",
+        "page": "araba.html",
+        "img": "assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_24_09.png",
+        "badge": "",
+        "gallery": "assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_24_09.png|assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_25_22.png|assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_26_35.png|assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_29_27.png|assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_35_06.png"
+    },
+    {
+        "name": "APEX Predator Hoodie",
+        "price": 1699,
+        "category": "Araba",
+        "page": "araba.html",
+        "img": "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_27_01.png",
+        "badge": "YENİ",
+        "gallery": "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_27_01.png|assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_29_39.png|assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_31_06.png|assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_33_43.png|assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_40_40.png|assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_49_04.png"
+    },
+    {
+        "name": "SPEED HUNTER BEANIE",
+        "price": 399,
+        "category": "Araba",
+        "page": "araba.html",
+        "img": "assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_05_42.png",
+        "badge": "",
+        "gallery": "assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_05_42.png|assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_06_40.png|assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_07_56.png"
+    },
+    {
+        "name": "Altın Elbiseli Adam 3 İplik Oversize Hoodie",
+        "price": 1799,
+        "category": "Motor",
+        "page": "motor.html",
+        "img": "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_27_27.png",
+        "badge": "YENİ",
+        "gallery": "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_27_27.png|assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_29_42.png"
+    },
+    {
+        "name": "CBR 600RR Baskılı Regular Fit Motorcu Tişörtü",
+        "price": 749,
+        "category": "Motor",
+        "page": "motor.html",
+        "img": "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_56_21.png",
+        "badge": "ÇOK SATAN",
+        "gallery": "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_56_21.png|assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_00_24.png|assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_01_49.png|assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_03_15.png|assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_05_55.png|assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_07_32.png"
+    },
+    {
+        "name": "MT-07 Baskılı Regular Fit Motorcu Tişörtü",
+        "price": 699,
+        "category": "Motor",
+        "page": "motor.html",
+        "img": "assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ön.png",
+        "badge": "",
+        "gallery": "assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ön.png|assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/kumasdetay.png|assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_07_41.png|assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_40_34.png|assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_43_06.png"
+    },
+    {
+        "name": "RIDE OR DIE TRACK PANTS",
+        "price": 1899,
+        "category": "Motor",
+        "page": "motor.html",
+        "img": "assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_18_54.png",
+        "badge": "SINIRLI",
+        "gallery": "assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_18_54.png|assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_19_50.png|assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_22_33.png"
+    },
+    {
+        "name": "S1000RR Baskılı Regular Fit Motorcu Tişörtü",
+        "price": 749,
+        "category": "Motor",
+        "page": "motor.html",
+        "img": "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_39_20.png",
+        "badge": "",
+        "gallery": "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_39_20.png|assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_44_30.png|assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_46_30.png|assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_48_06.png|assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_49_45.png"
+    },
+    {
+        "name": "The Evolution Motorcu Tişört",
+        "price": 699,
+        "category": "Motor",
+        "page": "motor.html",
+        "img": "assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_13_18.png",
+        "badge": "",
+        "gallery": "assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_13_18.png|assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_14_43.png|assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_20_39.png|assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_24_16.png"
+    },
+    {
+        "name": "DROP #01: V8 OBSESSION HOODIE",
+        "price": 1999,
+        "category": "Drop",
+        "page": "drop.html",
+        "img": "assets/img/V8 OBSESSION HOODIE/siyah/ön.png",
+        "badge": "SON 5 ADET",
+        "gallery": "assets/img/V8 OBSESSION HOODIE/siyah/ön.png|assets/img/V8 OBSESSION HOODIE/siyah/arka.png|assets/img/V8 OBSESSION HOODIE/siyah/arkaveön.png|assets/img/V8 OBSESSION HOODIE/siyah/doku.png|assets/img/V8 OBSESSION HOODIE/siyah/model.png|assets/img/V8 OBSESSION HOODIE/siyah/modelarka.png"
+    },
+    {
+        "name": "DROP #02: APEX PREDATOR HOODIE",
+        "price": 1899,
+        "category": "Drop",
+        "page": "drop.html",
+        "img": "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_27_01.png",
+        "badge": "SINIRLI",
+        "gallery": "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_27_01.png|assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_29_39.png|assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_31_06.png|assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_33_43.png|assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_40_40.png|assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_49_04.png"
+    },
+    {
+        "name": "DROP #03: DRIFT KING T-SHIRT",
+        "price": 899,
+        "category": "Drop",
+        "page": "drop.html",
+        "img": "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/ön.png",
+        "badge": "ÇOK SATAN",
+        "gallery": "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/ön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arka.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arkaveön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/kumasdetay.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelön.png|assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelarka.png"
+    },
+    {
+        "name": "DROP #04: CBR 600RR MOTORCU TİŞÖRTÜ",
+        "price": 899,
+        "category": "Drop",
+        "page": "drop.html",
+        "img": "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_56_21.png",
+        "badge": "SON 2 ADET",
+        "gallery": "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_56_21.png|assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_00_24.png|assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_01_49.png|assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_03_15.png|assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_05_55.png|assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_07_32.png"
+    },
+    {
+        "name": "DROP #05: S1000RR MOTORCU TİŞÖRTÜ",
+        "price": 899,
+        "category": "Drop",
+        "page": "drop.html",
+        "img": "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_39_20.png",
+        "badge": "SINIRLI",
+        "gallery": "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_39_20.png|assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_44_30.png|assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_46_30.png|assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_48_06.png|assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_49_45.png"
+    },
+    {
+        "name": "DROP #06: RIDE OR DIE TRACK PANTS",
+        "price": 1999,
+        "category": "Drop",
+        "page": "drop.html",
+        "img": "assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_18_54.png",
+        "badge": "SON 1 ADET",
+        "gallery": "assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_18_54.png|assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_19_50.png|assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_22_33.png"
+    },
+    {
+        "name": "DROP #07: ALTIN ELBİSELİ ADAM HOODIE",
+        "price": 1999,
+        "category": "Drop",
+        "page": "drop.html",
+        "img": "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_27_27.png",
+        "badge": "YENİ DROP",
+        "gallery": "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_27_27.png|assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_29_42.png"
+    },
+    {
+        "name": "DROP #08: SPEED HUNTER BEANIE",
+        "price": 499,
+        "category": "Drop",
+        "page": "drop.html",
+        "img": "assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_05_42.png",
+        "badge": "TÜKENMEK ÜZERE",
+        "gallery": "assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_05_42.png|assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_06_40.png|assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_07_56.png"
+    }
+];
 
   /* ─── FUZZY ARAMA SKORU ─── */
   function score(text, query) {
