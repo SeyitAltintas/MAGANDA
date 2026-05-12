@@ -1814,6 +1814,177 @@
                             "assets/img/The Evolution Motorcu Tişört/beyaz/ChatGPT Image 12 May 2026 12_30_11.png"
                       ]
                 }
+          },
+          {
+                "name": "CAFE RACER VINTAGE T-SHIRT",
+                "price": "₺749",
+                "series": "Motosiklet Serisi",
+                "category": "Motor",
+                "page": "motor.html",
+                "badge": "YENİ",
+                "img": "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (1).png",
+                "gallery": [
+                          "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (1).png",
+                          "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (2).png",
+                          "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (3).png",
+                          "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (4).png",
+                          "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (5).png",
+                          "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_32 (6).png"
+                ],
+                "colors": {
+                          "beyaz": [
+                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/beyaz/ChatGPT Image 12 May 2026 15_14_41 (1).png",
+                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/beyaz/ChatGPT Image 12 May 2026 15_14_42 (2).png",
+                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/beyaz/ChatGPT Image 12 May 2026 15_14_42 (3).png",
+                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/beyaz/ChatGPT Image 12 May 2026 15_14_43 (4).png",
+                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/beyaz/ChatGPT Image 12 May 2026 15_14_43 (5).png",
+                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/beyaz/ChatGPT Image 12 May 2026 15_14_43 (6).png"
+                          ],
+                          "siyah": [
+                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (1).png",
+                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (2).png",
+                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (3).png",
+                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (4).png",
+                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (5).png",
+                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_32 (6).png"
+                          ]
+                }
+          },
+          {
+                "name": "APEX CHASER LONG SLEEVE",
+                "price": "₺899",
+                "series": "Motosiklet Serisi",
+                "category": "Motor",
+                "page": "motor.html",
+                "badge": "YENİ",
+                "img": "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_33 (1).png",
+                "gallery": [
+                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_33 (1).png",
+                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (2).png",
+                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (3).png",
+                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (4).png",
+                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (5).png",
+                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (6).png",
+                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (7).png"
+                ],
+                "colors": {
+                          "beyaz": [
+                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_29 (1).png",
+                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_29 (2).png",
+                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_29 (3).png",
+                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_33 (4).png",
+                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_33 (5).png",
+                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_33 (6).png",
+                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_34 (7).png"
+                          ],
+                          "siyah": [
+                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_33 (1).png",
+                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (2).png",
+                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (3).png",
+                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (4).png",
+                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (5).png",
+                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (6).png",
+                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (7).png"
+                          ]
+                }
+          },
+          {
+                "name": "BURN RUBBER CAP",
+                "price": "₺499",
+                "series": "Motosiklet Serisi",
+                "category": "Motor",
+                "page": "motor.html",
+                "badge": "SINIRLI",
+                "img": "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_17_21.png",
+                "gallery": [
+                          "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_17_21.png",
+                          "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_15 (1).png",
+                          "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_15 (2).png",
+                          "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_16 (3).png"
+                ],
+                "colors": {
+                          "koyu-kırmızı": [
+                                    "assets/img/BURN RUBBER CAP/koyu-kırmızı/ChatGPT Image 12 May 2026 15_23_54 (1).png",
+                                    "assets/img/BURN RUBBER CAP/koyu-kırmızı/ChatGPT Image 12 May 2026 15_23_55 (2).png",
+                                    "assets/img/BURN RUBBER CAP/koyu-kırmızı/ChatGPT Image 12 May 2026 15_23_55 (3).png",
+                                    "assets/img/BURN RUBBER CAP/koyu-kırmızı/ChatGPT Image 12 May 2026 15_23_55 (4).png"
+                          ],
+                          "siyah": [
+                                    "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_17_21.png",
+                                    "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_15 (1).png",
+                                    "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_15 (2).png",
+                                    "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_16 (3).png"
+                          ]
+                }
+          },
+          {
+                "name": "BUILT FOR THE OBSESSED HOODIE",
+                "price": "₺1799",
+                "series": "Motosiklet Serisi",
+                "category": "Motor",
+                "page": "motor.html",
+                "badge": "YENİ",
+                "img": "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_22 (1).png",
+                "gallery": [
+                          "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_22 (1).png",
+                          "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_23 (2).png",
+                          "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_23 (3).png",
+                          "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_26 (4).png",
+                          "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_26 (5).png",
+                          "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_29 (6).png"
+                ],
+                "colors": {
+                          "gri": [
+                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/gri/ChatGPT Image 12 May 2026 15_33_47 (1).png",
+                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/gri/ChatGPT Image 12 May 2026 15_33_47 (2).png",
+                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/gri/ChatGPT Image 12 May 2026 15_33_48 (3).png",
+                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/gri/ChatGPT Image 12 May 2026 15_33_48 (4).png",
+                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/gri/ChatGPT Image 12 May 2026 15_33_48 (5).png",
+                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/gri/ChatGPT Image 12 May 2026 15_33_49 (6).png"
+                          ],
+                          "siyah": [
+                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_22 (1).png",
+                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_23 (2).png",
+                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_23 (3).png",
+                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_26 (4).png",
+                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_26 (5).png",
+                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_29 (6).png"
+                          ]
+                }
+          },
+          {
+                "name": "REDLINE TRACKSUIT",
+                "price": "₺1899",
+                "series": "Araba Serisi",
+                "category": "Araba",
+                "page": "araba.html",
+                "badge": "YENİ",
+                "img": "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_16 (1).png",
+                "gallery": [
+                          "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_16 (1).png",
+                          "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_17 (2).png",
+                          "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_20 (3).png",
+                          "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_20 (4).png",
+                          "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_21 (5).png",
+                          "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_22 (6).png"
+                ],
+                "colors": {
+                          "gri": [
+                                    "assets/img/REDLINE TRACKSUIT/gri/ChatGPT Image 12 May 2026 15_33_13 (1).png",
+                                    "assets/img/REDLINE TRACKSUIT/gri/ChatGPT Image 12 May 2026 15_33_14 (2).png",
+                                    "assets/img/REDLINE TRACKSUIT/gri/ChatGPT Image 12 May 2026 15_33_15 (3).png",
+                                    "assets/img/REDLINE TRACKSUIT/gri/ChatGPT Image 12 May 2026 15_33_16 (4).png",
+                                    "assets/img/REDLINE TRACKSUIT/gri/ChatGPT Image 12 May 2026 15_33_16 (5).png"
+                          ],
+                          "siyah": [
+                                    "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_16 (1).png",
+                                    "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_17 (2).png",
+                                    "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_20 (3).png",
+                                    "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_20 (4).png",
+                                    "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_21 (5).png",
+                                    "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_22 (6).png"
+                          ]
+                }
           }
     ];
 

@@ -205,6 +205,51 @@
         "img": "assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_05_42.png",
         "badge": "TÜKENMEK ÜZERE",
         "gallery": "assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_05_42.png|assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_06_40.png|assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_07_56.png"
+    },
+    {
+        "name": "CAFE RACER VINTAGE T-SHIRT",
+        "price": 749,
+        "category": "Motor",
+        "page": "motor.html",
+        "img": "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (1).png",
+        "badge": "YENİ",
+        "gallery": "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (1).png|assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (2).png|assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (3).png|assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (4).png|assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (5).png|assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_32 (6).png"
+    },
+    {
+        "name": "APEX CHASER LONG SLEEVE",
+        "price": 899,
+        "category": "Motor",
+        "page": "motor.html",
+        "img": "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_33 (1).png",
+        "badge": "YENİ",
+        "gallery": "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_33 (1).png|assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (2).png|assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (3).png|assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (4).png|assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (5).png|assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (6).png|assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (7).png"
+    },
+    {
+        "name": "BURN RUBBER CAP",
+        "price": 499,
+        "category": "Motor",
+        "page": "motor.html",
+        "img": "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_17_21.png",
+        "badge": "SINIRLI",
+        "gallery": "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_17_21.png|assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_15 (1).png|assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_15 (2).png|assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_16 (3).png"
+    },
+    {
+        "name": "BUILT FOR THE OBSESSED HOODIE",
+        "price": 1799,
+        "category": "Motor",
+        "page": "motor.html",
+        "img": "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_22 (1).png",
+        "badge": "YENİ",
+        "gallery": "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_22 (1).png|assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_23 (2).png|assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_23 (3).png|assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_26 (4).png|assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_26 (5).png|assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_29 (6).png"
+    },
+    {
+        "name": "REDLINE TRACKSUIT",
+        "price": 1899,
+        "category": "Araba",
+        "page": "araba.html",
+        "img": "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_16 (1).png",
+        "badge": "YENİ",
+        "gallery": "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_16 (1).png|assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_17 (2).png|assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_20 (3).png|assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_20 (4).png|assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_21 (5).png|assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_22 (6).png"
     }
 ];
 
