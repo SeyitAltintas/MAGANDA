@@ -145,21 +145,47 @@
 
   /* ─── PRELOAD ───────────────────────────── */
   function preloadImages(onComplete) {
-    for (var i = 1; i <= TOTAL_FRAMES; i++) {
-      var img = new Image();
+    var INITIAL_FRAMES = Math.min(20, TOTAL_FRAMES);
+    var initialLoaded = 0;
+
+    // Yalnızca placeholder dizisi oluştur
+    for (var i = 0; i < TOTAL_FRAMES; i++) {
+      images.push(new Image());
+    }
+
+    // İlk N kareyi yükle
+    for (var i = 1; i <= INITIAL_FRAMES; i++) {
+      var img = images[i - 1];
       img.src = 'assets/Gif/ezgif-frame-' + String(i).padStart(3, '0') + '.jpg';
 
-      /* Her ikisinde de sayacı artır — yükleme her zaman tamamlanır */
       (function (image) {
         function onDone() {
+          initialLoaded++;
           loadedCount++;
-          if (loadedCount === TOTAL_FRAMES) onComplete();
+          if (initialLoaded === INITIAL_FRAMES) {
+            onComplete();
+            loadRemainingFrames();
+          }
         }
         image.onload = onDone;
         image.onerror = onDone;
       })(img);
+    }
 
-      images.push(img);
+    function loadRemainingFrames() {
+      var i = INITIAL_FRAMES + 1;
+      function loadNext() {
+        if (i > TOTAL_FRAMES) return;
+        var img = images[i - 1];
+        img.src = 'assets/Gif/ezgif-frame-' + String(i).padStart(3, '0') + '.jpg';
+
+        img.onload = img.onerror = function() {
+          loadedCount++;
+          i++;
+          setTimeout(loadNext, 5);
+        };
+      }
+      loadNext();
     }
   }
 

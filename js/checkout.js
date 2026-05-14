@@ -15,6 +15,7 @@
   var currentStep = 0;
   var isGuest     = false;
   var selectedAddressId = null;
+  var appliedCoupon = null;
 
   function getBuyNowItems() {
     try {
@@ -127,7 +128,7 @@
     if (!listEl) return;
 
     if (cart.length === 0) {
-      listEl.innerHTML = '<p class="cart-empty">Sepetiniz boş.</p>';
+      listEl.innerHTML = '<div style="text-align:center; padding: 2rem 0;"><p class="cart-empty" style="margin-bottom: 1rem;">Sepetiniz boş.</p><a href="index.html" class="co-btn">Mağazaya Dön</a></div>';
       if (summaryItemsEl) summaryItemsEl.innerHTML = '';
       if (subtotalEl) subtotalEl.textContent = '₺0';
       if (totalEl)    totalEl.textContent    = '₺0';
@@ -180,12 +181,21 @@
         '</div>';
     });
 
+    var discountAmount = 0;
+    if (appliedCoupon) {
+      discountAmount = (total * appliedCoupon.discountPercent) / 100;
+      summaryHtml += '<div class="co-summary__item" style="color:var(--color-primary)">' +
+                     '<span class="co-summary__item-name">İndirim (' + escapeAttr(appliedCoupon.code) + ')</span>' +
+                     '<span>-₺' + discountAmount.toLocaleString('tr-TR', { maximumFractionDigits: 0 }) + '</span>' +
+                     '</div>';
+    }
+
     listEl.innerHTML = listHtml;
     if (summaryItemsEl) summaryItemsEl.innerHTML = summaryHtml;
 
     var FREE_SHIPPING = 1000;
-    var shipping      = total >= FREE_SHIPPING ? 0 : 49;
-    var finalTotal    = total + shipping;
+    var shipping      = (total - discountAmount) >= FREE_SHIPPING ? 0 : 49;
+    var finalTotal    = (total - discountAmount) + shipping;
 
     if (subtotalEl) subtotalEl.textContent = '₺' + total.toLocaleString('tr-TR');
     if (totalEl)    totalEl.textContent    = '₺' + finalTotal.toLocaleString('tr-TR');
@@ -684,11 +694,36 @@
     pairs.forEach(function (p) { bindLiveClear(p[0], p[1]); });
   }
 
+  /* ─────────────────────────────────────────
+     KUPON YÖNETİMİ
+  ───────────────────────────────────────── */
+  function initCoupon() {
+    var couponInput = document.getElementById('checkoutCouponCode');
+    var couponBtn = document.querySelector('.co-coupon-box__btn');
+    if (!couponInput || !couponBtn) return;
+
+    couponBtn.addEventListener('click', function() {
+       var code = couponInput.value.trim().toUpperCase();
+       if (!code) return;
+       // Validating MAGANDA10 or WHEEL mock codes
+       if (code === 'MAGANDA10' || code.indexOf('WHEEL') !== -1) {
+           appliedCoupon = { code: code, discountPercent: 10 };
+           if (window.toast) window.toast('Kupon uygulandı!', 'success');
+           renderCart();
+       } else {
+           if (window.toast) window.toast('Geçersiz kupon kodu.', 'error');
+           appliedCoupon = null;
+           renderCart();
+       }
+    });
+  }
+
   /* ───────────────────────────────────────────
      INIT
   ─────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function () {
     initCheckoutAuth();
+    initCoupon();
     renderCart();
     bindButtons();
     bindLiveValidation();
