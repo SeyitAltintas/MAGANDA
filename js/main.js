@@ -625,7 +625,8 @@
     }
 
     var total = 0;
-    var itemsHTML = '<div class="cart-items-list">';
+    var itemsHTML = '<div class="cart-reservation-timer" style="background:rgba(255,255,255,0.05); padding:10px; text-align:center; font-size:0.85rem; margin-bottom:16px; border-radius:4px; border:1px solid rgba(255,255,255,0.1); color:var(--color-text);">⏱️ Sepetinizdeki ürünler <strong id="cart-reservation-time" style="color:var(--color-primary);">15:00</strong> dakika rezerve edildi.</div>';
+    itemsHTML += '<div class="cart-items-list">';
 
     cart.forEach(function (item) {
       var qty = item.quantity || 1;
@@ -665,6 +666,28 @@
 
     if (totalEl) totalEl.textContent = '₺' + total.toLocaleString('tr-TR');
     updateShippingBar(total);
+
+    // Rezervasyon Sayacı Başlat (Bir kere başlatıp localStorage'da süreyi tutalım)
+    var endTime = localStorage.getItem('maganda_cart_reservation');
+    if (!endTime || parseInt(endTime) < new Date().getTime()) {
+      endTime = new Date().getTime() + 15 * 60 * 1000;
+      localStorage.setItem('maganda_cart_reservation', endTime);
+    }
+    
+    if (window.cartResInterval) clearInterval(window.cartResInterval);
+    window.cartResInterval = setInterval(function() {
+      var el = document.getElementById('cart-reservation-time');
+      if (!el) return;
+      var dist = parseInt(endTime) - new Date().getTime();
+      if (dist < 0) {
+         el.textContent = "00:00";
+         clearInterval(window.cartResInterval);
+      } else {
+         var m = Math.floor(dist / 60000);
+         var s = Math.floor((dist % 60000) / 1000);
+         el.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+      }
+    }, 1000);
   }
 
 
@@ -1830,6 +1853,62 @@
     var selectedSize = '';
     var currentQty = 1;
     var sizeStock = getProductSizeStock(name);
+
+    // FOMO: Toplam Stok Mesajı
+    var totalStockMsgEl = document.getElementById('pp-total-stock-msg');
+    if (totalStockMsgEl) {
+      var totalStock = 0;
+      Object.keys(sizeStock).forEach(function(s) {
+         var st = sizeStock[s];
+         if (st > 2) st = 10;
+         totalStock += st;
+      });
+      if (totalStock > 0 && totalStock < 100) {
+        totalStockMsgEl.innerHTML = '🔥 Bu üründe stoklarımızda sadece <strong>son ' + totalStock + ' adet</strong> kalmıştır.';
+      }
+    }
+
+    // FOMO: Canlı Ziyaretçi Sayacı
+    var liveVisitorsCountEl = document.getElementById('pp-live-visitors-count');
+    if (liveVisitorsCountEl) {
+      var baseVisitors = 12 + (productHash(name) % 25);
+      liveVisitorsCountEl.textContent = baseVisitors;
+      setInterval(function() {
+         var variation = Math.floor(Math.random() * 5) - 2;
+         var current = parseInt(liveVisitorsCountEl.textContent) || baseVisitors;
+         var next = current + variation;
+         if (next < 8) next = 8;
+         if (next > 45) next = 45;
+         liveVisitorsCountEl.textContent = next;
+      }, 4500);
+    }
+
+    // FOMO: Aynı Gün Kargo Sayacı
+    var fastShippingTimeEl = document.getElementById('pp-fast-shipping-time');
+    if (fastShippingTimeEl) {
+      function updateShippingTimer() {
+        var now = new Date();
+        var target = new Date();
+        target.setHours(16, 0, 0, 0);
+        if (now > target) {
+          target.setDate(target.getDate() + 1);
+        }
+        var diff = target - now;
+        var hours = Math.floor(diff / 1000 / 60 / 60);
+        var minutes = Math.floor((diff / 1000 / 60) % 60);
+        var seconds = Math.floor((diff / 1000) % 60);
+        fastShippingTimeEl.textContent = String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+      }
+      updateShippingTimer();
+      setInterval(updateShippingTimer, 1000);
+    }
+
+    // FOMO: Sepet Çekiciliği
+    var cartAddCountEl = document.getElementById('pp-cart-add-count');
+    if (cartAddCountEl) {
+       var addCount = 20 + (productHash(name) % 80);
+       cartAddCountEl.textContent = addCount;
+    }
 
     function getSelectedSizeStock() {
       if (!selectedSize) return 10;
