@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/discount-wheel.css">
   <link rel="stylesheet" href="css/checkout.css">
   <link rel="stylesheet" href="css/auth.css">
 </head>
@@ -125,6 +126,14 @@
             <span>Kargo</span>
             <span class="co-summary__free" id="summaryShipping">Ücretsiz</span>
           </div>
+          <div id="discountWheelCheckoutReminder" hidden></div>
+          <div class="co-coupon-box" aria-label="Kupon kodu kullan">
+            <label class="co-coupon-box__label" for="checkoutCouponCode">Kupon kodu</label>
+            <div class="co-coupon-box__control">
+              <input class="co-coupon-box__input" id="checkoutCouponCode" type="text" placeholder="Kodunu yaz" autocomplete="off">
+              <button class="co-coupon-box__btn" type="button">Uygula</button>
+            </div>
+          </div>
           <div class="co-summary__divider"></div>
           <div class="co-summary__row co-summary__row--total">
             <span>Toplam</span>
@@ -150,6 +159,7 @@
   <script src="js/main.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/checkout.js"></script>
+  <script src="js/discount-wheel.js"></script>
   <script src="js/site-audio.js"></script>
 </body>
 

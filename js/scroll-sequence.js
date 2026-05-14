@@ -16,37 +16,6 @@
   var rafPending = false;
 
   /* ─── LOADER ───────────────────────────── */
-  function buildLoader(section) {
-    var loader = document.createElement('div');
-    loader.className = 'seq-loader';
-    loader.id = 'seqLoader';
-    loader.innerHTML =
-      '<span class="seq-loader__brand">MAGANDA</span>' +
-      '<span class="seq-loader__sep">/ / /</span>' +
-      '<div class="seq-loader__bar-wrap">' +
-      '<div class="seq-loader__bar" id="seqBar"></div>' +
-      '</div>' +
-      '<span class="seq-loader__label" id="seqLabel">192 kare yükleniyor...</span>';
-    section.appendChild(loader);
-    return loader;
-  }
-
-  function updateLoader(count) {
-    var bar = document.getElementById('seqBar');
-    var label = document.getElementById('seqLabel');
-    if (bar) bar.style.width = ((count / TOTAL_FRAMES) * 100) + '%';
-    if (label) label.textContent = count + ' / ' + TOTAL_FRAMES + ' sahne';
-  }
-
-  function hideLoader(loader) {
-    loader.style.transition = 'opacity 0.8s ease';
-    loader.style.opacity = '0';
-    setTimeout(function () {
-      loader.style.display = 'none';
-      document.body.classList.remove('no-scroll');
-    }, 800);
-  }
-
   /* ─── CANVAS ───────────────────────────── */
   function buildCanvas(section) {
     var canvas = document.createElement('canvas');
@@ -175,9 +144,7 @@
   }
 
   /* ─── PRELOAD ───────────────────────────── */
-  function preloadImages(onProgress, onComplete) {
-    document.body.classList.add('no-scroll');
-
+  function preloadImages(onComplete) {
     for (var i = 1; i <= TOTAL_FRAMES; i++) {
       var img = new Image();
       img.src = 'assets/Gif/ezgif-frame-' + String(i).padStart(3, '0') + '.jpg';
@@ -186,7 +153,6 @@
       (function (image) {
         function onDone() {
           loadedCount++;
-          onProgress(loadedCount);
           if (loadedCount === TOTAL_FRAMES) onComplete();
         }
         image.onload = onDone;
@@ -235,7 +201,6 @@
     var section = document.getElementById(SECTION_ID);
     if (!section) return;
 
-    var loader = buildLoader(section);
     var canvas = buildCanvas(section);
     resizeCanvas(canvas);
 
@@ -249,14 +214,10 @@
       updateSequenceNavbar(section);
     });
 
-    preloadImages(
-      function (count) { updateLoader(count); },
-      function () {
-        hideLoader(loader);
-        renderFrame(canvas, 0);
-        initScroll(section, canvas, textNodes);
-      }
-    );
+    preloadImages(function () {
+      renderFrame(canvas, 0);
+      initScroll(section, canvas, textNodes);
+    });
   }
 
   window.initScrollSequence = initScrollSequence;

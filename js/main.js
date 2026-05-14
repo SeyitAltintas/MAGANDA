@@ -104,6 +104,57 @@
   }
 
   /* --- COLLECTION FILTERS ─────────────── */
+  function initCollectionSkeletonLoading() {
+    var grid = document.querySelector('.collection-page .collection__grid');
+    if (!grid) return;
+
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.product-card'));
+    if (!cards.length) return;
+
+    var pending = 0;
+    var finishGrid = function () {
+      grid.classList.remove('collection__grid--loading');
+    };
+
+    var finishCard = function (card) {
+      card.classList.remove('product-card--loading');
+      card.setAttribute('aria-busy', 'false');
+      card.setAttribute('data-skeleton-ready', 'true');
+    };
+
+    grid.classList.add('collection__grid--loading');
+
+    cards.forEach(function (card) {
+      var imageUrl = getCardImageUrl(card);
+      card.classList.add('product-card--loading');
+      card.setAttribute('aria-busy', 'true');
+      card.removeAttribute('data-skeleton-ready');
+
+      if (!imageUrl) {
+        finishCard(card);
+        return;
+      }
+
+      pending++;
+      var image = new Image();
+      var isDone = false;
+      var done = function () {
+        if (isDone) return;
+        isDone = true;
+        finishCard(card);
+        pending--;
+        if (pending === 0) finishGrid();
+      };
+
+      image.onload = done;
+      image.onerror = done;
+      image.src = imageUrl;
+      setTimeout(done, 2400);
+    });
+
+    if (pending === 0) finishGrid();
+  }
+
   function initFilters() {
     var filterBtns = document.querySelectorAll('.filter-btn');
     var grid = document.querySelector('.collection__grid');
@@ -793,6 +844,37 @@
   }
 
   /* ─── ÜRÜN DETAY SAYFASI (product.html) ─────── */
+  var MAGANDA_PRODUCT_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+  function getSharedProductHash(value) {
+    var hash = 0;
+    String(value || '').split('').forEach(function (char) {
+      hash = ((hash << 5) - hash) + char.charCodeAt(0);
+      hash |= 0;
+    });
+    return Math.abs(hash);
+  }
+
+  function getProductSizeStock(productName) {
+    var seed = getSharedProductHash(productName);
+    var stockMap = {};
+    MAGANDA_PRODUCT_SIZES.forEach(function (size, index) {
+      stockMap[size] = (seed + index * 3) % 7;
+    });
+    if (Object.keys(stockMap).every(function (size) { return stockMap[size] === 0; })) stockMap.M = 3;
+    return stockMap;
+  }
+
+  function getProductMaxQty(productName, size) {
+    if (!size) return 10;
+    var stock = getProductSizeStock(productName)[size] || 0;
+    return stock > 2 ? 10 : stock;
+  }
+
+  window.MagandaProductStock = {
+    getProductSizeStock: getProductSizeStock,
+    getProductMaxQty: getProductMaxQty
+  };
   function initProductPage() {
     if (!document.getElementById('productPage')) return;
 
@@ -2433,6 +2515,7 @@
         price: parsePriceValue(price),
         size: selectedSize,
         quantity: currentQty,
+        maxQuantity: getSelectedSizeStock(),
         image: imgUrl
       };
     }
@@ -3022,6 +3105,7 @@
 
     initCart();
     initSmoothScroll();
+    initCollectionSkeletonLoading();
     initFilters();
     initScrollAnimations();
     initParallax();

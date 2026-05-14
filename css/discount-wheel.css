@@ -1,0 +1,352 @@
+/* MAGANDA discount wheel */
+.discount-wheel__launcher {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  z-index: 12000;
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 58px;
+  padding: 0 4px 0 0;
+  border: 1px solid rgba(225, 6, 0, 0.68);
+  border-left: 0;
+  border-radius: 0 999px 999px 0;
+  background:
+    radial-gradient(circle at 58% 50%, rgba(255, 255, 255, 0.12), transparent 34%),
+    linear-gradient(135deg, #090909 0%, #1a1a1a 50%, #e10600 150%);
+  color: #fff;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.38), 0 0 22px rgba(225, 6, 0, 0.24);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.discount-wheel__launcher:hover {
+  transform: translateY(-50%) translateX(2px);
+  border-color: #ff2a23;
+}
+
+.discount-wheel__launcher-wheel {
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  background:
+    radial-gradient(circle, #080808 0 18%, transparent 20%),
+    conic-gradient(#e10600 0deg 60deg, #f5f5f5 60deg 120deg, #111 120deg 180deg, #e10600 180deg 240deg, #f5f5f5 240deg 300deg, #111 300deg 360deg);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.34);
+}
+
+.discount-wheel__launcher-arrow {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid #fff;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+  transform: translateY(-50%);
+}
+
+.discount-wheel__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 12050;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+}
+
+.discount-wheel__modal.is-open {
+  display: flex;
+}
+
+.discount-wheel__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(7px);
+}
+
+.discount-wheel__panel {
+  position: relative;
+  width: min(760px, 100%);
+  max-height: min(720px, calc(100vh - 28px));
+  overflow: auto;
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 24px;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(225, 6, 0, 0.22), transparent 34%),
+    radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.12), transparent 26%),
+    #090909;
+  color: #fff;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.58);
+}
+
+.discount-wheel__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.discount-wheel__copy {
+  align-self: center;
+  min-width: 0;
+}
+
+.discount-wheel__eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #ff2a23;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.discount-wheel__title {
+  margin: 0 0 12px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(38px, 6vw, 72px);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.discount-wheel__text {
+  margin: 0;
+  max-width: 30ch;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.discount-wheel__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 330px;
+}
+
+.discount-wheel__pointer {
+  position: absolute;
+  top: 5px;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 30px solid #fff;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.45));
+}
+
+.discount-wheel__disc {
+  position: relative;
+  width: min(310px, 72vw);
+  aspect-ratio: 1;
+  border: 9px solid #1f1f1f;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #101010 0 16%, transparent 17%),
+    conic-gradient(
+      #e10600 0deg 60deg,
+      #111 60deg 120deg,
+      #b7b7b7 120deg 180deg,
+      #e10600 180deg 240deg,
+      #1f1f1f 240deg 300deg,
+      #f7f7f7 300deg 360deg
+    );
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.08), 0 20px 42px rgba(0, 0, 0, 0.48);
+  transition: transform 3.8s cubic-bezier(0.13, 0.78, 0.1, 1);
+}
+
+.discount-wheel__disc::after {
+  content: '';
+  position: absolute;
+  inset: 40%;
+  border-radius: 50%;
+  background: #050505;
+  border: 4px solid #e10600;
+}
+
+.discount-wheel__disc span {
+  position: absolute;
+  inset: 18px;
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
+  transform: rotate(calc(var(--i) * 60deg + 30deg));
+  transform-origin: center;
+}
+
+.discount-wheel__disc span:nth-child(3),
+.discount-wheel__disc span:nth-child(6) {
+  color: #111;
+  text-shadow: none;
+}
+
+.discount-wheel__spin {
+  position: absolute;
+  width: 104px;
+  height: 104px;
+  border: 2px solid rgba(255, 255, 255, 0.32);
+  border-radius: 50%;
+  background: #e10600;
+  color: #fff;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  line-height: 0.95;
+  letter-spacing: 0;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(225, 6, 0, 0.32);
+}
+
+.discount-wheel__spin:disabled {
+  cursor: default;
+  background: #2a2a2a;
+  color: rgba(255, 255, 255, 0.68);
+  box-shadow: none;
+}
+
+.discount-wheel__result {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 14px;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid rgba(225, 6, 0, 0.44);
+  border-radius: 8px;
+  background: rgba(225, 6, 0, 0.12);
+}
+
+.discount-wheel__result[hidden] {
+  display: none;
+}
+
+.discount-wheel__result-label {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.discount-wheel__code {
+  grid-row: span 2;
+  padding: 10px 14px;
+  border: 1px dashed rgba(255, 255, 255, 0.42);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.28);
+  color: #fff;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0;
+}
+
+.discount-wheel__result-detail {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 13px;
+}
+
+.discount-wheel__copy-btn {
+  grid-column: 1 / -1;
+  justify-self: start;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 4px;
+  background: #fff;
+  color: #0b0b0b;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.co-summary__coupon-note {
+  margin: 4px 0 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.co-summary__row--coupon strong {
+  color: #e10600;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0;
+}
+
+@media (max-width: 640px) {
+  .discount-wheel__launcher {
+    left: 0;
+    top: 50%;
+    width: 29px;
+    height: 58px;
+    padding-right: 4px;
+  }
+
+  .discount-wheel__launcher-wheel {
+    width: 21px;
+    height: 21px;
+  }
+
+  .discount-wheel__modal {
+    padding: 12px;
+  }
+
+  .discount-wheel__panel {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 22px 16px 18px;
+  }
+
+  .discount-wheel__text {
+    max-width: none;
+  }
+
+  .discount-wheel__stage {
+    min-height: 285px;
+  }
+
+  .discount-wheel__disc {
+    width: min(268px, 82vw);
+  }
+
+  .discount-wheel__spin {
+    width: 88px;
+    height: 88px;
+    font-size: 21px;
+  }
+
+  .discount-wheel__result {
+    grid-template-columns: 1fr;
+  }
+
+  .discount-wheel__code {
+    grid-row: auto;
+    width: fit-content;
+  }
+}

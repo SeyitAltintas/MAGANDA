@@ -42,6 +42,21 @@
     localStorage.removeItem('maganda_buy_now');
   }
 
+  function escapeAttr(value) {
+    return String(value || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+  }
+
+  function getCheckoutItemMaxQty(item) {
+    var storedMax = Number(item && item.maxQuantity);
+    if (storedMax > 0) return Math.max(1, Math.min(10, storedMax));
+
+    if (item && item.name && item.size && window.MagandaProductStock && typeof window.MagandaProductStock.getProductMaxQty === 'function') {
+      return Math.max(1, Math.min(10, window.MagandaProductStock.getProductMaxQty(item.name, item.size)));
+    }
+
+    return 10;
+  }
+
   function saveCart() {
     if (checkoutUsesBuyNow) {
       localStorage.setItem('maganda_buy_now', JSON.stringify(cart));
@@ -116,18 +131,27 @@
       if (summaryItemsEl) summaryItemsEl.innerHTML = '';
       if (subtotalEl) subtotalEl.textContent = '₺0';
       if (totalEl)    totalEl.textContent    = '₺0';
+      renderDiscountWheelCheckoutReminder();
       return;
     }
 
     var listHtml    = '';
     var summaryHtml = '';
     var total       = 0;
+    var cartAdjusted = false;
 
     cart.forEach(function (item) {
-      var qty       = item.quantity || 1;
+      var maxQty    = getCheckoutItemMaxQty(item);
+      var qty       = Math.max(1, Math.min(maxQty, item.quantity || 1));
+      if (qty !== item.quantity) {
+        item.quantity = qty;
+        cartAdjusted = true;
+      }
       var lineTotal = item.price * qty;
       total += lineTotal;
-      var imgStyle = item.image ? 'background-image:url(' + item.image + ');background-size:cover;background-position:center;' : '';
+      var imgStyle = item.image ? 'background-image:url(&quot;' + escapeAttr(item.image) + '&quot;);background-size:cover;background-position:center;' : '';
+      var qtyMinusDisabled = qty <= 1 ? ' disabled' : '';
+      var qtyPlusDisabled = qty >= maxQty ? ' disabled' : '';
 
       listHtml +=
         '<div class="ci">' +
@@ -139,9 +163,9 @@
           '</div>' +
           '<div class="ci__right">' +
             '<div class="ci__qty">' +
-              '<button type="button" class="ci__qty-btn" onclick="changeQty(\'' + item.id + '\',-1)">−</button>' +
+              '<button type="button" class="ci__qty-btn" onclick="changeQty(\'' + item.id + '\',-1)"' + qtyMinusDisabled + '>−</button>' +
               '<span class="ci__qty-val">' + qty + '</span>' +
-              '<button type="button" class="ci__qty-btn" onclick="changeQty(\'' + item.id + '\',1)">+</button>' +
+              '<button type="button" class="ci__qty-btn" onclick="changeQty(\'' + item.id + '\',1)"' + qtyPlusDisabled + '>+</button>' +
             '</div>' +
             '<button type="button" class="ci__remove" onclick="removeItem(\'' + item.id + '\')" title="Ürünü Sil">' +
               '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="pointer-events:none"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>' +
@@ -168,6 +192,19 @@
 
     var shipEl = document.getElementById('summaryShipping');
     if (shipEl) shipEl.textContent = shipping === 0 ? 'Ücretsiz' : '₺' + shipping;
+
+    renderDiscountWheelCheckoutReminder();
+
+    if (cartAdjusted) saveCart();
+  }
+
+  function renderDiscountWheelCheckoutReminder() {
+    var reminderMount = document.getElementById('discountWheelCheckoutReminder');
+    if (!reminderMount) return;
+
+    if (window.MagandaDiscountWheel && typeof window.MagandaDiscountWheel.renderCheckoutReminder === 'function') {
+      window.MagandaDiscountWheel.renderCheckoutReminder();
+    }
   }
 
   /* ───────────────────────────────────────────
@@ -313,8 +350,8 @@
   window.changeQty = function (id, delta) {
     var item = cart.find(function (i) { return String(i.id) === String(id); });
     if (!item) return;
-    item.quantity = (item.quantity || 1) + delta;
-    if (item.quantity < 1) item.quantity = 1;
+    var maxQty = getCheckoutItemMaxQty(item);
+    item.quantity = Math.max(1, Math.min(maxQty, (item.quantity || 1) + delta));
     saveCart();
     renderCart();
   };

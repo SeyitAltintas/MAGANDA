@@ -328,6 +328,80 @@
   position: relative;
 }
 
+.collection__grid--loading .product-card {
+  pointer-events: none;
+}
+
+.product-card--loading {
+  overflow: hidden;
+}
+
+.product-card--loading::after {
+  content: '';
+  position: absolute;
+  left: 16px;
+  right: 48%;
+  bottom: 16px;
+  height: 18px;
+  background: linear-gradient(90deg, var(--bg-surface) 25%, var(--bg-hover) 50%, var(--bg-surface) 75%);
+  background-size: 800px 100%;
+  animation: skeleton-shimmer 1.5s infinite linear;
+  border-radius: 4px;
+}
+
+.product-card--loading .product-card__image {
+  background-image: none !important;
+  background-color: var(--bg-surface);
+}
+
+.product-card--loading .product-card__image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--bg-surface) 25%, var(--bg-hover) 50%, var(--bg-surface) 75%);
+  background-size: 800px 100%;
+  animation: skeleton-shimmer 1.5s infinite linear;
+}
+
+.product-card--loading .product-card__image > *,
+.product-card--loading .product-card__corner,
+.product-card--loading[data-badge]::before {
+  opacity: 0;
+}
+
+.product-card--loading .product-card__name,
+.product-card--loading .product-card__tag,
+.product-card--loading .product-card__price {
+  color: transparent;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--bg-surface) 25%, var(--bg-hover) 50%, var(--bg-surface) 75%);
+  background-size: 800px 100%;
+  animation: skeleton-shimmer 1.5s infinite linear;
+}
+
+.product-card--loading .product-card__name {
+  max-width: 82%;
+}
+
+.product-card--loading .product-card__tag {
+  max-width: 68%;
+}
+
+.product-card--loading .product-card__price {
+  display: inline-block;
+  min-width: 86px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-card--loading::after,
+  .product-card--loading .product-card__image::before,
+  .product-card--loading .product-card__name,
+  .product-card--loading .product-card__tag,
+  .product-card--loading .product-card__price {
+    animation: none;
+  }
+}
+
 .product-card-gallery-nav {
   position: absolute;
   inset: 0;
