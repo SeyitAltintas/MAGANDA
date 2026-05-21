@@ -1979,6 +1979,26 @@
     var addBtn = document.getElementById('pp-add-btn');
     var buyNowBtn = document.getElementById('pp-buy-now-btn');
     var sizeWarn = document.getElementById('pp-size-warn');
+
+    // Cross-sell Logic
+    var crossSellEl = document.getElementById('pp-cross-sell');
+    var crossSellImg = document.getElementById('pp-cross-sell-img');
+    var crossSellName = document.getElementById('pp-cross-sell-name');
+    var crossSellPrice = document.getElementById('pp-cross-sell-price');
+    var crossSellCheckbox = document.getElementById('pp-cross-sell-checkbox');
+    var crossSellProduct = null;
+
+    if (crossSellEl && typeof MAGANDA_PRODUCT_CATALOG !== 'undefined' && MAGANDA_PRODUCT_CATALOG.length) {
+      var others = MAGANDA_PRODUCT_CATALOG.filter(function(p) { return p.name !== name; });
+      crossSellProduct = others.find(function(p) { return p.name.indexOf('CAP') !== -1 || p.name.indexOf('ŞAPKA') !== -1; }) || others[0];
+      
+      if (crossSellProduct) {
+        crossSellEl.style.display = 'flex';
+        if (crossSellImg) crossSellImg.src = crossSellProduct.img;
+        if (crossSellName) crossSellName.textContent = crossSellProduct.name;
+        if (crossSellPrice) crossSellPrice.textContent = crossSellProduct.price;
+      }
+    }
     function warnMissingSize() {
       if (sizesEl) {
         sizesEl.classList.add('pp-sizes--warn');
@@ -2017,6 +2037,21 @@
           existingItem.quantity = Math.min(existingItem.quantity + currentQty, Math.min(10, getSelectedSizeStock()));
         } else {
           cart.push(productCartItem);
+        }
+
+        if (crossSellCheckbox && crossSellCheckbox.checked && crossSellProduct) {
+          var csItem = {
+            id: Date.now() + 1,
+            name: crossSellProduct.name,
+            price: parsePriceValue(crossSellProduct.price),
+            size: 'Standart',
+            quantity: 1,
+            maxQuantity: 10,
+            image: crossSellProduct.img
+          };
+          var existingCs = cart.find(function (item) { return item.name === csItem.name; });
+          if (existingCs) existingCs.quantity++;
+          else cart.push(csItem);
         }
 
         saveCart();
