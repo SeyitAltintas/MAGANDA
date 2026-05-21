@@ -11,6 +11,23 @@
   if (theme === 'light') {
     document.documentElement.setAttribute('data-theme', 'light');
   }
+
+  if (window.location.search.indexOf('modal=1') !== -1) {
+    document.documentElement.classList.add('is-modal');
+    var style = document.createElement('style');
+    style.textContent = `
+      .is-modal .navbar, .is-modal .footer, .is-modal .footer-brand-band, 
+      .is-modal .pp-breadcrumb, .is-modal #pp-related, .is-modal #pp-recent,
+      .is-modal .noise-overlay, .is-modal #pp-cross-sell, .is-modal .pp-buy-actions,
+      .is-modal #pp-color-options, .is-modal #pp-color-divider, .is-modal .pp-size-header,
+      .is-modal .pp-size-tools, .is-modal #pp-sizes, .is-modal .pp-qty-row {
+        display: none !important;
+      }
+      .is-modal body { padding-top: 0 !important; background: transparent !important; }
+      .is-modal .product-page { margin-top: 0 !important; padding-top: 20px !important; }
+    `;
+    document.head.appendChild(style);
+  }
 })();
 (function () {
   'use strict';
@@ -1986,6 +2003,10 @@
     var crossSellName = document.getElementById('pp-cross-sell-name');
     var crossSellPrice = document.getElementById('pp-cross-sell-price');
     var crossSellCheckbox = document.getElementById('pp-cross-sell-checkbox');
+    var crossSellSizeContainer = document.getElementById('pp-cross-sell-size-container');
+    var crossSellSize = document.getElementById('pp-cross-sell-size');
+    var crossSellColorContainer = document.getElementById('pp-cross-sell-color-container');
+    var crossSellColor = document.getElementById('pp-cross-sell-color');
     var crossSellProduct = null;
 
     if (crossSellEl && typeof MAGANDA_PRODUCT_CATALOG !== 'undefined' && MAGANDA_PRODUCT_CATALOG.length) {
@@ -1997,6 +2018,72 @@
         if (crossSellImg) crossSellImg.src = crossSellProduct.img;
         if (crossSellName) crossSellName.textContent = crossSellProduct.name;
         if (crossSellPrice) crossSellPrice.textContent = crossSellProduct.price;
+
+        if (crossSellSizeContainer) {
+          crossSellSizeContainer.style.display = 'flex';
+        }
+        if (crossSellColorContainer && crossSellColor) {
+          if (crossSellProduct.colors && Object.keys(crossSellProduct.colors).length > 0) {
+            crossSellColor.innerHTML = '';
+            Object.keys(crossSellProduct.colors).forEach(function(c, index) {
+              var opt = document.createElement('option');
+              var capitalized = c.charAt(0).toUpperCase() + c.slice(1).replace('-', ' ');
+              opt.value = capitalized;
+              opt.textContent = capitalized;
+              if (index === 0) opt.selected = true;
+              crossSellColor.appendChild(opt);
+            });
+            crossSellColorContainer.style.display = 'flex';
+          } else {
+            crossSellColorContainer.style.display = 'none';
+          }
+        }
+
+        var inspectBtn = document.getElementById('pp-cross-sell-inspect');
+        var inspectModal = document.getElementById('pp-cross-sell-modal-overlay');
+        var inspectModalIframe = document.getElementById('pp-cross-sell-modal-iframe');
+        var inspectModalClose = document.getElementById('pp-cross-sell-modal-close');
+
+        if (crossSellColorContainer && crossSellColor) {
+          crossSellColor.addEventListener('change', function() {
+            var selectedColorKey = Object.keys(crossSellProduct.colors).find(function(c) {
+              return (c.charAt(0).toUpperCase() + c.slice(1).replace('-', ' ')) === crossSellColor.value;
+            });
+            if (selectedColorKey && crossSellProduct.colors[selectedColorKey] && crossSellProduct.colors[selectedColorKey].length > 0) {
+              if (crossSellImg) crossSellImg.src = crossSellProduct.colors[selectedColorKey][0];
+            }
+          });
+          // Update initial image according to selected color
+          crossSellColor.dispatchEvent(new Event('change'));
+        }
+
+        if (inspectBtn && inspectModal) {
+          inspectBtn.addEventListener('click', function() {
+            if (inspectModalIframe) {
+              var qString = '?name=' + encodeURIComponent(crossSellProduct.name || '') +
+                            '&price=' + encodeURIComponent(crossSellProduct.price || '') +
+                            '&series=' + encodeURIComponent(crossSellProduct.series || '') +
+                            '&badge=' + encodeURIComponent(crossSellProduct.badge || '') +
+                            '&img=' + encodeURIComponent(crossSellProduct.img || '') +
+                            '&gallery=' + encodeURIComponent((crossSellProduct.gallery || []).join('|')) +
+                            '&modal=1';
+              inspectModalIframe.src = 'product.html' + qString;
+            }
+            inspectModal.style.display = 'flex';
+          });
+          
+          if (inspectModalClose) {
+            inspectModalClose.addEventListener('click', function() {
+              inspectModal.style.display = 'none';
+            });
+          }
+          
+          inspectModal.addEventListener('click', function(e) {
+            if (e.target === inspectModal) {
+              inspectModal.style.display = 'none';
+            }
+          });
+        }
       }
     }
     function warnMissingSize() {
@@ -2040,16 +2127,24 @@
         }
 
         if (crossSellCheckbox && crossSellCheckbox.checked && crossSellProduct) {
+          var csSize = 'Standart';
+          if (typeof crossSellSize !== 'undefined' && crossSellSize && typeof crossSellSizeContainer !== 'undefined' && crossSellSizeContainer && crossSellSizeContainer.style.display !== 'none') {
+            csSize = crossSellSize.value;
+          }
+          if (typeof crossSellColor !== 'undefined' && crossSellColor && typeof crossSellColorContainer !== 'undefined' && crossSellColorContainer && crossSellColorContainer.style.display !== 'none') {
+            csSize += ' / ' + crossSellColor.value;
+          }
+
           var csItem = {
             id: Date.now() + 1,
             name: crossSellProduct.name,
             price: parsePriceValue(crossSellProduct.price),
-            size: 'Standart',
+            size: csSize,
             quantity: 1,
             maxQuantity: 10,
             image: crossSellProduct.img
           };
-          var existingCs = cart.find(function (item) { return item.name === csItem.name; });
+          var existingCs = cart.find(function (item) { return item.name === csItem.name && item.size === csItem.size; });
           if (existingCs) existingCs.quantity++;
           else cart.push(csItem);
         }

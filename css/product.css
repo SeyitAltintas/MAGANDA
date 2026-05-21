@@ -59,11 +59,11 @@ body.no-scroll {
 .pp-visual {
   position: sticky;
   top: 140px;
-  height: calc(100vh - 180px);
-  max-height: 700px; /* Görsel çok büyük olmasın */
+  height: calc(100vh - 160px);
+  max-height: 900px; /* Görsellerin 3:4/4:5 oranında daha iyi görünmesi için artırıldı */
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
-  gap: 10px;
+  gap: 20px;
 }
 
 .pp-image-frame {
