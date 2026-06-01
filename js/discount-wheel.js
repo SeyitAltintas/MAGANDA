@@ -7,11 +7,11 @@
   var SEGMENT_DEG = 60;
 
   var prizes = [
-    { label: '%5 indirim', code: 'MAGANDA5', detail: 'Sepette kullanabileceğin hızlı başlangıç kodu.' },
-    { label: '%10 indirim', code: 'MAGANDA10', detail: 'Garajdan çıkmadan önce iyi bir avantaj.' },
+    { label: '%5 indirim', code: 'NMAGANDA5', detail: 'Sepette kullanabileceğin hızlı başlangıç kodu.' },
+    { label: '%10 indirim', code: 'NMAGANDA10', detail: 'Garajdan çıkmadan önce iyi bir avantaj.' },
     { label: '%15 indirim', code: 'REDLINE15', detail: 'Redline ruhuna yakışan daha sert bir kod.' },
     { label: '%20 drop kodu', code: 'DROP20', detail: 'Drop ürünlerde kullanmak için sakla.' },
-    { label: 'Ücretsiz kargo', code: 'KARGOBIZDEN', detail: 'Kargo tarafını MAGANDA üstlensin.' },
+    { label: 'Ücretsiz kargo', code: 'KARGOBIZDEN', detail: 'Kargo tarafını NMAGANDA üstlensin.' },
     { label: 'Sticker hediyesi', code: 'STICKER', detail: 'Sipariş notunda bu kodu belirt.' }
   ];
 
@@ -70,7 +70,7 @@
         '<section class="discount-wheel__panel" role="dialog" aria-modal="true" aria-labelledby="discountWheelTitle">' +
           '<button class="discount-wheel__close" type="button" aria-label="Kapat" data-wheel-close>&times;</button>' +
           '<div class="discount-wheel__copy">' +
-            '<span class="discount-wheel__eyebrow">MAGANDA GARAGE BONUS</span>' +
+            '<span class="discount-wheel__eyebrow">NMAGANDA GARAGE BONUS</span>' +
             '<h2 class="discount-wheel__title" id="discountWheelTitle">İndirim çarkını çevir</h2>' +
             '<p class="discount-wheel__text">Bugünkü kodunu kap. Her gün bir şans, her dilim kazandırır.</p>' +
           '</div>' +

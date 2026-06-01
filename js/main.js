@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   MAGANDA — main.js
+   NMAGANDA — main.js
    Modüler yapı: her özellik ayrı fonksiyon
    ═══════════════════════════════════════════ */
 
@@ -718,7 +718,7 @@
       e.preventDefault();
       form.style.display = 'none';
       success.classList.add('drop__success--show');
-      window.toast && window.toast('Listeye eklendin. Hoş geldin, MAGANDA.', 'success');
+      window.toast && window.toast('Listeye eklendin. Hoş geldin, NMAGANDA.', 'success');
     });
   }
 
@@ -938,13 +938,13 @@
     var sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
     var descriptions = [
       'Piston sesi ruhunda, yol izi kalbinde. Bu parça, garaj kokusunu her gün üzerinde taşıyanlar için tasarlandı. Asfaltta bıraktığın her izin giysiye yansıması.',
-      'Gece yarısı pistten dönerken soyunma odasına giren adam gibi: Sessiz, emin ve fark yaratan. MAGANDA kalitesiyle dokunuşunu hissedeceksin.',
+      'Gece yarısı pistten dönerken soyunma odasına giren adam gibi: Sessiz, emin ve fark yaratan. NMAGANDA kalitesiyle dokunuşunu hissedeceksin.',
       'Turbo çarptığında hissettirdiği güç — bunu beze de işledik. Maksimum konfor, sıfır taviz. Petrolhead DNA\'sı her iplikte saklı.',
       'RPM\'in kırmızı çizgisine kadar çıktığında bile rahat olacaksın. Türkiye\'nin en gözü pek sürücüleri için üretildi. Fark yaratmak için giyilir.'
     ];
 
     // Sayfa başlığı
-    document.title = 'MAGANDA — ' + name;
+    document.title = 'NMAGANDA — ' + name;
 
     // Görsel
     var imgEl = document.getElementById('pp-img');
@@ -993,8 +993,8 @@
           title: 'ÜRÜN AÇIKLAMASI',
           body: [
             '<div class="pp-desc-section pp-desc-section--intro">',
-            '<span class="pp-desc-eyebrow">MAGANDA DROP</span>',
-            '<p><strong>' + name + '</strong>, MAGANDA ruhunu günlük kullanıma taşıyan sınırlı üretim bir parça olarak tasarlandı.</p>',
+            '<span class="pp-desc-eyebrow">NMAGANDA DROP</span>',
+            '<p><strong>' + name + '</strong>, NMAGANDA ruhunu günlük kullanıma taşıyan sınırlı üretim bir parça olarak tasarlandı.</p>',
             '<p>' + activeDescription + '</p>',
             '</div>',
             '<div class="pp-desc-section pp-desc-section--model">',
@@ -1323,7 +1323,7 @@
         var reviews = getStoredReviews(productName);
         reviews.unshift({
           id: 'user-' + Date.now(),
-          user: 'MAGANDA Müşterisi',
+          user: 'NMAGANDA Müşterisi',
           rating: Number(ratingEl.value) || 5,
           size: sizeEl.value,
           fit: fitEl.value,
@@ -1437,7 +1437,7 @@
             '<p>' + escapeHtml(item.q) + '</p>' +
             '</div>' +
             '<div class="pp-question-card__a">' +
-            '<span>MAGANDA Satıcısı · ' + escapeHtml(item.date) + '</span>' +
+            '<span>NMAGANDA Satıcısı · ' + escapeHtml(item.date) + '</span>' +
             '<p>' + escapeHtml(item.a) + '</p>' +
             '</div>' +
             '</article>';
@@ -2260,7 +2260,7 @@
               '<path class="fav-empty-heart" d="M40 65 C10 45 5 20 20 12 C30 6 40 16 40 16 C40 16 50 6 60 12 C75 20 70 45 40 65Z" stroke-linecap="round" stroke-linejoin="round"/>' +
               '</svg>' +
               '</div>' +
-              '<span class="favorites-empty__mark">MAGANDA</span>' +
+              '<span class="favorites-empty__mark brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></span>' +
               '<h2 class="favorites-empty__title">HENÜZ FAVORİN YOK</h2>' +
               '<p class="favorites-empty__text">Beğendiğin ürünleri ürün detay sayfasından favorilerine ekleyebilirsin.<br>Koleksiyona göz at ve ilk ürünü seç.</p>' +
               '<div class="fav-empty-actions">' +
@@ -2289,7 +2289,7 @@
           '<div class="product-card__image" style="' + imgStyle + '"></div>' +
           '<div class="product-card__corner"></div>' +
           '<div class="product-card__info">' +
-          '<p class="product-card__tag">' + escapeHtml(item.series || 'MAGANDA') + '</p>' +
+          '<p class="product-card__tag">' + escapeHtml(item.series || 'NMAGANDA') + '</p>' +
           '<h3 class="product-card__name">' + escapeHtml(item.name) + '</h3>' +
           '<div class="product-card__row">' +
           '<span class="product-card__price">' + escapeHtml(item.price) + '</span>' +
@@ -2373,7 +2373,7 @@
       '<nav class="' + navClass + '" id="navbar">' +
       '<div class="navbar__inner">' +
       '<a href="index.html" class="navbar__logo">' +
-      '<span class="navbar__logo-text">MAGANDA</span>' +
+      '<span class="navbar__logo-text brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></span>' +
       '</a>' +
       '<ul class="navbar__links" id="navLinks">' +
       '<li><a href="index.html" class="navbar__link">ANA SAYFA</a></li>' +
@@ -2478,8 +2478,8 @@
     if (document.querySelector('.footer-brand-band')) return;
 
     var html =
-      '<section class="footer-brand-band" aria-label="MAGANDA">' +
-      '<span class="footer-brand-band__text">MAGANDA</span>' +
+      '<section class="footer-brand-band" aria-label="NMAGANDA">' +
+      '<span class="footer-brand-band__text brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></span>' +
       '</section>';
     var anchor = document.getElementById('cartOverlay') || document.querySelector('script');
     if (anchor) {
@@ -2496,7 +2496,7 @@
       '<footer class="footer">' +
       '<div class="footer__grid">' +
       '<div class="footer__col">' +
-      '<span class="footer__logo">MAGANDA</span>' +
+      '<span class="footer__logo brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></span>' +
       '<p class="footer__tagline">SINIR TANIMAYANLARA..</p>' +
       '<button class="footer__audio-btn" id="siteAudioToggle" type="button" aria-label="Muzigi ac" aria-pressed="false">' +
       '<span class="footer__audio-dot" aria-hidden="true"></span>' +
@@ -2528,7 +2528,7 @@
       '</div>' +
       '</div>' +
       '<div class="footer__bar">' +
-      '<span>© 2026 MAGANDA. Tüm hakları saklıdır.</span>' +
+      '<span>© 2026 NMAGANDA. Tüm hakları saklıdır.</span>' +
       '<a href="#">Gizlilik Politikası</a>' +
       '</div>' +
       '</footer>';

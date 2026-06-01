@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   MAGANDA — skeleton.js
+   NMAGANDA — skeleton.js
    Skeleton Loader: ürün kartları ve product page için
    ═══════════════════════════════════════════ */
 

@@ -1,5 +1,5 @@
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   MAGANDA â€” DESIGN TOKENS (KaranlÄ±k Tema â€” VarsayÄ±lan)
+   NMAGANDA â€” DESIGN TOKENS (KaranlÄ±k Tema â€” VarsayÄ±lan)
    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 :root {
   --color-black: #0A0A0A;
@@ -397,6 +397,24 @@ body.no-scroll {
   transition: color 0.4s;
 }
 
+.brand-logo {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.brand-logo__name {
+  color: currentColor;
+}
+
+.brand-logo__n {
+  color: #0A0A0A;
+  transition: color 0.4s;
+}
+
+html[data-theme="light"] .brand-logo__n {
+  color: #F5F5F5;
+}
+
 .navbar__links {
   display: flex;
   align-items: center;
@@ -697,6 +715,10 @@ html body .navbar:not(.navbar--scrolled) .navbar__cart-btn {
   color: #F5F5F5;
 }
 
+html body .navbar:not(.navbar--scrolled) .brand-logo__n {
+  color: #0A0A0A;
+}
+
 html body .navbar:not(.navbar--scrolled) .navbar__theme-btn {
   border-color: rgba(255, 255, 255, 0.2);
   background: rgba(0, 0, 0, 0.2);
@@ -716,6 +738,10 @@ html[data-theme="light"] body .navbar.navbar--scrolled .navbar__link,
 html[data-theme="light"] body .navbar.navbar--scrolled .navbar__icon-btn,
 html[data-theme="light"] body .navbar.navbar--scrolled .navbar__cart-btn {
   color: #0A0A0A;
+}
+
+html[data-theme="light"] body .navbar.navbar--scrolled .brand-logo__n {
+  color: #F5F5F5;
 }
 
 html[data-theme="light"] body .navbar.navbar--scrolled .navbar__theme-btn {
@@ -762,6 +788,10 @@ html body .navbar.navbar--sequence .navbar__link,
 html body .navbar.navbar--sequence .navbar__icon-btn,
 html body .navbar.navbar--sequence .navbar__cart-btn {
   color: #0A0A0A;
+}
+
+html body .navbar.navbar--sequence .brand-logo__n {
+  color: #F5F5F5;
 }
 
 html body .navbar.navbar--sequence .navbar__theme-btn {

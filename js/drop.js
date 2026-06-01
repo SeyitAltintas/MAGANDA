@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   MAGANDA — drop.js
+   NMAGANDA — drop.js
    Countdown Timer + Stock Bar + Social Proof
    ═══════════════════════════════════════════ */
 

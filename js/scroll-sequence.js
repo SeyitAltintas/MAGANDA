@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   MAGANDA — scroll-sequence.js
+   NMAGANDA — scroll-sequence.js
    Canvas tabanlı scroll-driven image sequence
    192 frame: assets/sequence/frame001.jpg–frame192.jpg
    ═══════════════════════════════════════════ */
@@ -69,7 +69,7 @@
       rangeEnd: 0.31,
       className: 'seq-text--center',
       html: '<p class="seq-text__title">ÖZEL SERİ</p>' +
-        '<p class="seq-text__sub">MAGANDA imzasıyla sınırlı üretim.</p>'
+        '<p class="seq-text__sub">NMAGANDA imzasıyla sınırlı üretim.</p>'
     },
     {
       rangeStart: 0.34,

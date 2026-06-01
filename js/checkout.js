@@ -705,8 +705,8 @@
     couponBtn.addEventListener('click', function() {
        var code = couponInput.value.trim().toUpperCase();
        if (!code) return;
-       // Validating MAGANDA10 or WHEEL mock codes
-       if (code === 'MAGANDA10' || code.indexOf('WHEEL') !== -1) {
+       // Validating NMAGANDA10 or WHEEL mock codes
+       if (code === 'NMAGANDA10' || code.indexOf('WHEEL') !== -1) {
            appliedCoupon = { code: code, discountPercent: 10 };
            if (window.toast) window.toast('Kupon uygulandı!', 'success');
            renderCart();

@@ -632,5 +632,86 @@ window.MAGANDA_PRODUCT_CATALOG = [
                                     "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_22 (6).png"
                           ]
                 }
+          },
+          {
+                "name": "R34 T-SHIRT",
+                "price": "₺699",
+                "series": "Araba Serisi",
+                "category": "Araba",
+                "page": "araba.html",
+                "badge": "YENİ",
+                "img": "assets/img/R34 T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.15.jpeg",
+                "gallery": [
+                      "assets/img/R34 T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.15.jpeg",
+                      "assets/img/R34 T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.15 (2).jpeg",
+                      "assets/img/R34 T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.15 (3).jpeg",
+                      "assets/img/R34 T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.16.jpeg"
+                ],
+                "colors": {
+                      "siyah": [
+                            "assets/img/R34 T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.15.jpeg",
+                            "assets/img/R34 T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.15 (2).jpeg",
+                            "assets/img/R34 T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.15 (3).jpeg",
+                            "assets/img/R34 T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.16.jpeg"
+                      ]
+                }
+          },
+          {
+                "name": "VIN DIESEL T-SHIRT",
+                "price": "₺699",
+                "series": "Araba Serisi",
+                "category": "Araba",
+                "page": "araba.html",
+                "badge": "YENİ",
+                "img": "assets/img/VIN DIESEL T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.16 (1).jpeg",
+                "gallery": [
+                      "assets/img/VIN DIESEL T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.16 (1).jpeg",
+                      "assets/img/VIN DIESEL T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.17.jpeg",
+                      "assets/img/VIN DIESEL T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.17 (1).jpeg",
+                      "assets/img/VIN DIESEL T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.17 (2).jpeg"
+                ],
+                "colors": {
+                      "siyah": [
+                            "assets/img/VIN DIESEL T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.16 (1).jpeg",
+                            "assets/img/VIN DIESEL T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.17.jpeg",
+                            "assets/img/VIN DIESEL T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.17 (1).jpeg",
+                            "assets/img/VIN DIESEL T-SHIRT/WhatsApp Image 2026-06-01 at 12.45.17 (2).jpeg"
+                      ]
+                }
+          },
+          {
+                "name": "Life is too Short Baskılı Regular Fit Motorcu Tişört",
+                "price": "₺749",
+                "series": "Motosiklet Serisi",
+                "category": "Motor",
+                "page": "motor.html",
+                "badge": "YENİ",
+                "img": "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 15_41_14 (1).png",
+                "gallery": [
+                      "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 15_41_14 (1).png",
+                      "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 15_41_15 (2).png",
+                      "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 15_41_15 (3).png",
+                      "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 15_41_16 (4).png",
+                      "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 15_41_16 (5).png",
+                      "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 15_41_16 (6).png"
+                ],
+                "colors": {
+                      "siyah": [
+                            "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 15_41_14 (1).png",
+                            "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 15_41_15 (2).png",
+                            "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 15_41_15 (3).png",
+                            "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 15_41_16 (4).png",
+                            "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 15_41_16 (5).png",
+                            "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 15_41_16 (6).png"
+                      ],
+                      "gri": [
+                            "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/gri/ChatGPT Image 12 May 2026 15_47_30 (1).png",
+                            "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/gri/ChatGPT Image 12 May 2026 15_47_33 (2).png",
+                            "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/gri/ChatGPT Image 12 May 2026 15_47_34 (3).png",
+                            "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/gri/ChatGPT Image 12 May 2026 15_47_35 (4).png",
+                            "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/gri/ChatGPT Image 12 May 2026 15_47_36 (5).png",
+                            "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/gri/ChatGPT Image 12 May 2026 15_47_37 (6).png"
+                      ]
+                }
           }
     ];

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   MAGANDA — auth.js
+   NMAGANDA — auth.js
    Demo Auth Sistemi (localStorage tabanlı)
    ═══════════════════════════════════════════ */
 

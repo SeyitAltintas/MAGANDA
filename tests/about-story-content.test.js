@@ -12,7 +12,7 @@ function assert(condition, message) {
 
 [
   'assets/img/hakkimizdaresim.png',
-  'MAGANDA, araba ve motosiklet kültürünün içinden çıkan yerli bir giyim markası.',
+  'NMAGANDA, araba ve motosiklet kültürünün içinden çıkan yerli bir giyim markası.',
   'İlk fikir, hazır kalıpların bize uymadığını fark ettiğimizde ortaya çıktı.',
   'Bugün amacımız, günlük hayatta giyilebilir ama karakteri olan parçalar üretmek.',
   'YERLİ ÜRETİM. GERÇEK TUTKU.'

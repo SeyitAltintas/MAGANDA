@@ -1,11 +1,11 @@
-# MAGANDA - Codebase Overview
+# NMAGANDA - Codebase Overview
 
 ## Proje Mimarisi
 Bu proje, modern framework'ler (React, Vue vb.) kullanılmadan geliştirilmiş Vanilla HTML, CSS ve JavaScript tabanlı bir e-ticaret (MPA - Multi Page Application) uygulamasıdır. Veri yönetimi (sepet, tema, favoriler) tamamen tarayıcının `localStorage` API'si üzerinden sağlanmaktadır.
 
 ## Dizin Yapısı
 ```text
-MAGANDA/
+NMAGANDA/
 ├── index.html           # Ana sayfa (Cinematic Hero, Featured Products)
 ├── araba.html           # Araba koleksiyonu
 ├── motor.html           # Motor koleksiyonu
