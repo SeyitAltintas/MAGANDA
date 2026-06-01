@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   MAGANDA — collection.js
+   NMAGANDA — collection.js
    Araba & Motor ürün sayfaları için JS
    ═══════════════════════════════════════════ */
 

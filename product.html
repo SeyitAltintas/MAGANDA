@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MAGANDA — Ürün</title>
-  <meta name="description" content="MAGANDA petrolhead giyim. Asfaltta bıraktığın izin giysiye yansıması.">
+  <title>NMAGANDA — Ürün</title>
+  <meta name="description" content="NMAGANDA petrolhead giyim. Asfaltta bıraktığın izin giysiye yansıması.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/discount-wheel.css">
   <link rel="stylesheet" href="css/product.css">
 </head>
 
@@ -84,6 +85,10 @@
       <span class="pp-series" id="pp-series"></span>
       <h1 class="pp-name" id="pp-name">ÜRÜN YÜKLENİYOR...</h1>
       <span class="pp-price" id="pp-price">₺—</span>
+      <div id="pp-live-visitors" style="font-size:0.85rem; color:var(--color-muted); display:flex; align-items:center; gap:6px; margin-bottom:12px;">
+        <span style="display:inline-block;width:8px;height:8px;background:var(--color-primary);border-radius:50%;animation:pulse 2s infinite;"></span>
+        <span id="pp-live-visitors-text">👀 Şu an <strong id="pp-live-visitors-count">--</strong> kişi bu ürünü inceliyor.</span>
+      </div>
       <div class="pp-action-row">
         <span class="pp-limited-badge" id="pp-limited-badge">SINIRLI DROP</span>
         <button class="pp-favorite-btn" id="pp-favorite-btn" type="button" aria-label="Favorilere Ekle" aria-pressed="false">
@@ -92,6 +97,7 @@
           </svg>
         </button>
       </div>
+      <div id="pp-total-stock-msg" style="color:var(--color-primary); font-size:0.85rem; font-weight:500; margin-top:8px; letter-spacing:0.5px;"></div>
 
       <div class="pp-divider"></div>
 
@@ -155,10 +161,54 @@
         </div>
       </div>
 
+      <!-- Hızlı Kargo Sayacı -->
+      <div id="pp-fast-shipping-timer" style="margin-bottom:1rem; font-size:0.85rem; color:var(--color-text); background:rgba(255,255,255,0.05); padding:10px 12px; border-radius:4px; border-left: 3px solid var(--color-primary); display:flex; align-items:center; gap:8px;">
+        <span style="font-size:1.2rem;">🚀</span>
+        <span>Aynı gün kargo için son <strong id="pp-fast-shipping-time">--:--:--</strong></span>
+      </div>
+
+      <!-- Cross-sell Modülü -->
+      <div id="pp-cross-sell" style="margin-bottom:1rem; padding:12px; border:1px solid rgba(255,255,255,0.1); border-radius:4px; display:none; align-items:center; gap:12px; background:rgba(0,0,0,0.2); cursor:pointer;">
+        <input type="checkbox" id="pp-cross-sell-checkbox" style="width:18px;height:18px;accent-color:var(--color-primary);cursor:pointer;">
+        <label for="pp-cross-sell-checkbox" style="font-size:0.85rem; color:var(--color-text); cursor:pointer; flex:1; display:flex; align-items:center; gap:8px;">
+          <img id="pp-cross-sell-img" src="" alt="" style="width:36px; height:36px; object-fit:cover; border-radius:4px; border:1px solid rgba(255,255,255,0.1);">
+          <div style="display:flex; flex-direction:column; gap:4px; flex:1;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <span>Kombini tamamla: <strong id="pp-cross-sell-name"></strong> (<span id="pp-cross-sell-price" style="color:var(--color-primary);"></span>)</span>
+              <span id="pp-cross-sell-inspect" style="font-size:0.75rem; text-decoration:underline; color:var(--color-primary); cursor:pointer; margin-left:8px;" onclick="event.preventDefault(); event.stopPropagation();">İncele</span>
+            </div>
+            <div style="display:flex; gap:12px; margin-top:2px;" onclick="event.preventDefault();">
+              <div id="pp-cross-sell-size-container" style="display:none; align-items:center; gap:4px;">
+                <span style="font-size:0.75rem; color:var(--color-muted);">Beden:</span>
+                <select id="pp-cross-sell-size" style="background:#1a1a1a; color:var(--color-text); border:1px solid rgba(255,255,255,0.2); border-radius:2px; padding:2px 4px; font-size:0.75rem; cursor:pointer;" onclick="event.stopPropagation();">
+                  <option value="S">S</option>
+                  <option value="M" selected>M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+                </select>
+              </div>
+              <div id="pp-cross-sell-color-container" style="display:none; align-items:center; gap:4px;">
+                <span style="font-size:0.75rem; color:var(--color-muted);">Renk:</span>
+                <select id="pp-cross-sell-color" style="background:#1a1a1a; color:var(--color-text); border:1px solid rgba(255,255,255,0.2); border-radius:2px; padding:2px 4px; font-size:0.75rem; cursor:pointer;" onclick="event.stopPropagation();">
+                  <option value="Siyah" selected>Siyah</option>
+                  <option value="Beyaz">Beyaz</option>
+                  <option value="Gri">Gri</option>
+                  <option value="Krem">Krem</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </label>
+      </div>
+
       <!-- Satın Alma Aksiyonları -->
       <div class="pp-buy-actions">
         <button class="pp-add-btn" id="pp-add-btn" type="button">SEPETE EKLE</button>
         <button class="pp-buy-now-btn" id="pp-buy-now-btn" type="button">ŞİMDİ AL</button>
+      </div>
+      <div id="pp-cart-attractiveness" style="font-size:0.8rem; color:var(--color-muted); text-align:center; margin-top:12px; font-weight:500;">
+        🔥 Son 24 saatte <strong id="pp-cart-add-count" style="color:var(--color-text)">--</strong> kez sepete eklendi.
       </div>
 
       <div class="pp-info-links" id="pp-info-links" aria-label="&#220;r&#252;n bilgi detaylar&#305;">
@@ -279,6 +329,24 @@
     <div class="pp-related__grid" id="pp-related-grid"></div>
   </section>
 
+  <section class="pp-related" id="pp-recent" aria-label="Son görüntülenenler" style="display:none">
+    <div class="pp-related__head">
+      <span class="pp-related__eyebrow">KALDIĞIN YERDEN DEVAM ET</span>
+      <h2 class="pp-related__title">SON GÖRÜNTÜLENENLER</h2>
+    </div>
+    <div class="pp-related__grid" id="pp-recent-grid"></div>
+  </section>
+
+  <div class="pp-cross-sell-modal-overlay" id="pp-cross-sell-modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9998; align-items:center; justify-content:center; backdrop-filter:blur(5px);">
+    <div style="background:var(--color-bg); border:1px solid rgba(255,255,255,0.1); border-radius:8px; width:90%; height:90%; max-width:1200px; position:relative; z-index:9999; overflow:hidden; display:flex; flex-direction:column;" onclick="event.stopPropagation();">
+      <div style="padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-family:var(--font-heading); font-size:1.2rem;">ÜRÜN İNCELEMESİ</span>
+        <button id="pp-cross-sell-modal-close" style="background:transparent; border:none; color:var(--color-text); font-size:1.5rem; cursor:pointer;">&times;</button>
+      </div>
+      <iframe id="pp-cross-sell-modal-iframe" src="" style="width:100%; flex:1; border:none; background:var(--color-bg);"></iframe>
+    </div>
+  </div>
+
   <div class="pp-info-panel-overlay" id="ppInfoPanelOverlay"></div>
   <div class="pp-zoom-modal" id="pp-zoom-modal" aria-hidden="true">
     <button class="pp-zoom-modal__close" id="pp-zoom-close" type="button" aria-label="Kapat">&times;</button>
@@ -293,7 +361,9 @@
     <div class="pp-info-panel__body" id="ppInfoPanelBody"></div>
   </aside>
 
+  <script src="js/catalog.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/discount-wheel.js"></script>
   <script src="js/site-audio.js"></script>
   <script>
     // Breadcrumb ürün adını güncelle

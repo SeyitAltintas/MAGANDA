@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   MAGANDA — search.js
+   NMAGANDA — search.js
    Gelişmiş Arama: live dropdown, fuzzy eşleşme, klavye navigasyonu
    ═══════════════════════════════════════════ */
 

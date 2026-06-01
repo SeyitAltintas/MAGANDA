@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   MAGANDA — CHECKOUT PAGE
+   NMAGANDA — CHECKOUT PAGE
    Tasarım Sistemi: Bebas Neue + Inter
    ═══════════════════════════════════════════ */
 
@@ -334,6 +334,14 @@ img { display: block; max-width: 100%; }
   background: rgba(255,255,255,0.05);
   color: var(--white);
 }
+.ci__qty-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+}
+.ci__qty-btn:disabled:hover {
+  background: transparent;
+  color: var(--white-dim);
+}
 .ci__qty-val {
   width: 36px;
   text-align: center;
@@ -417,6 +425,61 @@ img { display: block; max-width: 100%; }
   margin-bottom: 0;
 }
 .co-summary__free { color: var(--green); font-weight: 600; }
+.co-coupon-box {
+  margin: 14px 0 4px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.03);
+}
+.co-coupon-box__label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.co-coupon-box__control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+.co-coupon-box__input {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  padding: 0 11px;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--black);
+  color: var(--white);
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+  text-transform: uppercase;
+}
+.co-coupon-box__input::placeholder {
+  color: var(--white-dim);
+  text-transform: none;
+}
+.co-coupon-box__input:focus {
+  border-color: var(--red);
+}
+.co-coupon-box__btn {
+  height: 40px;
+  padding: 0 13px;
+  border: 0;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--red);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
 .co-summary__badge {
   margin-top: 20px;
   font-size: 11px;

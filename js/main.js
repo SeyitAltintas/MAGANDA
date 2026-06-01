@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   MAGANDA — main.js
+   NMAGANDA — main.js
    Modüler yapı: her özellik ayrı fonksiyon
    ═══════════════════════════════════════════ */
 
@@ -10,6 +10,23 @@
   var theme = saved || (prefersDark ? 'dark' : 'light');
   if (theme === 'light') {
     document.documentElement.setAttribute('data-theme', 'light');
+  }
+
+  if (window.location.search.indexOf('modal=1') !== -1) {
+    document.documentElement.classList.add('is-modal');
+    var style = document.createElement('style');
+    style.textContent = `
+      .is-modal .navbar, .is-modal .footer, .is-modal .footer-brand-band, 
+      .is-modal .pp-breadcrumb, .is-modal #pp-related, .is-modal #pp-recent,
+      .is-modal .noise-overlay, .is-modal #pp-cross-sell, .is-modal .pp-buy-actions,
+      .is-modal #pp-color-options, .is-modal #pp-color-divider, .is-modal .pp-size-header,
+      .is-modal .pp-size-tools, .is-modal #pp-sizes, .is-modal .pp-qty-row {
+        display: none !important;
+      }
+      .is-modal body { padding-top: 0 !important; background: transparent !important; }
+      .is-modal .product-page { margin-top: 0 !important; padding-top: 20px !important; }
+    `;
+    document.head.appendChild(style);
   }
 })();
 (function () {
@@ -104,6 +121,57 @@
   }
 
   /* --- COLLECTION FILTERS ─────────────── */
+  function initCollectionSkeletonLoading() {
+    var grid = document.querySelector('.collection-page .collection__grid');
+    if (!grid) return;
+
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.product-card'));
+    if (!cards.length) return;
+
+    var pending = 0;
+    var finishGrid = function () {
+      grid.classList.remove('collection__grid--loading');
+    };
+
+    var finishCard = function (card) {
+      card.classList.remove('product-card--loading');
+      card.setAttribute('aria-busy', 'false');
+      card.setAttribute('data-skeleton-ready', 'true');
+    };
+
+    grid.classList.add('collection__grid--loading');
+
+    cards.forEach(function (card) {
+      var imageUrl = getCardImageUrl(card);
+      card.classList.add('product-card--loading');
+      card.setAttribute('aria-busy', 'true');
+      card.removeAttribute('data-skeleton-ready');
+
+      if (!imageUrl) {
+        finishCard(card);
+        return;
+      }
+
+      pending++;
+      var image = new Image();
+      var isDone = false;
+      var done = function () {
+        if (isDone) return;
+        isDone = true;
+        finishCard(card);
+        pending--;
+        if (pending === 0) finishGrid();
+      };
+
+      image.onload = done;
+      image.onerror = done;
+      image.src = imageUrl;
+      setTimeout(done, 2400);
+    });
+
+    if (pending === 0) finishGrid();
+  }
+
   function initFilters() {
     var filterBtns = document.querySelectorAll('.filter-btn');
     var grid = document.querySelector('.collection__grid');
@@ -324,16 +392,7 @@
         if (entry.isIntersecting) {
           var lines = entry.target.querySelectorAll('[data-animate]');
           lines.forEach(function (line, i) {
-            setTimeout// Tema flasini onlemek icin sayfa yuklenmeden once temayi uygula
-              (function () {
-                var saved = localStorage.getItem('maganda_theme');
-                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                var theme = saved || (prefersDark ? 'dark' : 'light');
-                if (theme === 'light') {
-                  document.documentElement.setAttribute('data-theme', 'light');
-                }
-              })();
-            (function () {
+            setTimeout(function () {
               line.classList.add('is-visible');
             }, i * 150);
           });
@@ -354,16 +413,7 @@
 
     window.addEventListener('scroll', function () {
       if (!ticking) {
-        requestAnimationFrame// Tema flasini onlemek icin sayfa yuklenmeden once temayi uygula
-          (function () {
-            var saved = localStorage.getItem('maganda_theme');
-            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            var theme = saved || (prefersDark ? 'dark' : 'light');
-            if (theme === 'light') {
-              document.documentElement.setAttribute('data-theme', 'light');
-            }
-          })();
-        (function () {
+        requestAnimationFrame(function () {
           var scrollY = window.scrollY;
 
           // Background Text Parallax
@@ -592,7 +642,8 @@
     }
 
     var total = 0;
-    var itemsHTML = '<div class="cart-items-list">';
+    var itemsHTML = '<div class="cart-reservation-timer" style="background:rgba(255,255,255,0.05); padding:10px; text-align:center; font-size:0.85rem; margin-bottom:16px; border-radius:4px; border:1px solid rgba(255,255,255,0.1); color:var(--color-text);">⏱️ Sepetinizdeki ürünler <strong id="cart-reservation-time" style="color:var(--color-primary);">15:00</strong> dakika rezerve edildi.</div>';
+    itemsHTML += '<div class="cart-items-list">';
 
     cart.forEach(function (item) {
       var qty = item.quantity || 1;
@@ -632,6 +683,28 @@
 
     if (totalEl) totalEl.textContent = '₺' + total.toLocaleString('tr-TR');
     updateShippingBar(total);
+
+    // Rezervasyon Sayacı Başlat (Bir kere başlatıp localStorage'da süreyi tutalım)
+    var endTime = localStorage.getItem('maganda_cart_reservation');
+    if (!endTime || parseInt(endTime) < new Date().getTime()) {
+      endTime = new Date().getTime() + 15 * 60 * 1000;
+      localStorage.setItem('maganda_cart_reservation', endTime);
+    }
+    
+    if (window.cartResInterval) clearInterval(window.cartResInterval);
+    window.cartResInterval = setInterval(function() {
+      var el = document.getElementById('cart-reservation-time');
+      if (!el) return;
+      var dist = parseInt(endTime) - new Date().getTime();
+      if (dist < 0) {
+         el.textContent = "00:00";
+         clearInterval(window.cartResInterval);
+      } else {
+         var m = Math.floor(dist / 60000);
+         var s = Math.floor((dist % 60000) / 1000);
+         el.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+      }
+    }, 1000);
   }
 
 
@@ -645,7 +718,7 @@
       e.preventDefault();
       form.style.display = 'none';
       success.classList.add('drop__success--show');
-      window.toast && window.toast('Listeye eklendin. Hoş geldin, MAGANDA.', 'success');
+      window.toast && window.toast('Listeye eklendin. Hoş geldin, NMAGANDA.', 'success');
     });
   }
 
@@ -793,6 +866,37 @@
   }
 
   /* ─── ÜRÜN DETAY SAYFASI (product.html) ─────── */
+  var MAGANDA_PRODUCT_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+  function getSharedProductHash(value) {
+    var hash = 0;
+    String(value || '').split('').forEach(function (char) {
+      hash = ((hash << 5) - hash) + char.charCodeAt(0);
+      hash |= 0;
+    });
+    return Math.abs(hash);
+  }
+
+  function getProductSizeStock(productName) {
+    var seed = getSharedProductHash(productName);
+    var stockMap = {};
+    MAGANDA_PRODUCT_SIZES.forEach(function (size, index) {
+      stockMap[size] = (seed + index * 3) % 7;
+    });
+    if (Object.keys(stockMap).every(function (size) { return stockMap[size] === 0; })) stockMap.M = 3;
+    return stockMap;
+  }
+
+  function getProductMaxQty(productName, size) {
+    if (!size) return 10;
+    var stock = getProductSizeStock(productName)[size] || 0;
+    return stock > 2 ? 10 : stock;
+  }
+
+  window.MagandaProductStock = {
+    getProductSizeStock: getProductSizeStock,
+    getProductMaxQty: getProductMaxQty
+  };
   function initProductPage() {
     if (!document.getElementById('productPage')) return;
 
@@ -806,7 +910,8 @@
     var badge = params.get('badge') || '';
     var imgUrl = params.get('img') || '';
     var galleryImages = (params.get('gallery') || '').split('|').filter(Boolean);
-    var MAGANDA_PRODUCT_CATALOG = [];
+    var MAGANDA_PRODUCT_CATALOG = window.MAGANDA_PRODUCT_CATALOG || [];
+
 
     function syncProductBackLink() {
       var backLink = document.getElementById('pp-back');
@@ -833,13 +938,13 @@
     var sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
     var descriptions = [
       'Piston sesi ruhunda, yol izi kalbinde. Bu parça, garaj kokusunu her gün üzerinde taşıyanlar için tasarlandı. Asfaltta bıraktığın her izin giysiye yansıması.',
-      'Gece yarısı pistten dönerken soyunma odasına giren adam gibi: Sessiz, emin ve fark yaratan. MAGANDA kalitesiyle dokunuşunu hissedeceksin.',
+      'Gece yarısı pistten dönerken soyunma odasına giren adam gibi: Sessiz, emin ve fark yaratan. NMAGANDA kalitesiyle dokunuşunu hissedeceksin.',
       'Turbo çarptığında hissettirdiği güç — bunu beze de işledik. Maksimum konfor, sıfır taviz. Petrolhead DNA\'sı her iplikte saklı.',
       'RPM\'in kırmızı çizgisine kadar çıktığında bile rahat olacaksın. Türkiye\'nin en gözü pek sürücüleri için üretildi. Fark yaratmak için giyilir.'
     ];
 
     // Sayfa başlığı
-    document.title = 'MAGANDA — ' + name;
+    document.title = 'NMAGANDA — ' + name;
 
     // Görsel
     var imgEl = document.getElementById('pp-img');
@@ -888,8 +993,8 @@
           title: 'ÜRÜN AÇIKLAMASI',
           body: [
             '<div class="pp-desc-section pp-desc-section--intro">',
-            '<span class="pp-desc-eyebrow">MAGANDA DROP</span>',
-            '<p><strong>' + name + '</strong>, MAGANDA ruhunu günlük kullanıma taşıyan sınırlı üretim bir parça olarak tasarlandı.</p>',
+            '<span class="pp-desc-eyebrow">NMAGANDA DROP</span>',
+            '<p><strong>' + name + '</strong>, NMAGANDA ruhunu günlük kullanıma taşıyan sınırlı üretim bir parça olarak tasarlandı.</p>',
             '<p>' + activeDescription + '</p>',
             '</div>',
             '<div class="pp-desc-section pp-desc-section--model">',
@@ -1218,7 +1323,7 @@
         var reviews = getStoredReviews(productName);
         reviews.unshift({
           id: 'user-' + Date.now(),
-          user: 'MAGANDA Müşterisi',
+          user: 'NMAGANDA Müşterisi',
           rating: Number(ratingEl.value) || 5,
           size: sizeEl.value,
           fit: fitEl.value,
@@ -1332,7 +1437,7 @@
             '<p>' + escapeHtml(item.q) + '</p>' +
             '</div>' +
             '<div class="pp-question-card__a">' +
-            '<span>MAGANDA Satıcısı · ' + escapeHtml(item.date) + '</span>' +
+            '<span>NMAGANDA Satıcısı · ' + escapeHtml(item.date) + '</span>' +
             '<p>' + escapeHtml(item.a) + '</p>' +
             '</div>' +
             '</article>';
@@ -1351,646 +1456,14 @@
       draw(questions);
     }
 
-    MAGANDA_PRODUCT_CATALOG = [
-          {
-                "name": "V8 OBSESSION HOODIE",
-                "price": "₺1799",
-                "series": "Araba Serisi",
-                "category": "Araba",
-                "page": "araba.html",
-                "badge": "YENİ DROP",
-                "img": "assets/img/V8 OBSESSION HOODIE/siyah/ön.png",
-                "gallery": [
-                      "assets/img/V8 OBSESSION HOODIE/siyah/ön.png",
-                      "assets/img/V8 OBSESSION HOODIE/siyah/arka.png",
-                      "assets/img/V8 OBSESSION HOODIE/siyah/arkaveön.png",
-                      "assets/img/V8 OBSESSION HOODIE/siyah/doku.png",
-                      "assets/img/V8 OBSESSION HOODIE/siyah/model.png",
-                      "assets/img/V8 OBSESSION HOODIE/siyah/modelarka.png"
-                ],
-                "aliases": [
-                      "DROP #01: V8 OBSESSION HOODIE"
-                ],
-                "colors": {
-                      "siyah": [
-                            "assets/img/V8 OBSESSION HOODIE/siyah/ön.png",
-                            "assets/img/V8 OBSESSION HOODIE/siyah/arka.png",
-                            "assets/img/V8 OBSESSION HOODIE/siyah/arkaveön.png",
-                            "assets/img/V8 OBSESSION HOODIE/siyah/doku.png",
-                            "assets/img/V8 OBSESSION HOODIE/siyah/model.png",
-                            "assets/img/V8 OBSESSION HOODIE/siyah/modelarka.png"
-                      ],
-                      "beyaz": [
-                            "assets/img/V8 OBSESSION HOODIE/beyaz/ChatGPT Image 11 May 2026 14_03_56.png",
-                            "assets/img/V8 OBSESSION HOODIE/beyaz/ChatGPT Image 11 May 2026 14_16_31.png",
-                            "assets/img/V8 OBSESSION HOODIE/beyaz/ChatGPT Image 11 May 2026 14_18_00.png",
-                            "assets/img/V8 OBSESSION HOODIE/beyaz/ChatGPT Image 11 May 2026 14_20_37.png",
-                            "assets/img/V8 OBSESSION HOODIE/beyaz/ChatGPT Image 11 May 2026 14_21_50.png",
-                            "assets/img/V8 OBSESSION HOODIE/beyaz/ChatGPT Image 11 May 2026 14_26_53.png"
-                      ]
-                }
-          },
-          {
-                "name": "DRIFT KING OVERSIZE T-SHIRT",
-                "price": "₺699",
-                "series": "Araba Serisi",
-                "category": "Araba",
-                "page": "araba.html",
-                "badge": "ÇOK SATAN",
-                "img": "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/ön.png",
-                "gallery": [
-                      "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/ön.png",
-                      "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arka.png",
-                      "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arkaveön.png",
-                      "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/kumasdetay.png",
-                      "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelön.png",
-                      "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelarka.png"
-                ],
-                "aliases": [
-                      "DROP #03: DRIFT KING T-SHIRT"
-                ],
-                "colors": {
-                      "siyah": [
-                            "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/ön.png",
-                            "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arka.png",
-                            "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/arkaveön.png",
-                            "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/kumasdetay.png",
-                            "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelön.png",
-                            "assets/img/DRIFT KING OVERSİZE T-SHIRT/siyah/modelarka.png"
-                      ],
-                      "beyaz": [
-                            "assets/img/DRIFT KING OVERSİZE T-SHIRT/beyaz/ChatGPT Image 11 May 2026 13_48_20.png",
-                            "assets/img/DRIFT KING OVERSİZE T-SHIRT/beyaz/ChatGPT Image 11 May 2026 13_49_51.png",
-                            "assets/img/DRIFT KING OVERSİZE T-SHIRT/beyaz/ChatGPT Image 11 May 2026 13_53_19.png",
-                            "assets/img/DRIFT KING OVERSİZE T-SHIRT/beyaz/ChatGPT Image 11 May 2026 13_55_33.png",
-                            "assets/img/DRIFT KING OVERSİZE T-SHIRT/beyaz/ChatGPT Image 11 May 2026 13_57_08.png",
-                            "assets/img/DRIFT KING OVERSİZE T-SHIRT/beyaz/ChatGPT Image 11 May 2026 13_59_21.png"
-                      ]
-                }
-          },
-          {
-                "name": "MIDNIGHT RUN SWEATPANTS",
-                "price": "₺1899",
-                "series": "Araba Serisi",
-                "category": "Araba",
-                "page": "araba.html",
-                "badge": "",
-                "img": "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_39_41.png",
-                "gallery": [
-                      "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_39_41.png",
-                      "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_40_41.png",
-                      "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_42_36.png",
-                      "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_44_36.png",
-                      "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_45_48.png",
-                      "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_48_27.png"
-                ],
-                "aliases": [],
-                "colors": {
-                      "siyah": [
-                            "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_39_41.png",
-                            "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_40_41.png",
-                            "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_42_36.png",
-                            "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_44_36.png",
-                            "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_45_48.png",
-                            "assets/img/MIDNIGHT RUN SWEATPANTS/siyah/ChatGPT Image 11 May 2026 16_48_27.png"
-                      ],
-                      "beyaz": [
-                            "assets/img/MIDNIGHT RUN SWEATPANTS/beyaz/ChatGPT Image 11 May 2026 23_35_14.png",
-                            "assets/img/MIDNIGHT RUN SWEATPANTS/beyaz/ChatGPT Image 12 May 2026 10_06_38.png",
-                            "assets/img/MIDNIGHT RUN SWEATPANTS/beyaz/ChatGPT Image 12 May 2026 10_09_39.png",
-                            "assets/img/MIDNIGHT RUN SWEATPANTS/beyaz/ChatGPT Image 12 May 2026 10_10_48.png",
-                            "assets/img/MIDNIGHT RUN SWEATPANTS/beyaz/ChatGPT Image 12 May 2026 10_11_57.png",
-                            "assets/img/MIDNIGHT RUN SWEATPANTS/beyaz/ChatGPT Image 12 May 2026 10_13_14.png"
-                      ]
-                }
-          },
-          {
-                "name": "GEARHEAD JOGGERS",
-                "price": "₺1299",
-                "series": "Araba Serisi",
-                "category": "Araba",
-                "page": "araba.html",
-                "badge": "SINIRLI",
-                "img": "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 16_48_00.png",
-                "gallery": [
-                      "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 16_48_00.png",
-                      "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 16_49_46.png",
-                      "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 16_51_22.png",
-                      "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 17_09_27.png",
-                      "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 17_19_13.png",
-                      "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 23_12_28.png"
-                ],
-                "aliases": [],
-                "colors": {
-                      "siyah": [
-                            "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 16_48_00.png",
-                            "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 16_49_46.png",
-                            "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 16_51_22.png",
-                            "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 17_09_27.png",
-                            "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 17_19_13.png",
-                            "assets/img/GEARHEAD JOGGERS/siyah/ChatGPT Image 11 May 2026 23_12_28.png"
-                      ],
-                      "beyaz": [
-                            "assets/img/GEARHEAD JOGGERS/beyaz/ChatGPT Image 11 May 2026 23_30_43.png",
-                            "assets/img/GEARHEAD JOGGERS/beyaz/ChatGPT Image 12 May 2026 10_06_13.png",
-                            "assets/img/GEARHEAD JOGGERS/beyaz/ChatGPT Image 12 May 2026 10_06_18.png",
-                            "assets/img/GEARHEAD JOGGERS/beyaz/ChatGPT Image 12 May 2026 10_09_35.png",
-                            "assets/img/GEARHEAD JOGGERS/beyaz/ChatGPT Image 12 May 2026 10_11_08.png",
-                            "assets/img/GEARHEAD JOGGERS/beyaz/ChatGPT Image 12 May 2026 10_12_39.png"
-                      ]
-                }
-          },
-          {
-                "name": "TOKYO NIGHTS LONG SLEEVE",
-                "price": "₺899",
-                "series": "Araba Serisi",
-                "category": "Araba",
-                "page": "araba.html",
-                "badge": "",
-                "img": "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_19_02.png",
-                "gallery": [
-                      "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_19_02.png",
-                      "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_20_20.png",
-                      "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_21_31.png",
-                      "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_24_36.png",
-                      "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_27_26.png",
-                      "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_31_24.png"
-                ],
-                "aliases": [],
-                "colors": {
-                      "siyah": [
-                            "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_19_02.png",
-                            "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_20_20.png",
-                            "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_21_31.png",
-                            "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_24_36.png",
-                            "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_27_26.png",
-                            "assets/img/TOKYO NIGHTS LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 10_31_24.png"
-                      ],
-                      "beyaz": [
-                            "assets/img/TOKYO NIGHTS LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 10_41_20.png",
-                            "assets/img/TOKYO NIGHTS LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 10_50_17.png",
-                            "assets/img/TOKYO NIGHTS LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 10_52_47.png"
-                      ]
-                }
-          },
-          {
-                "name": "TRACK DAY CARBON CAP",
-                "price": "₺499",
-                "series": "Araba Serisi",
-                "category": "Araba",
-                "page": "araba.html",
-                "badge": "",
-                "img": "assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_24_09.png",
-                "gallery": [
-                      "assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_24_09.png",
-                      "assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_25_22.png",
-                      "assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_26_35.png",
-                      "assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_29_27.png",
-                      "assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_35_06.png"
-                ],
-                "aliases": [],
-                "colors": {
-                      "siyah": [
-                            "assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_24_09.png",
-                            "assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_25_22.png",
-                            "assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_26_35.png",
-                            "assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_29_27.png",
-                            "assets/img/TRACK DAY CARBON CAP/siyah/ChatGPT Image 12 May 2026 10_35_06.png"
-                      ],
-                      "beyaz": [
-                            "assets/img/TRACK DAY CARBON CAP/beyaz/ChatGPT Image 12 May 2026 10_41_09.png",
-                            "assets/img/TRACK DAY CARBON CAP/beyaz/ChatGPT Image 12 May 2026 10_50_30.png",
-                            "assets/img/TRACK DAY CARBON CAP/beyaz/ChatGPT Image 12 May 2026 10_52_33.png"
-                      ]
-                }
-          },
-          {
-                "name": "APEX Predator Hoodie",
-                "price": "₺1699",
-                "series": "Araba Serisi",
-                "category": "Araba",
-                "page": "araba.html",
-                "badge": "YENİ",
-                "img": "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_27_01.png",
-                "gallery": [
-                      "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_27_01.png",
-                      "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_29_39.png",
-                      "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_31_06.png",
-                      "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_33_43.png",
-                      "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_40_40.png",
-                      "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_49_04.png"
-                ],
-                "aliases": [
-                      "DROP #02: APEX PREDATOR HOODIE"
-                ],
-                "colors": {
-                      "siyah": [
-                            "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_27_01.png",
-                            "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_29_39.png",
-                            "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_31_06.png",
-                            "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_33_43.png",
-                            "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_40_40.png",
-                            "assets/img/APEX Predator Hoodie/siyah/ChatGPT Image 12 May 2026 10_49_04.png"
-                      ],
-                      "beyaz": [
-                            "assets/img/APEX Predator Hoodie/beyaz/ChatGPT Image 12 May 2026 10_57_47.png",
-                            "assets/img/APEX Predator Hoodie/beyaz/ChatGPT Image 12 May 2026 11_00_22.png",
-                            "assets/img/APEX Predator Hoodie/beyaz/ChatGPT Image 12 May 2026 11_29_08.png"
-                      ]
-                }
-          },
-          {
-                "name": "SPEED HUNTER BEANIE",
-                "price": "₺399",
-                "series": "Araba Serisi",
-                "category": "Araba",
-                "page": "araba.html",
-                "badge": "",
-                "img": "assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_05_42.png",
-                "gallery": [
-                      "assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_05_42.png",
-                      "assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_06_40.png",
-                      "assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_07_56.png"
-                ],
-                "aliases": [
-                      "DROP #08: SPEED HUNTER BEANIE"
-                ],
-                "colors": {
-                      "gri": [
-                            "assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_05_42.png",
-                            "assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_06_40.png",
-                            "assets/img/SPEED HUNTER BEANIE/gri/ChatGPT Image 12 May 2026 12_07_56.png"
-                      ],
-                      "siyah": [
-                            "assets/img/SPEED HUNTER BEANIE/siyah/ChatGPT Image 12 May 2026 12_01_27.png",
-                            "assets/img/SPEED HUNTER BEANIE/siyah/ChatGPT Image 12 May 2026 12_02_59.png",
-                            "assets/img/SPEED HUNTER BEANIE/siyah/ChatGPT Image 12 May 2026 12_04_06.png"
-                      ]
-                }
-          },
-          {
-                "name": "Altın Elbiseli Adam 3 İplik Oversize Hoodie",
-                "price": "₺1799",
-                "series": "Motosiklet Serisi",
-                "category": "Motor",
-                "page": "motor.html",
-                "badge": "YENİ",
-                "img": "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_27_27.png",
-                "gallery": [
-                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_27_27.png",
-                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_29_42.png",
-                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_41_39.png",
-                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_44_27.png",
-                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_52_48 (1).png",
-                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_52_49 (2).png",
-                      "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_52_49 (3).png"
-                ],
-                "aliases": [
-                      "DROP #07: ALTIN ELBİSELİ ADAM HOODIE"
-                ],
-                "colors": {
-                      "siyah": [
-                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_27_27.png",
-                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 12_29_42.png",
-                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_41_39.png",
-                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_44_27.png",
-                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_52_48 (1).png",
-                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_52_49 (2).png",
-                            "assets/img/Altın Elbiseli Adam 3 İplik Oversize Hoodie/siyah/ChatGPT Image 12 May 2026 14_52_49 (3).png"
-                      ]
-                }
-          },
-          {
-                "name": "CBR 600RR Baskılı Regular Fit Motorcu Tişörtü",
-                "price": "₺749",
-                "series": "Motosiklet Serisi",
-                "category": "Motor",
-                "page": "motor.html",
-                "badge": "ÇOK SATAN",
-                "img": "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_56_21.png",
-                "gallery": [
-                      "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_56_21.png",
-                      "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_00_24.png",
-                      "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_01_49.png",
-                      "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_03_15.png",
-                      "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_05_55.png",
-                      "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_07_32.png"
-                ],
-                "aliases": [
-                      "DROP #04: CBR 600RR MOTORCU TİŞÖRTÜ"
-                ],
-                "colors": {
-                      "siyah": [
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_56_21.png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_00_24.png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_01_49.png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_03_15.png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_05_55.png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 12_07_32.png"
-                      ],
-                      "beyaz": [
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/beyaz/ChatGPT Image 12 May 2026 12_12_26.png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/beyaz/ChatGPT Image 12 May 2026 12_13_54.png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/beyaz/ChatGPT Image 12 May 2026 12_15_01.png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/beyaz/ChatGPT Image 12 May 2026 12_15_56.png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/beyaz/ChatGPT Image 12 May 2026 12_18_04.png"
-                      ],
-                      "krem-bej": [
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/krem-bej/ChatGPT Image 12 May 2026 12_31_16_1.png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/krem-bej/ChatGPT Image 12 May 2026 12_31_16_2.png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/krem-bej/ChatGPT Image 12 May 2026 12_31_17_3.png",
-                            "assets/img/CBR 600RR Baskılı Regular Fit Motorcu Tişörtü/krem-bej/ChatGPT Image 12 May 2026 12_31_17_4.png"
-                      ]
-                }
-          },
-          {
-                "name": "MT-07 Baskılı Regular Fit Motorcu Tişörtü",
-                "price": "₺699",
-                "series": "Motosiklet Serisi",
-                "category": "Motor",
-                "page": "motor.html",
-                "badge": "",
-                "img": "assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ön.png",
-                "gallery": [
-                      "assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ön.png",
-                      "assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/kumasdetay.png",
-                      "assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_07_41.png",
-                      "assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_40_34.png",
-                      "assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_43_06.png"
-                ],
-                "aliases": [],
-                "colors": {
-                      "siyah": [
-                            "assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ön.png",
-                            "assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/kumasdetay.png",
-                            "assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_07_41.png",
-                            "assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_40_34.png",
-                            "assets/img/MT-07 Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_43_06.png"
-                      ]
-                }
-          },
-          {
-                "name": "RIDE OR DIE TRACK PANTS",
-                "price": "₺1899",
-                "series": "Motosiklet Serisi",
-                "category": "Motor",
-                "page": "motor.html",
-                "badge": "SINIRLI",
-                "img": "assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_18_54.png",
-                "gallery": [
-                      "assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_18_54.png",
-                      "assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_19_50.png",
-                      "assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_22_33.png"
-                ],
-                "aliases": [
-                      "DROP #06: RIDE OR DIE TRACK PANTS"
-                ],
-                "colors": {
-                      "siyah": [
-                            "assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_18_54.png",
-                            "assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_19_50.png",
-                            "assets/img/RIDE OR DIE TRACK PANTS/siyah/ChatGPT Image 12 May 2026 12_22_33.png"
-                      ]
-                }
-          },
-          {
-                "name": "S1000RR Baskılı Regular Fit Motorcu Tişörtü",
-                "price": "₺749",
-                "series": "Motosiklet Serisi",
-                "category": "Motor",
-                "page": "motor.html",
-                "badge": "",
-                "img": "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_39_20.png",
-                "gallery": [
-                      "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_39_20.png",
-                      "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_44_30.png",
-                      "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_46_30.png",
-                      "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_48_06.png",
-                      "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_49_45.png"
-                ],
-                "aliases": [
-                      "DROP #05: S1000RR MOTORCU TİŞÖRTÜ"
-                ],
-                "colors": {
-                      "siyah": [
-                            "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_39_20.png",
-                            "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_44_30.png",
-                            "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_46_30.png",
-                            "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_48_06.png",
-                            "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/siyah/ChatGPT Image 12 May 2026 11_49_45.png"
-                      ],
-                      "beyaz": [
-                            "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/beyaz/ChatGPT Image 12 May 2026 11_52_56.png",
-                            "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/beyaz/ChatGPT Image 12 May 2026 11_55_46.png",
-                            "assets/img/S1000RR Baskılı Regular Fit Motorcu Tişörtü/beyaz/ChatGPT Image 12 May 2026 11_57_22.png"
-                      ]
-                }
-          },
-          {
-                "name": "The Evolution Motorcu Tişört",
-                "price": "₺699",
-                "series": "Motosiklet Serisi",
-                "category": "Motor",
-                "page": "motor.html",
-                "badge": "",
-                "img": "assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_13_18.png",
-                "gallery": [
-                      "assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_13_18.png",
-                      "assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_14_43.png",
-                      "assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_20_39.png",
-                      "assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_24_16.png"
-                ],
-                "aliases": [],
-                "colors": {
-                      "siyah": [
-                            "assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_13_18.png",
-                            "assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_14_43.png",
-                            "assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_20_39.png",
-                            "assets/img/The Evolution Motorcu Tişört/siyah/ChatGPT Image 12 May 2026 12_24_16.png"
-                      ],
-                      "beyaz": [
-                            "assets/img/The Evolution Motorcu Tişört/beyaz/ChatGPT Image 12 May 2026 12_27_04.png",
-                            "assets/img/The Evolution Motorcu Tişört/beyaz/ChatGPT Image 12 May 2026 12_28_47.png",
-                            "assets/img/The Evolution Motorcu Tişört/beyaz/ChatGPT Image 12 May 2026 12_30_11.png"
-                      ]
-                }
-          },
-          {
-                "name": "CAFE RACER VINTAGE T-SHIRT",
-                "price": "₺749",
-                "series": "Motosiklet Serisi",
-                "category": "Motor",
-                "page": "motor.html",
-                "badge": "YENİ",
-                "img": "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (1).png",
-                "gallery": [
-                          "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (1).png",
-                          "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (2).png",
-                          "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (3).png",
-                          "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (4).png",
-                          "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (5).png",
-                          "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_32 (6).png"
-                ],
-                "colors": {
-                          "beyaz": [
-                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/beyaz/ChatGPT Image 12 May 2026 15_14_41 (1).png",
-                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/beyaz/ChatGPT Image 12 May 2026 15_14_42 (2).png",
-                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/beyaz/ChatGPT Image 12 May 2026 15_14_42 (3).png",
-                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/beyaz/ChatGPT Image 12 May 2026 15_14_43 (4).png",
-                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/beyaz/ChatGPT Image 12 May 2026 15_14_43 (5).png",
-                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/beyaz/ChatGPT Image 12 May 2026 15_14_43 (6).png"
-                          ],
-                          "siyah": [
-                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (1).png",
-                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (2).png",
-                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (3).png",
-                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (4).png",
-                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_31 (5).png",
-                                    "assets/img/CAFE RACER VINTAGE T-SHIRT/siyah/ChatGPT Image 12 May 2026 15_08_32 (6).png"
-                          ]
-                }
-          },
-          {
-                "name": "APEX CHASER LONG SLEEVE",
-                "price": "₺899",
-                "series": "Motosiklet Serisi",
-                "category": "Motor",
-                "page": "motor.html",
-                "badge": "YENİ",
-                "img": "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_33 (1).png",
-                "gallery": [
-                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_33 (1).png",
-                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (2).png",
-                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (3).png",
-                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (4).png",
-                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (5).png",
-                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (6).png",
-                          "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (7).png"
-                ],
-                "colors": {
-                          "beyaz": [
-                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_29 (1).png",
-                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_29 (2).png",
-                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_29 (3).png",
-                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_33 (4).png",
-                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_33 (5).png",
-                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_33 (6).png",
-                                    "assets/img/APEX CHASER LONG SLEEVE/beyaz/ChatGPT Image 12 May 2026 15_16_34 (7).png"
-                          ],
-                          "siyah": [
-                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_33 (1).png",
-                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (2).png",
-                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (3).png",
-                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_34 (4).png",
-                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (5).png",
-                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (6).png",
-                                    "assets/img/APEX CHASER LONG SLEEVE/siyah/ChatGPT Image 12 May 2026 15_12_35 (7).png"
-                          ]
-                }
-          },
-          {
-                "name": "BURN RUBBER CAP",
-                "price": "₺499",
-                "series": "Motosiklet Serisi",
-                "category": "Motor",
-                "page": "motor.html",
-                "badge": "SINIRLI",
-                "img": "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_17_21.png",
-                "gallery": [
-                          "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_17_21.png",
-                          "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_15 (1).png",
-                          "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_15 (2).png",
-                          "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_16 (3).png"
-                ],
-                "colors": {
-                          "koyu-kırmızı": [
-                                    "assets/img/BURN RUBBER CAP/koyu-kırmızı/ChatGPT Image 12 May 2026 15_23_54 (1).png",
-                                    "assets/img/BURN RUBBER CAP/koyu-kırmızı/ChatGPT Image 12 May 2026 15_23_55 (2).png",
-                                    "assets/img/BURN RUBBER CAP/koyu-kırmızı/ChatGPT Image 12 May 2026 15_23_55 (3).png",
-                                    "assets/img/BURN RUBBER CAP/koyu-kırmızı/ChatGPT Image 12 May 2026 15_23_55 (4).png"
-                          ],
-                          "siyah": [
-                                    "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_17_21.png",
-                                    "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_15 (1).png",
-                                    "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_15 (2).png",
-                                    "assets/img/BURN RUBBER CAP/siyah/ChatGPT Image 12 May 2026 15_21_16 (3).png"
-                          ]
-                }
-          },
-          {
-                "name": "BUILT FOR THE OBSESSED HOODIE",
-                "price": "₺1799",
-                "series": "Motosiklet Serisi",
-                "category": "Motor",
-                "page": "motor.html",
-                "badge": "YENİ",
-                "img": "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_22 (1).png",
-                "gallery": [
-                          "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_22 (1).png",
-                          "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_23 (2).png",
-                          "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_23 (3).png",
-                          "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_26 (4).png",
-                          "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_26 (5).png",
-                          "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_29 (6).png"
-                ],
-                "colors": {
-                          "gri": [
-                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/gri/ChatGPT Image 12 May 2026 15_33_47 (1).png",
-                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/gri/ChatGPT Image 12 May 2026 15_33_47 (2).png",
-                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/gri/ChatGPT Image 12 May 2026 15_33_48 (3).png",
-                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/gri/ChatGPT Image 12 May 2026 15_33_48 (4).png",
-                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/gri/ChatGPT Image 12 May 2026 15_33_48 (5).png",
-                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/gri/ChatGPT Image 12 May 2026 15_33_49 (6).png"
-                          ],
-                          "siyah": [
-                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_22 (1).png",
-                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_23 (2).png",
-                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_23 (3).png",
-                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_26 (4).png",
-                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_26 (5).png",
-                                    "assets/img/BUILT FOR THE OBSESSED HOODIE/siyah/ChatGPT Image 12 May 2026 15_28_29 (6).png"
-                          ]
-                }
-          },
-          {
-                "name": "REDLINE TRACKSUIT",
-                "price": "₺1899",
-                "series": "Araba Serisi",
-                "category": "Araba",
-                "page": "araba.html",
-                "badge": "YENİ",
-                "img": "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_16 (1).png",
-                "gallery": [
-                          "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_16 (1).png",
-                          "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_17 (2).png",
-                          "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_20 (3).png",
-                          "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_20 (4).png",
-                          "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_21 (5).png",
-                          "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_22 (6).png"
-                ],
-                "colors": {
-                          "gri": [
-                                    "assets/img/REDLINE TRACKSUIT/gri/ChatGPT Image 12 May 2026 15_33_13 (1).png",
-                                    "assets/img/REDLINE TRACKSUIT/gri/ChatGPT Image 12 May 2026 15_33_14 (2).png",
-                                    "assets/img/REDLINE TRACKSUIT/gri/ChatGPT Image 12 May 2026 15_33_15 (3).png",
-                                    "assets/img/REDLINE TRACKSUIT/gri/ChatGPT Image 12 May 2026 15_33_16 (4).png",
-                                    "assets/img/REDLINE TRACKSUIT/gri/ChatGPT Image 12 May 2026 15_33_16 (5).png"
-                          ],
-                          "siyah": [
-                                    "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_16 (1).png",
-                                    "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_17 (2).png",
-                                    "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_20 (3).png",
-                                    "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_20 (4).png",
-                                    "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_21 (5).png",
-                                    "assets/img/REDLINE TRACKSUIT/siyah/ChatGPT Image 12 May 2026 15_30_22 (6).png"
-                          ]
-                }
-          }
-    ];
+    MAGANDA_PRODUCT_CATALOG = window.MAGANDA_PRODUCT_CATALOG || [];
 
     initProductColorOptions(name, productGalleryApi, imgUrl);
 
     function renderRelatedProducts(productName, productSeries) {
+      var currentProduct = findCatalogProduct(productName);
+      addToRecentlyViewed(currentProduct);
+      renderRecentProducts(productName);
       var relatedGrid = document.getElementById('pp-related-grid');
       if (!relatedGrid) return;
 
@@ -2028,6 +1501,58 @@
     }
 
     // Breadcrumb — referrer'a göre geri link
+    function addToRecentlyViewed(product) {
+      if (!product || !product.name) return;
+      var KEY = 'maganda_recently_viewed';
+      var history = JSON.parse(localStorage.getItem(KEY)) || [];
+      history = history.filter(function(p) { return p.name !== product.name; });
+      history.unshift({
+          name: product.name,
+          price: product.price,
+          series: product.series,
+          badge: product.badge || '',
+          img: product.img,
+          gallery: product.gallery ? product.gallery.join('|') : ''
+      });
+      history = history.slice(0, 4);
+      localStorage.setItem(KEY, JSON.stringify(history));
+    }
+
+    function renderRecentProducts(productName) {
+      var recentSection = document.getElementById('pp-recent');
+      var recentGrid = document.getElementById('pp-recent-grid');
+      if (!recentSection || !recentGrid) return;
+
+      var KEY = 'maganda_recently_viewed';
+      var history = JSON.parse(localStorage.getItem(KEY)) || [];
+      var others = history.filter(function(p) { return p.name !== productName; });
+      
+      if (others.length === 0) {
+        recentSection.style.display = 'none';
+        return;
+      }
+      
+      recentSection.style.display = '';
+      recentGrid.innerHTML = others.map(function(item) {
+        var params = new URLSearchParams({
+          name: item.name,
+          price: item.price,
+          series: item.series,
+          badge: item.badge || '',
+          img: item.img
+        });
+        if (item.gallery) params.set('gallery', item.gallery);
+
+        return '<a class="pp-related-card" href="product.html?' + params.toString() + '">' +
+          '<div class="pp-related-card__img" style="background-image:url(&quot;' + escapeAttr(item.img) + '&quot;)"></div>' +
+          '<div class="pp-related-card__body">' +
+          '<span class="pp-related-card__tag">' + escapeHtml(item.series) + '</span>' +
+          '<h3 class="pp-related-card__name">' + escapeHtml(item.name) + '</h3>' +
+          '<span class="pp-related-card__price">' + escapeHtml(item.price) + '</span>' +
+          '</div>' +
+          '</a>';
+      }).join('');
+    }
     function getCareIconItem(name, label) {
       return '<li>' +
         '<span class="pp-care-icon-wrap">' +
@@ -2346,6 +1871,62 @@
     var currentQty = 1;
     var sizeStock = getProductSizeStock(name);
 
+    // FOMO: Toplam Stok Mesajı
+    var totalStockMsgEl = document.getElementById('pp-total-stock-msg');
+    if (totalStockMsgEl) {
+      var totalStock = 0;
+      Object.keys(sizeStock).forEach(function(s) {
+         var st = sizeStock[s];
+         if (st > 2) st = 10;
+         totalStock += st;
+      });
+      if (totalStock > 0 && totalStock < 100) {
+        totalStockMsgEl.innerHTML = '🔥 Bu üründe stoklarımızda sadece <strong>son ' + totalStock + ' adet</strong> kalmıştır.';
+      }
+    }
+
+    // FOMO: Canlı Ziyaretçi Sayacı
+    var liveVisitorsCountEl = document.getElementById('pp-live-visitors-count');
+    if (liveVisitorsCountEl) {
+      var baseVisitors = 12 + (productHash(name) % 25);
+      liveVisitorsCountEl.textContent = baseVisitors;
+      setInterval(function() {
+         var variation = Math.floor(Math.random() * 5) - 2;
+         var current = parseInt(liveVisitorsCountEl.textContent) || baseVisitors;
+         var next = current + variation;
+         if (next < 8) next = 8;
+         if (next > 45) next = 45;
+         liveVisitorsCountEl.textContent = next;
+      }, 4500);
+    }
+
+    // FOMO: Aynı Gün Kargo Sayacı
+    var fastShippingTimeEl = document.getElementById('pp-fast-shipping-time');
+    if (fastShippingTimeEl) {
+      function updateShippingTimer() {
+        var now = new Date();
+        var target = new Date();
+        target.setHours(16, 0, 0, 0);
+        if (now > target) {
+          target.setDate(target.getDate() + 1);
+        }
+        var diff = target - now;
+        var hours = Math.floor(diff / 1000 / 60 / 60);
+        var minutes = Math.floor((diff / 1000 / 60) % 60);
+        var seconds = Math.floor((diff / 1000) % 60);
+        fastShippingTimeEl.textContent = String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+      }
+      updateShippingTimer();
+      setInterval(updateShippingTimer, 1000);
+    }
+
+    // FOMO: Sepet Çekiciliği
+    var cartAddCountEl = document.getElementById('pp-cart-add-count');
+    if (cartAddCountEl) {
+       var addCount = 20 + (productHash(name) % 80);
+       cartAddCountEl.textContent = addCount;
+    }
+
     function getSelectedSizeStock() {
       if (!selectedSize) return 10;
       var stock = sizeStock[selectedSize] || 0;
@@ -2415,6 +1996,96 @@
     var addBtn = document.getElementById('pp-add-btn');
     var buyNowBtn = document.getElementById('pp-buy-now-btn');
     var sizeWarn = document.getElementById('pp-size-warn');
+
+    // Cross-sell Logic
+    var crossSellEl = document.getElementById('pp-cross-sell');
+    var crossSellImg = document.getElementById('pp-cross-sell-img');
+    var crossSellName = document.getElementById('pp-cross-sell-name');
+    var crossSellPrice = document.getElementById('pp-cross-sell-price');
+    var crossSellCheckbox = document.getElementById('pp-cross-sell-checkbox');
+    var crossSellSizeContainer = document.getElementById('pp-cross-sell-size-container');
+    var crossSellSize = document.getElementById('pp-cross-sell-size');
+    var crossSellColorContainer = document.getElementById('pp-cross-sell-color-container');
+    var crossSellColor = document.getElementById('pp-cross-sell-color');
+    var crossSellProduct = null;
+
+    if (crossSellEl && typeof MAGANDA_PRODUCT_CATALOG !== 'undefined' && MAGANDA_PRODUCT_CATALOG.length) {
+      var others = MAGANDA_PRODUCT_CATALOG.filter(function(p) { return p.name !== name; });
+      crossSellProduct = others.find(function(p) { return p.name.indexOf('CAP') !== -1 || p.name.indexOf('ŞAPKA') !== -1; }) || others[0];
+      
+      if (crossSellProduct) {
+        crossSellEl.style.display = 'flex';
+        if (crossSellImg) crossSellImg.src = crossSellProduct.img;
+        if (crossSellName) crossSellName.textContent = crossSellProduct.name;
+        if (crossSellPrice) crossSellPrice.textContent = crossSellProduct.price;
+
+        if (crossSellSizeContainer) {
+          crossSellSizeContainer.style.display = 'flex';
+        }
+        if (crossSellColorContainer && crossSellColor) {
+          if (crossSellProduct.colors && Object.keys(crossSellProduct.colors).length > 0) {
+            crossSellColor.innerHTML = '';
+            Object.keys(crossSellProduct.colors).forEach(function(c, index) {
+              var opt = document.createElement('option');
+              var capitalized = c.charAt(0).toUpperCase() + c.slice(1).replace('-', ' ');
+              opt.value = capitalized;
+              opt.textContent = capitalized;
+              if (index === 0) opt.selected = true;
+              crossSellColor.appendChild(opt);
+            });
+            crossSellColorContainer.style.display = 'flex';
+          } else {
+            crossSellColorContainer.style.display = 'none';
+          }
+        }
+
+        var inspectBtn = document.getElementById('pp-cross-sell-inspect');
+        var inspectModal = document.getElementById('pp-cross-sell-modal-overlay');
+        var inspectModalIframe = document.getElementById('pp-cross-sell-modal-iframe');
+        var inspectModalClose = document.getElementById('pp-cross-sell-modal-close');
+
+        if (crossSellColorContainer && crossSellColor) {
+          crossSellColor.addEventListener('change', function() {
+            var selectedColorKey = Object.keys(crossSellProduct.colors).find(function(c) {
+              return (c.charAt(0).toUpperCase() + c.slice(1).replace('-', ' ')) === crossSellColor.value;
+            });
+            if (selectedColorKey && crossSellProduct.colors[selectedColorKey] && crossSellProduct.colors[selectedColorKey].length > 0) {
+              if (crossSellImg) crossSellImg.src = crossSellProduct.colors[selectedColorKey][0];
+            }
+          });
+          // Update initial image according to selected color
+          crossSellColor.dispatchEvent(new Event('change'));
+        }
+
+        if (inspectBtn && inspectModal) {
+          inspectBtn.addEventListener('click', function() {
+            if (inspectModalIframe) {
+              var qString = '?name=' + encodeURIComponent(crossSellProduct.name || '') +
+                            '&price=' + encodeURIComponent(crossSellProduct.price || '') +
+                            '&series=' + encodeURIComponent(crossSellProduct.series || '') +
+                            '&badge=' + encodeURIComponent(crossSellProduct.badge || '') +
+                            '&img=' + encodeURIComponent(crossSellProduct.img || '') +
+                            '&gallery=' + encodeURIComponent((crossSellProduct.gallery || []).join('|')) +
+                            '&modal=1';
+              inspectModalIframe.src = 'product.html' + qString;
+            }
+            inspectModal.style.display = 'flex';
+          });
+          
+          if (inspectModalClose) {
+            inspectModalClose.addEventListener('click', function() {
+              inspectModal.style.display = 'none';
+            });
+          }
+          
+          inspectModal.addEventListener('click', function(e) {
+            if (e.target === inspectModal) {
+              inspectModal.style.display = 'none';
+            }
+          });
+        }
+      }
+    }
     function warnMissingSize() {
       if (sizesEl) {
         sizesEl.classList.add('pp-sizes--warn');
@@ -2433,6 +2104,7 @@
         price: parsePriceValue(price),
         size: selectedSize,
         quantity: currentQty,
+        maxQuantity: getSelectedSizeStock(),
         image: imgUrl
       };
     }
@@ -2452,6 +2124,29 @@
           existingItem.quantity = Math.min(existingItem.quantity + currentQty, Math.min(10, getSelectedSizeStock()));
         } else {
           cart.push(productCartItem);
+        }
+
+        if (crossSellCheckbox && crossSellCheckbox.checked && crossSellProduct) {
+          var csSize = 'Standart';
+          if (typeof crossSellSize !== 'undefined' && crossSellSize && typeof crossSellSizeContainer !== 'undefined' && crossSellSizeContainer && crossSellSizeContainer.style.display !== 'none') {
+            csSize = crossSellSize.value;
+          }
+          if (typeof crossSellColor !== 'undefined' && crossSellColor && typeof crossSellColorContainer !== 'undefined' && crossSellColorContainer && crossSellColorContainer.style.display !== 'none') {
+            csSize += ' / ' + crossSellColor.value;
+          }
+
+          var csItem = {
+            id: Date.now() + 1,
+            name: crossSellProduct.name,
+            price: parsePriceValue(crossSellProduct.price),
+            size: csSize,
+            quantity: 1,
+            maxQuantity: 10,
+            image: crossSellProduct.img
+          };
+          var existingCs = cart.find(function (item) { return item.name === csItem.name && item.size === csItem.size; });
+          if (existingCs) existingCs.quantity++;
+          else cart.push(csItem);
         }
 
         saveCart();
@@ -2565,7 +2260,7 @@
               '<path class="fav-empty-heart" d="M40 65 C10 45 5 20 20 12 C30 6 40 16 40 16 C40 16 50 6 60 12 C75 20 70 45 40 65Z" stroke-linecap="round" stroke-linejoin="round"/>' +
               '</svg>' +
               '</div>' +
-              '<span class="favorites-empty__mark">MAGANDA</span>' +
+              '<span class="favorites-empty__mark brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></span>' +
               '<h2 class="favorites-empty__title">HENÜZ FAVORİN YOK</h2>' +
               '<p class="favorites-empty__text">Beğendiğin ürünleri ürün detay sayfasından favorilerine ekleyebilirsin.<br>Koleksiyona göz at ve ilk ürünü seç.</p>' +
               '<div class="fav-empty-actions">' +
@@ -2594,7 +2289,7 @@
           '<div class="product-card__image" style="' + imgStyle + '"></div>' +
           '<div class="product-card__corner"></div>' +
           '<div class="product-card__info">' +
-          '<p class="product-card__tag">' + escapeHtml(item.series || 'MAGANDA') + '</p>' +
+          '<p class="product-card__tag">' + escapeHtml(item.series || 'NMAGANDA') + '</p>' +
           '<h3 class="product-card__name">' + escapeHtml(item.name) + '</h3>' +
           '<div class="product-card__row">' +
           '<span class="product-card__price">' + escapeHtml(item.price) + '</span>' +
@@ -2678,7 +2373,7 @@
       '<nav class="' + navClass + '" id="navbar">' +
       '<div class="navbar__inner">' +
       '<a href="index.html" class="navbar__logo">' +
-      '<span class="navbar__logo-text">MAGANDA</span>' +
+      '<span class="navbar__logo-text brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></span>' +
       '</a>' +
       '<ul class="navbar__links" id="navLinks">' +
       '<li><a href="index.html" class="navbar__link">ANA SAYFA</a></li>' +
@@ -2783,8 +2478,8 @@
     if (document.querySelector('.footer-brand-band')) return;
 
     var html =
-      '<section class="footer-brand-band" aria-label="MAGANDA">' +
-      '<span class="footer-brand-band__text">MAGANDA</span>' +
+      '<section class="footer-brand-band" aria-label="NMAGANDA">' +
+      '<span class="footer-brand-band__text brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></span>' +
       '</section>';
     var anchor = document.getElementById('cartOverlay') || document.querySelector('script');
     if (anchor) {
@@ -2801,7 +2496,7 @@
       '<footer class="footer">' +
       '<div class="footer__grid">' +
       '<div class="footer__col">' +
-      '<span class="footer__logo">MAGANDA</span>' +
+      '<span class="footer__logo brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></span>' +
       '<p class="footer__tagline">SINIR TANIMAYANLARA..</p>' +
       '<button class="footer__audio-btn" id="siteAudioToggle" type="button" aria-label="Muzigi ac" aria-pressed="false">' +
       '<span class="footer__audio-dot" aria-hidden="true"></span>' +
@@ -2833,7 +2528,7 @@
       '</div>' +
       '</div>' +
       '<div class="footer__bar">' +
-      '<span>© 2026 MAGANDA. Tüm hakları saklıdır.</span>' +
+      '<span>© 2026 NMAGANDA. Tüm hakları saklıdır.</span>' +
       '<a href="#">Gizlilik Politikası</a>' +
       '</div>' +
       '</footer>';
@@ -3022,6 +2717,7 @@
 
     initCart();
     initSmoothScroll();
+    initCollectionSkeletonLoading();
     initFilters();
     initScrollAnimations();
     initParallax();

@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MAGANDA — Giriş Yap</title>
-  <meta name="description" content="MAGANDA hesabına giriş yap veya misafir olarak alışverişe devam et.">
+  <title>NMAGANDA — Giriş Yap</title>
+  <meta name="description" content="NMAGANDA hesabına giriş yap veya misafir olarak alışverişe devam et.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/discount-wheel.css">
   <link rel="stylesheet" href="css/auth.css">
 </head>
 
@@ -18,7 +19,7 @@
 
   <main class="auth-main">
     <div class="auth-logo">
-    <a href="index.html">MAGANDA</a>
+    <a href="index.html" class="brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></a>
     <span class="auth-logo__sub">Hesabına giriş yap</span>
   </div>
 
@@ -65,7 +66,7 @@
 
     <div class="auth-links__divider">veya</div>
 
-    <a href="checkout.html" class="auth-guest-btn" id="guestContinueBtn">
+    <a href="index.html" class="auth-guest-btn" id="guestContinueBtn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
         <circle cx="9" cy="7" r="4"/>
@@ -77,8 +78,10 @@
   </div>
   </main>
 
+  <script src="js/catalog.js"></script>
   <script src="js/main.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/discount-wheel.js"></script>
   <script src="js/site-audio.js"></script>
   <script>
     (function () {
@@ -109,6 +112,20 @@
             var isPassword = passwordInp.type === 'password';
             passwordInp.type = isPassword ? 'text' : 'password';
             pwToggle.setAttribute('aria-label', isPassword ? 'Şifreyi gizle' : 'Şifreyi göster');
+          });
+        }
+
+        // Misafir olarak devam et yönlendirmesi
+        var guestBtn = document.getElementById('guestContinueBtn');
+        if (guestBtn) {
+          guestBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            var redirect = new URLSearchParams(window.location.search).get('redirect');
+            if (redirect) {
+              window.location.href = redirect;
+            } else {
+              window.location.href = 'index.html';
+            }
           });
         }
 

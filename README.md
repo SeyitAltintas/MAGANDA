@@ -1,4 +1,4 @@
-# MAGANDA — Built For The Obsessed
+# NMAGANDA — Built For The Obsessed
 
 > Türk yerli petrolhead giyim markası. Hız, özgürlük, aidiyet. Sadece tutkunlar anlar.
 
@@ -11,7 +11,7 @@
 
 ## 🏎️ Proje Hakkında
 
-**MAGANDA**, araba ve motosiklet tutkunlarına yönelik tasarlanmış, sınırlı sayıda üretilen (drop) giyim ürünlerini sunan bir e-ticaret platformudur. Proje, herhangi bir JavaScript framework'ü veya backend altyapısı kullanılmadan tamamen **Vanilla HTML, CSS ve JavaScript** ile geliştirilmiştir.
+**NMAGANDA**, araba ve motosiklet tutkunlarına yönelik tasarlanmış, sınırlı sayıda üretilen (drop) giyim ürünlerini sunan bir e-ticaret platformudur. Proje, herhangi bir JavaScript framework'ü veya backend altyapısı kullanılmadan tamamen **Vanilla HTML, CSS ve JavaScript** ile geliştirilmiştir.
 
 Tüm durum yönetimi tarayıcının `localStorage` API'si üzerinden sağlanmaktadır; bu sayede sıfır sunucu maliyetiyle tam işlevsel bir alışveriş deneyimi sunulmaktadır.
 
@@ -37,7 +37,7 @@ Tüm durum yönetimi tarayıcının `localStorage` API'si üzerinden sağlanmakt
 ## 📁 Proje Yapısı
 
 ```text
-MAGANDA/
+NMAGANDA/
 ├── index.html           # Ana sayfa (Cinematic Hero, Drop Ürünler)
 ├── araba.html           # Araba koleksiyonu
 ├── motor.html           # Motosiklet koleksiyonu
@@ -119,8 +119,8 @@ Bu proje saf HTML/CSS/JS tabanlı olduğundan herhangi bir kurulum veya derleme 
 
 ```bash
 # 1. Repoyu klonla
-git clone https://github.com/SeyitAltintas/MAGANDA.git
-cd MAGANDA
+git clone https://github.com/SeyitAltintas/NMAGANDA.git
+cd NMAGANDA
 
 # 2. Live Server ile aç (VS Code)
 #    index.html dosyasına sağ tıkla → "Open with Live Server"
@@ -197,5 +197,5 @@ Bu proje [MIT Lisansı](LICENSE) ile lisanslanmıştır.
 ---
 
 <div align="center">
-  <strong>MAGANDA — Sadece Tutkunlar Anlar.</strong>
+  <strong>NMAGANDA — Sadece Tutkunlar Anlar.</strong>
 </div>

@@ -1,5 +1,5 @@
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   MAGANDA â€” DESIGN TOKENS (KaranlÄ±k Tema â€” VarsayÄ±lan)
+   NMAGANDA â€” DESIGN TOKENS (KaranlÄ±k Tema â€” VarsayÄ±lan)
    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 :root {
   --color-black: #0A0A0A;
@@ -397,6 +397,24 @@ body.no-scroll {
   transition: color 0.4s;
 }
 
+.brand-logo {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.brand-logo__name {
+  color: currentColor;
+}
+
+.brand-logo__n {
+  color: #0A0A0A;
+  transition: color 0.4s;
+}
+
+html[data-theme="light"] .brand-logo__n {
+  color: #F5F5F5;
+}
+
 .navbar__links {
   display: flex;
   align-items: center;
@@ -697,6 +715,10 @@ html body .navbar:not(.navbar--scrolled) .navbar__cart-btn {
   color: #F5F5F5;
 }
 
+html body .navbar:not(.navbar--scrolled) .brand-logo__n {
+  color: #0A0A0A;
+}
+
 html body .navbar:not(.navbar--scrolled) .navbar__theme-btn {
   border-color: rgba(255, 255, 255, 0.2);
   background: rgba(0, 0, 0, 0.2);
@@ -716,6 +738,10 @@ html[data-theme="light"] body .navbar.navbar--scrolled .navbar__link,
 html[data-theme="light"] body .navbar.navbar--scrolled .navbar__icon-btn,
 html[data-theme="light"] body .navbar.navbar--scrolled .navbar__cart-btn {
   color: #0A0A0A;
+}
+
+html[data-theme="light"] body .navbar.navbar--scrolled .brand-logo__n {
+  color: #F5F5F5;
 }
 
 html[data-theme="light"] body .navbar.navbar--scrolled .navbar__theme-btn {
@@ -762,6 +788,10 @@ html body .navbar.navbar--sequence .navbar__link,
 html body .navbar.navbar--sequence .navbar__icon-btn,
 html body .navbar.navbar--sequence .navbar__cart-btn {
   color: #0A0A0A;
+}
+
+html body .navbar.navbar--sequence .brand-logo__n {
+  color: #F5F5F5;
 }
 
 html body .navbar.navbar--sequence .navbar__theme-btn {
@@ -3802,73 +3832,6 @@ html body .navbar.navbar--sequence .navbar__dropdown-link:focus {
 
 .seq-text--center .seq-text__sub {
   max-width: 24rem;
-}
-
-.seq-loader {
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-primary);
-  z-index: 100;
-}
-
-.seq-loader__brand {
-  font-family: var(--font-display);
-  font-size: 2.25rem;
-  letter-spacing: 0.15em;
-  color: var(--color-red);
-  margin-bottom: 0.4rem;
-}
-
-.seq-loader__sep {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  color: var(--color-gray-text);
-  letter-spacing: 0.4em;
-  margin-bottom: 1.5rem;
-  animation: seq-sep-pulse 1.2s ease-in-out infinite;
-}
-
-@keyframes seq-sep-pulse {
-
-  0%,
-  100% {
-    opacity: 0.2;
-  }
-
-  50% {
-    opacity: 1;
-  }
-}
-
-.seq-loader__bar-wrap {
-  width: 200px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-}
-
-.seq-loader__bar {
-  height: 100%;
-  width: 0%;
-  background: var(--color-red);
-  border-radius: 2px;
-  transition: width 0.1s linear;
-}
-
-.seq-loader__label {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  color: var(--color-gray-text);
-  letter-spacing: 0.1em;
 }
 
 @media (max-width: 768px) {

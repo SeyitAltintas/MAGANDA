@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MAGANDA — Favorilerim</title>
-  <meta name="description" content="MAGANDA favorilere eklenen ürünler.">
+  <title>NMAGANDA — Favorilerim</title>
+  <meta name="description" content="NMAGANDA favorilere eklenen ürünler.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/discount-wheel.css">
 </head>
 
 <body class="force-scrolled-nav">
@@ -26,7 +27,7 @@
 
     <section class="favorites-content" aria-label="Favori ürünler">
       <div class="favorites-empty" id="favoritesEmpty" hidden>
-        <span class="favorites-empty__mark">MAGANDA</span>
+        <span class="favorites-empty__mark brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></span>
         <h2 class="favorites-empty__title">HENÜZ FAVORİN YOK</h2>
         <p class="favorites-empty__text">Beğendiğin ürünleri ürün detay sayfasından favorilerine ekleyebilirsin.</p>
         <a href="drop.html" class="favorites-empty__btn">DROP ÜRÜNLERE GİT</a>
@@ -35,7 +36,9 @@
     </section>
   </main>
 
+  <script src="js/catalog.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/discount-wheel.js"></script>
   <script src="js/site-audio.js"></script>
 </body>
 </html>

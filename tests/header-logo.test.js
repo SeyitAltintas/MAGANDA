@@ -11,7 +11,7 @@ function assert(condition, message) {
   }
 }
 
-assert(mainJs.includes('navbar__logo-text">MAGANDA'), 'header logo text missing');
+assert(mainJs.includes('navbar__logo-text brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span>'), 'header logo text missing');
 assert(!mainJs.includes('navbar__logo-divider'), 'header logo red divider should be removed');
 assert(!mainJs.includes('navbar__logo-est'), 'header KUR. 2026 text should be removed');
 assert(!mainJs.includes('KUR. 2026'), 'header KUR. 2026 label should be removed');
