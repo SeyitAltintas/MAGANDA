@@ -690,19 +690,19 @@
       endTime = new Date().getTime() + 15 * 60 * 1000;
       localStorage.setItem('maganda_cart_reservation', endTime);
     }
-    
+
     if (window.cartResInterval) clearInterval(window.cartResInterval);
-    window.cartResInterval = setInterval(function() {
+    window.cartResInterval = setInterval(function () {
       var el = document.getElementById('cart-reservation-time');
       if (!el) return;
       var dist = parseInt(endTime) - new Date().getTime();
       if (dist < 0) {
-         el.textContent = "00:00";
-         clearInterval(window.cartResInterval);
+        el.textContent = "00:00";
+        clearInterval(window.cartResInterval);
       } else {
-         var m = Math.floor(dist / 60000);
-         var s = Math.floor((dist % 60000) / 1000);
-         el.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+        var m = Math.floor(dist / 60000);
+        var s = Math.floor((dist % 60000) / 1000);
+        el.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
       }
     }, 1000);
   }
@@ -1505,14 +1505,14 @@
       if (!product || !product.name) return;
       var KEY = 'maganda_recently_viewed';
       var history = JSON.parse(localStorage.getItem(KEY)) || [];
-      history = history.filter(function(p) { return p.name !== product.name; });
+      history = history.filter(function (p) { return p.name !== product.name; });
       history.unshift({
-          name: product.name,
-          price: product.price,
-          series: product.series,
-          badge: product.badge || '',
-          img: product.img,
-          gallery: product.gallery ? product.gallery.join('|') : ''
+        name: product.name,
+        price: product.price,
+        series: product.series,
+        badge: product.badge || '',
+        img: product.img,
+        gallery: product.gallery ? product.gallery.join('|') : ''
       });
       history = history.slice(0, 4);
       localStorage.setItem(KEY, JSON.stringify(history));
@@ -1525,15 +1525,15 @@
 
       var KEY = 'maganda_recently_viewed';
       var history = JSON.parse(localStorage.getItem(KEY)) || [];
-      var others = history.filter(function(p) { return p.name !== productName; });
-      
+      var others = history.filter(function (p) { return p.name !== productName; });
+
       if (others.length === 0) {
         recentSection.style.display = 'none';
         return;
       }
-      
+
       recentSection.style.display = '';
-      recentGrid.innerHTML = others.map(function(item) {
+      recentGrid.innerHTML = others.map(function (item) {
         var params = new URLSearchParams({
           name: item.name,
           price: item.price,
@@ -1655,7 +1655,7 @@
       if (thumbsEl) {
         function renderGalleryThumbs() {
           thumbsEl.innerHTML = gallery.map(function (image, index) {
-          return '<button class="pp-gallery-thumb' + (index === activeIndex ? ' pp-gallery-thumb--active' : '') + '" type="button" data-gallery-thumb="' + index + '" aria-label="Ürün görseli ' + (index + 1) + '" aria-current="' + (index === activeIndex ? 'true' : 'false') + '" style="background-image:url(&quot;' + escapeAttr(image) + '&quot;)"></button>';
+            return '<button class="pp-gallery-thumb' + (index === activeIndex ? ' pp-gallery-thumb--active' : '') + '" type="button" data-gallery-thumb="' + index + '" aria-label="Ürün görseli ' + (index + 1) + '" aria-current="' + (index === activeIndex ? 'true' : 'false') + '" style="background-image:url(&quot;' + escapeAttr(image) + '&quot;)"></button>';
           }).join('');
 
           thumbsEl.querySelectorAll('[data-gallery-thumb]').forEach(function (thumb) {
@@ -1682,16 +1682,16 @@
       });
 
       // ─── LIGHTBOX ────────────────────────────────────────────────
-      var lightboxModal   = document.getElementById('pp-zoom-modal');
-      var lightboxImage   = document.getElementById('pp-zoom-image');
-      var lightboxClose   = document.getElementById('pp-zoom-close');
-      var lightboxPrev    = document.getElementById('pp-lightbox-prev');
-      var lightboxNext    = document.getElementById('pp-lightbox-next');
-      var lightboxThumbs  = document.getElementById('pp-lightbox-thumbs');
+      var lightboxModal = document.getElementById('pp-zoom-modal');
+      var lightboxImage = document.getElementById('pp-zoom-image');
+      var lightboxClose = document.getElementById('pp-zoom-close');
+      var lightboxPrev = document.getElementById('pp-lightbox-prev');
+      var lightboxNext = document.getElementById('pp-lightbox-next');
+      var lightboxThumbs = document.getElementById('pp-lightbox-thumbs');
       var lightboxCounter = document.getElementById('pp-lightbox-counter');
       var lightboxOverlay = document.getElementById('pp-lightbox-overlay');
-      var zoomTrigger     = document.getElementById('pp-zoom-trigger');
-      var lightboxIndex   = 0;
+      var zoomTrigger = document.getElementById('pp-zoom-trigger');
+      var lightboxIndex = 0;
 
       function openLightbox(startIndex) {
         if (!lightboxModal) return;
@@ -1748,15 +1748,15 @@
 
       if (imgEl) imgEl.addEventListener('click', function () { openLightbox(activeIndex); });
       if (zoomTrigger) zoomTrigger.addEventListener('click', function (e) { e.stopPropagation(); openLightbox(activeIndex); });
-      if (lightboxClose)   lightboxClose.addEventListener('click', closeLightbox);
+      if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
       if (lightboxOverlay) lightboxOverlay.addEventListener('click', closeLightbox);
-      if (lightboxPrev)    lightboxPrev.addEventListener('click', function () { lightboxNavigate(-1); });
-      if (lightboxNext)    lightboxNext.addEventListener('click', function () { lightboxNavigate(1); });
+      if (lightboxPrev) lightboxPrev.addEventListener('click', function () { lightboxNavigate(-1); });
+      if (lightboxNext) lightboxNext.addEventListener('click', function () { lightboxNavigate(1); });
 
       document.addEventListener('keydown', function (e) {
         if (!lightboxModal || !lightboxModal.classList.contains('pp-lightbox--active')) return;
-        if (e.key === 'Escape')     closeLightbox();
-        if (e.key === 'ArrowLeft')  lightboxNavigate(-1);
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') lightboxNavigate(-1);
         if (e.key === 'ArrowRight') lightboxNavigate(1);
       });
 
@@ -1875,10 +1875,10 @@
     var totalStockMsgEl = document.getElementById('pp-total-stock-msg');
     if (totalStockMsgEl) {
       var totalStock = 0;
-      Object.keys(sizeStock).forEach(function(s) {
-         var st = sizeStock[s];
-         if (st > 2) st = 10;
-         totalStock += st;
+      Object.keys(sizeStock).forEach(function (s) {
+        var st = sizeStock[s];
+        if (st > 2) st = 10;
+        totalStock += st;
       });
       if (totalStock > 0 && totalStock < 100) {
         totalStockMsgEl.innerHTML = '🔥 Bu üründe stoklarımızda sadece <strong>son ' + totalStock + ' adet</strong> kalmıştır.';
@@ -1890,13 +1890,13 @@
     if (liveVisitorsCountEl) {
       var baseVisitors = 12 + (productHash(name) % 25);
       liveVisitorsCountEl.textContent = baseVisitors;
-      setInterval(function() {
-         var variation = Math.floor(Math.random() * 5) - 2;
-         var current = parseInt(liveVisitorsCountEl.textContent) || baseVisitors;
-         var next = current + variation;
-         if (next < 8) next = 8;
-         if (next > 45) next = 45;
-         liveVisitorsCountEl.textContent = next;
+      setInterval(function () {
+        var variation = Math.floor(Math.random() * 5) - 2;
+        var current = parseInt(liveVisitorsCountEl.textContent) || baseVisitors;
+        var next = current + variation;
+        if (next < 8) next = 8;
+        if (next > 45) next = 45;
+        liveVisitorsCountEl.textContent = next;
       }, 4500);
     }
 
@@ -1923,8 +1923,8 @@
     // FOMO: Sepet Çekiciliği
     var cartAddCountEl = document.getElementById('pp-cart-add-count');
     if (cartAddCountEl) {
-       var addCount = 20 + (productHash(name) % 80);
-       cartAddCountEl.textContent = addCount;
+      var addCount = 20 + (productHash(name) % 80);
+      cartAddCountEl.textContent = addCount;
     }
 
     function getSelectedSizeStock() {
@@ -2010,9 +2010,9 @@
     var crossSellProduct = null;
 
     if (crossSellEl && typeof MAGANDA_PRODUCT_CATALOG !== 'undefined' && MAGANDA_PRODUCT_CATALOG.length) {
-      var others = MAGANDA_PRODUCT_CATALOG.filter(function(p) { return p.name !== name; });
-      crossSellProduct = others.find(function(p) { return p.name.indexOf('CAP') !== -1 || p.name.indexOf('ŞAPKA') !== -1; }) || others[0];
-      
+      var others = MAGANDA_PRODUCT_CATALOG.filter(function (p) { return p.name !== name; });
+      crossSellProduct = others.find(function (p) { return p.name.indexOf('CAP') !== -1 || p.name.indexOf('ŞAPKA') !== -1; }) || others[0];
+
       if (crossSellProduct) {
         crossSellEl.style.display = 'flex';
         if (crossSellImg) crossSellImg.src = crossSellProduct.img;
@@ -2025,7 +2025,7 @@
         if (crossSellColorContainer && crossSellColor) {
           if (crossSellProduct.colors && Object.keys(crossSellProduct.colors).length > 0) {
             crossSellColor.innerHTML = '';
-            Object.keys(crossSellProduct.colors).forEach(function(c, index) {
+            Object.keys(crossSellProduct.colors).forEach(function (c, index) {
               var opt = document.createElement('option');
               var capitalized = c.charAt(0).toUpperCase() + c.slice(1).replace('-', ' ');
               opt.value = capitalized;
@@ -2045,8 +2045,8 @@
         var inspectModalClose = document.getElementById('pp-cross-sell-modal-close');
 
         if (crossSellColorContainer && crossSellColor) {
-          crossSellColor.addEventListener('change', function() {
-            var selectedColorKey = Object.keys(crossSellProduct.colors).find(function(c) {
+          crossSellColor.addEventListener('change', function () {
+            var selectedColorKey = Object.keys(crossSellProduct.colors).find(function (c) {
               return (c.charAt(0).toUpperCase() + c.slice(1).replace('-', ' ')) === crossSellColor.value;
             });
             if (selectedColorKey && crossSellProduct.colors[selectedColorKey] && crossSellProduct.colors[selectedColorKey].length > 0) {
@@ -2058,27 +2058,27 @@
         }
 
         if (inspectBtn && inspectModal) {
-          inspectBtn.addEventListener('click', function() {
+          inspectBtn.addEventListener('click', function () {
             if (inspectModalIframe) {
               var qString = '?name=' + encodeURIComponent(crossSellProduct.name || '') +
-                            '&price=' + encodeURIComponent(crossSellProduct.price || '') +
-                            '&series=' + encodeURIComponent(crossSellProduct.series || '') +
-                            '&badge=' + encodeURIComponent(crossSellProduct.badge || '') +
-                            '&img=' + encodeURIComponent(crossSellProduct.img || '') +
-                            '&gallery=' + encodeURIComponent((crossSellProduct.gallery || []).join('|')) +
-                            '&modal=1';
+                '&price=' + encodeURIComponent(crossSellProduct.price || '') +
+                '&series=' + encodeURIComponent(crossSellProduct.series || '') +
+                '&badge=' + encodeURIComponent(crossSellProduct.badge || '') +
+                '&img=' + encodeURIComponent(crossSellProduct.img || '') +
+                '&gallery=' + encodeURIComponent((crossSellProduct.gallery || []).join('|')) +
+                '&modal=1';
               inspectModalIframe.src = 'product.html' + qString;
             }
             inspectModal.style.display = 'flex';
           });
-          
+
           if (inspectModalClose) {
-            inspectModalClose.addEventListener('click', function() {
+            inspectModalClose.addEventListener('click', function () {
               inspectModal.style.display = 'none';
             });
           }
-          
-          inspectModal.addEventListener('click', function(e) {
+
+          inspectModal.addEventListener('click', function (e) {
             if (e.target === inspectModal) {
               inspectModal.style.display = 'none';
             }
@@ -2260,7 +2260,7 @@
               '<path class="fav-empty-heart" d="M40 65 C10 45 5 20 20 12 C30 6 40 16 40 16 C40 16 50 6 60 12 C75 20 70 45 40 65Z" stroke-linecap="round" stroke-linejoin="round"/>' +
               '</svg>' +
               '</div>' +
-              '<span class="favorites-empty__mark brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></span>' +
+              '<span class="favorites-empty__mark">NMAGANDA</span>' +
               '<h2 class="favorites-empty__title">HENÜZ FAVORİN YOK</h2>' +
               '<p class="favorites-empty__text">Beğendiğin ürünleri ürün detay sayfasından favorilerine ekleyebilirsin.<br>Koleksiyona göz at ve ilk ürünü seç.</p>' +
               '<div class="fav-empty-actions">' +
@@ -2373,7 +2373,7 @@
       '<nav class="' + navClass + '" id="navbar">' +
       '<div class="navbar__inner">' +
       '<a href="index.html" class="navbar__logo">' +
-      '<span class="navbar__logo-text brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></span>' +
+      '<span class="navbar__logo-text"><span class="navbar__logo-initial">N</span>MAGANDA</span>' +
       '</a>' +
       '<ul class="navbar__links" id="navLinks">' +
       '<li><a href="index.html" class="navbar__link">ANA SAYFA</a></li>' +
@@ -2479,7 +2479,7 @@
 
     var html =
       '<section class="footer-brand-band" aria-label="NMAGANDA">' +
-      '<span class="footer-brand-band__text brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></span>' +
+      '<span class="footer-brand-band__text">NMAGANDA</span>' +
       '</section>';
     var anchor = document.getElementById('cartOverlay') || document.querySelector('script');
     if (anchor) {
@@ -2496,7 +2496,7 @@
       '<footer class="footer">' +
       '<div class="footer__grid">' +
       '<div class="footer__col">' +
-      '<span class="footer__logo brand-logo" aria-label="NMAGANDA"><span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span></span>' +
+      '<span class="footer__logo">NMAGANDA</span>' +
       '<p class="footer__tagline">SINIR TANIMAYANLARA..</p>' +
       '<button class="footer__audio-btn" id="siteAudioToggle" type="button" aria-label="Muzigi ac" aria-pressed="false">' +
       '<span class="footer__audio-dot" aria-hidden="true"></span>' +

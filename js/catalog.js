@@ -713,5 +713,356 @@ window.MAGANDA_PRODUCT_CATALOG = [
                             "assets/img/Life is too Short Baskılı Regular Fit Motorcu Tişört/gri/ChatGPT Image 12 May 2026 15_47_37 (6).png"
                       ]
                 }
+          },
+          {
+                "name": "BLACKTOP FAMILY TEE",
+                "price": "₺749",
+                "series": "Araba Serisi",
+                "category": "Araba",
+                "page": "araba.html",
+                "badge": "YENİ",
+                "img": "assets/img/BLACKTOP FAMILY TEE/0354f8c7-1917-4175-a85a-60323b4b4073.png",
+                "gallery": [
+                      "assets/img/BLACKTOP FAMILY TEE/0354f8c7-1917-4175-a85a-60323b4b4073.png",
+                      "assets/img/BLACKTOP FAMILY TEE/0f7c7635-fea7-45be-8903-be71d3d6f8f0.png",
+                      "assets/img/BLACKTOP FAMILY TEE/4d724650-7200-40c0-a1eb-66d901ee2773.png",
+                      "assets/img/BLACKTOP FAMILY TEE/8446e355-6969-413d-bb07-66cd02854e5f.png",
+                      "assets/img/BLACKTOP FAMILY TEE/9ccf32dc-be90-41d6-b52a-d94b9a6fa62c.png",
+                      "assets/img/BLACKTOP FAMILY TEE/b025660f-3ad6-44e9-a284-75a79a22db38.png"
+                ],
+                "colors": {
+                      "standart": [
+                            "assets/img/BLACKTOP FAMILY TEE/0354f8c7-1917-4175-a85a-60323b4b4073.png",
+                            "assets/img/BLACKTOP FAMILY TEE/0f7c7635-fea7-45be-8903-be71d3d6f8f0.png",
+                            "assets/img/BLACKTOP FAMILY TEE/4d724650-7200-40c0-a1eb-66d901ee2773.png",
+                            "assets/img/BLACKTOP FAMILY TEE/8446e355-6969-413d-bb07-66cd02854e5f.png",
+                            "assets/img/BLACKTOP FAMILY TEE/9ccf32dc-be90-41d6-b52a-d94b9a6fa62c.png",
+                            "assets/img/BLACKTOP FAMILY TEE/b025660f-3ad6-44e9-a284-75a79a22db38.png"
+                      ]
+                }
+          },
+          {
+                "name": "BLUE EMPIRE TEE",
+                "price": "₺749",
+                "series": "Araba Serisi",
+                "category": "Araba",
+                "page": "araba.html",
+                "badge": "",
+                "img": "assets/img/BLUE EMPIRE TEE/28ee2065-61b6-49dd-8415-56c6dd75f5bd.png",
+                "gallery": [
+                      "assets/img/BLUE EMPIRE TEE/28ee2065-61b6-49dd-8415-56c6dd75f5bd.png",
+                      "assets/img/BLUE EMPIRE TEE/3c2267af-3007-46ba-b043-16df94405b15.png",
+                      "assets/img/BLUE EMPIRE TEE/81dd912d-3ca6-4dbb-898a-a6ca1c5cd256.png",
+                      "assets/img/BLUE EMPIRE TEE/a54ac624-06c5-49f3-a2f8-ce05bbf54ab5.png",
+                      "assets/img/BLUE EMPIRE TEE/e1a9cd28-6f5b-46c8-bb0a-9f6487bf7a93.png",
+                      "assets/img/BLUE EMPIRE TEE/ee3d3b1e-3773-42d8-846f-51bc041db322.png"
+                ],
+                "colors": {
+                      "standart": [
+                            "assets/img/BLUE EMPIRE TEE/28ee2065-61b6-49dd-8415-56c6dd75f5bd.png",
+                            "assets/img/BLUE EMPIRE TEE/3c2267af-3007-46ba-b043-16df94405b15.png",
+                            "assets/img/BLUE EMPIRE TEE/81dd912d-3ca6-4dbb-898a-a6ca1c5cd256.png",
+                            "assets/img/BLUE EMPIRE TEE/a54ac624-06c5-49f3-a2f8-ce05bbf54ab5.png",
+                            "assets/img/BLUE EMPIRE TEE/e1a9cd28-6f5b-46c8-bb0a-9f6487bf7a93.png",
+                            "assets/img/BLUE EMPIRE TEE/ee3d3b1e-3773-42d8-846f-51bc041db322.png"
+                      ]
+                }
+          },
+          {
+                "name": "DUST RUNNER HOODIE",
+                "price": "₺1799",
+                "series": "Motosiklet Serisi",
+                "category": "Motor",
+                "page": "motor.html",
+                "badge": "YENİ",
+                "img": "assets/img/DUST RUNNER HOODIE/01ada325-ddd7-4197-ada9-3ec0462d5558.png",
+                "gallery": [
+                      "assets/img/DUST RUNNER HOODIE/01ada325-ddd7-4197-ada9-3ec0462d5558.png",
+                      "assets/img/DUST RUNNER HOODIE/0c98a6e4-2d79-4e57-9e51-7477be306fd4.png",
+                      "assets/img/DUST RUNNER HOODIE/3edb40d9-81b8-4dfc-bdf6-d566e5ca1643.png",
+                      "assets/img/DUST RUNNER HOODIE/5e0b792d-1d3a-424b-af39-b37565de4b0e.png",
+                      "assets/img/DUST RUNNER HOODIE/76f72174-dbc9-40cb-861e-84e5eca17220.png",
+                      "assets/img/DUST RUNNER HOODIE/dfa5ee3a-e3fc-49cb-af99-7f3cfaaa923d.png"
+                ],
+                "colors": {
+                      "standart": [
+                            "assets/img/DUST RUNNER HOODIE/01ada325-ddd7-4197-ada9-3ec0462d5558.png",
+                            "assets/img/DUST RUNNER HOODIE/0c98a6e4-2d79-4e57-9e51-7477be306fd4.png",
+                            "assets/img/DUST RUNNER HOODIE/3edb40d9-81b8-4dfc-bdf6-d566e5ca1643.png",
+                            "assets/img/DUST RUNNER HOODIE/5e0b792d-1d3a-424b-af39-b37565de4b0e.png",
+                            "assets/img/DUST RUNNER HOODIE/76f72174-dbc9-40cb-861e-84e5eca17220.png",
+                            "assets/img/DUST RUNNER HOODIE/dfa5ee3a-e3fc-49cb-af99-7f3cfaaa923d.png"
+                      ]
+                }
+          },
+          {
+                "name": "LOYAL LANES TEE",
+                "price": "₺749",
+                "series": "Araba Serisi",
+                "category": "Araba",
+                "page": "araba.html",
+                "badge": "",
+                "img": "assets/img/LOYAL LANES TEE/1a037c7c-000c-42e5-8f41-953299a107ae.png",
+                "gallery": [
+                      "assets/img/LOYAL LANES TEE/1a037c7c-000c-42e5-8f41-953299a107ae.png",
+                      "assets/img/LOYAL LANES TEE/8b1bde33-23b0-47d6-93d6-2a534807b655.png",
+                      "assets/img/LOYAL LANES TEE/b5fd7d76-3c23-447a-a968-01881381dff2.png",
+                      "assets/img/LOYAL LANES TEE/b614d395-0fcb-4467-98be-10ad745cbab0.png",
+                      "assets/img/LOYAL LANES TEE/b956a669-8e7b-4a94-96eb-252176330e8d.png",
+                      "assets/img/LOYAL LANES TEE/c57035f0-c6ff-4b20-a3f0-c27b856ad4aa.png"
+                ],
+                "colors": {
+                      "standart": [
+                            "assets/img/LOYAL LANES TEE/1a037c7c-000c-42e5-8f41-953299a107ae.png",
+                            "assets/img/LOYAL LANES TEE/8b1bde33-23b0-47d6-93d6-2a534807b655.png",
+                            "assets/img/LOYAL LANES TEE/b5fd7d76-3c23-447a-a968-01881381dff2.png",
+                            "assets/img/LOYAL LANES TEE/b614d395-0fcb-4467-98be-10ad745cbab0.png",
+                            "assets/img/LOYAL LANES TEE/b956a669-8e7b-4a94-96eb-252176330e8d.png",
+                            "assets/img/LOYAL LANES TEE/c57035f0-c6ff-4b20-a3f0-c27b856ad4aa.png"
+                      ]
+                }
+          },
+          {
+                "name": "MIDNIGHT HEART HOODIE",
+                "price": "₺1799",
+                "series": "Araba Serisi",
+                "category": "Araba",
+                "page": "araba.html",
+                "badge": "YENİ",
+                "img": "assets/img/MIDNIGHT HEART HOODIE/1e938dab-27d1-409d-9c17-704a9d7d90d6.png",
+                "gallery": [
+                      "assets/img/MIDNIGHT HEART HOODIE/1e938dab-27d1-409d-9c17-704a9d7d90d6.png",
+                      "assets/img/MIDNIGHT HEART HOODIE/27655669-44e2-4ab0-9521-5c7bdfa91039.png",
+                      "assets/img/MIDNIGHT HEART HOODIE/6b0009d3-ba39-459c-937e-2b2cf950dd75.png",
+                      "assets/img/MIDNIGHT HEART HOODIE/7558f951-5392-4d48-9926-4a5157d173e5.png",
+                      "assets/img/MIDNIGHT HEART HOODIE/a4a75eee-8079-4601-9626-2222dc9dc15f.png",
+                      "assets/img/MIDNIGHT HEART HOODIE/f2acfc96-7e2a-4672-a547-ee46cd1543f9.png"
+                ],
+                "colors": {
+                      "standart": [
+                            "assets/img/MIDNIGHT HEART HOODIE/1e938dab-27d1-409d-9c17-704a9d7d90d6.png",
+                            "assets/img/MIDNIGHT HEART HOODIE/27655669-44e2-4ab0-9521-5c7bdfa91039.png",
+                            "assets/img/MIDNIGHT HEART HOODIE/6b0009d3-ba39-459c-937e-2b2cf950dd75.png",
+                            "assets/img/MIDNIGHT HEART HOODIE/7558f951-5392-4d48-9926-4a5157d173e5.png",
+                            "assets/img/MIDNIGHT HEART HOODIE/a4a75eee-8079-4601-9626-2222dc9dc15f.png",
+                            "assets/img/MIDNIGHT HEART HOODIE/f2acfc96-7e2a-4672-a547-ee46cd1543f9.png"
+                      ]
+                }
+          },
+          {
+                "name": "MIDNIGHT TORQUE HOODIE",
+                "price": "₺1799",
+                "series": "Motosiklet Serisi",
+                "category": "Motor",
+                "page": "motor.html",
+                "badge": "YENİ",
+                "img": "assets/img/MIDNIGHT TORQUE HOODIE/0cb577df-a081-470f-858e-e8551663f7d0.png",
+                "gallery": [
+                      "assets/img/MIDNIGHT TORQUE HOODIE/0cb577df-a081-470f-858e-e8551663f7d0.png",
+                      "assets/img/MIDNIGHT TORQUE HOODIE/26dcff7c-70ba-4ae5-8afb-b4b676600e36.png",
+                      "assets/img/MIDNIGHT TORQUE HOODIE/925d0006-fa52-40d7-9da5-9ade5ba328fe.png",
+                      "assets/img/MIDNIGHT TORQUE HOODIE/96cd3a23-f687-40cb-92d6-f239fcfe4b01.png",
+                      "assets/img/MIDNIGHT TORQUE HOODIE/deb694e9-c339-4ada-829d-f91ad66959ad.png",
+                      "assets/img/MIDNIGHT TORQUE HOODIE/ed495662-ccc1-4036-b927-00921501a886.png"
+                ],
+                "colors": {
+                      "standart": [
+                            "assets/img/MIDNIGHT TORQUE HOODIE/0cb577df-a081-470f-858e-e8551663f7d0.png",
+                            "assets/img/MIDNIGHT TORQUE HOODIE/26dcff7c-70ba-4ae5-8afb-b4b676600e36.png",
+                            "assets/img/MIDNIGHT TORQUE HOODIE/925d0006-fa52-40d7-9da5-9ade5ba328fe.png",
+                            "assets/img/MIDNIGHT TORQUE HOODIE/96cd3a23-f687-40cb-92d6-f239fcfe4b01.png",
+                            "assets/img/MIDNIGHT TORQUE HOODIE/deb694e9-c339-4ada-829d-f91ad66959ad.png",
+                            "assets/img/MIDNIGHT TORQUE HOODIE/ed495662-ccc1-4036-b927-00921501a886.png"
+                      ]
+                }
+          },
+          {
+                "name": "NIGHTSHADE JOGGER",
+                "price": "₺1299",
+                "series": "Araba Serisi",
+                "category": "Araba",
+                "page": "araba.html",
+                "badge": "",
+                "img": "assets/img/NIGHTSHADE JOGGER/1cf03bd7-37b9-4e00-83ef-3470a5109a99.png",
+                "gallery": [
+                      "assets/img/NIGHTSHADE JOGGER/1cf03bd7-37b9-4e00-83ef-3470a5109a99.png",
+                      "assets/img/NIGHTSHADE JOGGER/61327ca5-2bf8-49f4-939c-2ab604cd1f8c.png",
+                      "assets/img/NIGHTSHADE JOGGER/9de84fd3-fc8c-4951-ab75-c9c9e80d4f0d.png",
+                      "assets/img/NIGHTSHADE JOGGER/a8772733-0d09-4b02-b3d0-1268e91af9bf.png",
+                      "assets/img/NIGHTSHADE JOGGER/dd173a90-111f-4794-8646-b0636e7935c4.png",
+                      "assets/img/NIGHTSHADE JOGGER/fd077c90-84ef-489f-bbf7-421e9baa0cdf.png"
+                ],
+                "colors": {
+                      "standart": [
+                            "assets/img/NIGHTSHADE JOGGER/1cf03bd7-37b9-4e00-83ef-3470a5109a99.png",
+                            "assets/img/NIGHTSHADE JOGGER/61327ca5-2bf8-49f4-939c-2ab604cd1f8c.png",
+                            "assets/img/NIGHTSHADE JOGGER/9de84fd3-fc8c-4951-ab75-c9c9e80d4f0d.png",
+                            "assets/img/NIGHTSHADE JOGGER/a8772733-0d09-4b02-b3d0-1268e91af9bf.png",
+                            "assets/img/NIGHTSHADE JOGGER/dd173a90-111f-4794-8646-b0636e7935c4.png",
+                            "assets/img/NIGHTSHADE JOGGER/fd077c90-84ef-489f-bbf7-421e9baa0cdf.png"
+                      ]
+                }
+          },
+          {
+                "name": "PLUM FIST BEANIE",
+                "price": "₺499",
+                "series": "Motosiklet Serisi",
+                "category": "Motor",
+                "page": "motor.html",
+                "badge": "",
+                "img": "assets/img/PLUM FIST BEANIE/023cf531-28cb-4b94-9dc6-3c466ee0414f.png",
+                "gallery": [
+                      "assets/img/PLUM FIST BEANIE/023cf531-28cb-4b94-9dc6-3c466ee0414f.png",
+                      "assets/img/PLUM FIST BEANIE/1ad377f6-c308-4c33-9dd6-a4f6f1950bc4.png",
+                      "assets/img/PLUM FIST BEANIE/24e0c81a-be4a-4c05-8993-a85ac9d31727.png",
+                      "assets/img/PLUM FIST BEANIE/4acd4ae5-5a4b-4dbc-9d49-0db7b227924e.png",
+                      "assets/img/PLUM FIST BEANIE/694ab050-7eea-4f62-8a37-ea5a58dcfec0.png",
+                      "assets/img/PLUM FIST BEANIE/a924a28d-1a98-4126-83d1-26bfa447fe0f.png"
+                ],
+                "colors": {
+                      "standart": [
+                            "assets/img/PLUM FIST BEANIE/023cf531-28cb-4b94-9dc6-3c466ee0414f.png",
+                            "assets/img/PLUM FIST BEANIE/1ad377f6-c308-4c33-9dd6-a4f6f1950bc4.png",
+                            "assets/img/PLUM FIST BEANIE/24e0c81a-be4a-4c05-8993-a85ac9d31727.png",
+                            "assets/img/PLUM FIST BEANIE/4acd4ae5-5a4b-4dbc-9d49-0db7b227924e.png",
+                            "assets/img/PLUM FIST BEANIE/694ab050-7eea-4f62-8a37-ea5a58dcfec0.png",
+                            "assets/img/PLUM FIST BEANIE/a924a28d-1a98-4126-83d1-26bfa447fe0f.png"
+                      ]
+                }
+          },
+          {
+                "name": "Rose Pit Jogger",
+                "price": "₺1299",
+                "series": "Araba Serisi",
+                "category": "Araba",
+                "page": "araba.html",
+                "badge": "",
+                "img": "assets/img/Rose Pit Jogger/0585813c-e9a8-450a-a187-23dc2250c0ce.png",
+                "gallery": [
+                      "assets/img/Rose Pit Jogger/0585813c-e9a8-450a-a187-23dc2250c0ce.png",
+                      "assets/img/Rose Pit Jogger/0a450e8c-fc30-4a62-872a-881c16345179.png",
+                      "assets/img/Rose Pit Jogger/465fc1cc-fd67-4f32-bcc4-53762f1fa8b9.png",
+                      "assets/img/Rose Pit Jogger/819eee20-2522-4ec1-a453-fe05dc2eaba0.png",
+                      "assets/img/Rose Pit Jogger/b0656781-f019-471c-b179-b87dd9de0e06.png",
+                      "assets/img/Rose Pit Jogger/b49c8458-2fcc-4ff7-a718-3f41238b0e6f.png"
+                ],
+                "colors": {
+                      "standart": [
+                            "assets/img/Rose Pit Jogger/0585813c-e9a8-450a-a187-23dc2250c0ce.png",
+                            "assets/img/Rose Pit Jogger/0a450e8c-fc30-4a62-872a-881c16345179.png",
+                            "assets/img/Rose Pit Jogger/465fc1cc-fd67-4f32-bcc4-53762f1fa8b9.png",
+                            "assets/img/Rose Pit Jogger/819eee20-2522-4ec1-a453-fe05dc2eaba0.png",
+                            "assets/img/Rose Pit Jogger/b0656781-f019-471c-b179-b87dd9de0e06.png",
+                            "assets/img/Rose Pit Jogger/b49c8458-2fcc-4ff7-a718-3f41238b0e6f.png"
+                      ]
+                }
+          },
+          {
+                "name": "Stone Drift Cap",
+                "price": "₺499",
+                "series": "Araba Serisi",
+                "category": "Araba",
+                "page": "araba.html",
+                "badge": "YENİ",
+                "img": "assets/img/Stone Drift Cap/19d84f4b-7787-48b6-bcba-f664bf1cabef.png",
+                "gallery": [
+                      "assets/img/Stone Drift Cap/19d84f4b-7787-48b6-bcba-f664bf1cabef.png",
+                      "assets/img/Stone Drift Cap/5c4bb3b3-8005-4838-b69c-22dc63f7500f.png",
+                      "assets/img/Stone Drift Cap/a7760609-0ea2-4cf4-a9ec-866b8c7df0ce.png",
+                      "assets/img/Stone Drift Cap/b77dcb6e-04e8-4836-a5f0-0acbb335b8ef.png",
+                      "assets/img/Stone Drift Cap/e3990408-3248-4d49-be29-d6a56bd12d36.png",
+                      "assets/img/Stone Drift Cap/f093a5ca-fd42-4432-9ca7-a3857465e7a7.png"
+                ],
+                "colors": {
+                      "standart": [
+                            "assets/img/Stone Drift Cap/19d84f4b-7787-48b6-bcba-f664bf1cabef.png",
+                            "assets/img/Stone Drift Cap/5c4bb3b3-8005-4838-b69c-22dc63f7500f.png",
+                            "assets/img/Stone Drift Cap/a7760609-0ea2-4cf4-a9ec-866b8c7df0ce.png",
+                            "assets/img/Stone Drift Cap/b77dcb6e-04e8-4836-a5f0-0acbb335b8ef.png",
+                            "assets/img/Stone Drift Cap/e3990408-3248-4d49-be29-d6a56bd12d36.png",
+                            "assets/img/Stone Drift Cap/f093a5ca-fd42-4432-9ca7-a3857465e7a7.png"
+                      ]
+                }
+          },
+          {
+                "name": "Stone Torque Cargo Jogger",
+                "price": "₺1299",
+                "series": "Motosiklet Serisi",
+                "category": "Motor",
+                "page": "motor.html",
+                "badge": "",
+                "img": "assets/img/Stone Torque Cargo Jogger/2d16e36d-48d5-4735-b71a-b606df9aca7b.png",
+                "gallery": [
+                      "assets/img/Stone Torque Cargo Jogger/2d16e36d-48d5-4735-b71a-b606df9aca7b.png",
+                      "assets/img/Stone Torque Cargo Jogger/4198ab3b-409c-470e-8f57-8e513887d030.png",
+                      "assets/img/Stone Torque Cargo Jogger/50d6990e-6374-494c-abd2-81bb63ae5744.png",
+                      "assets/img/Stone Torque Cargo Jogger/532d3ec2-dc50-4798-8d01-d93b0d86c55e.png",
+                      "assets/img/Stone Torque Cargo Jogger/ab20b67b-10fe-498e-bb41-29bf9026b04f.png",
+                      "assets/img/Stone Torque Cargo Jogger/b57108d0-5814-490a-a681-64b79c6906d5.png"
+                ],
+                "colors": {
+                      "standart": [
+                            "assets/img/Stone Torque Cargo Jogger/2d16e36d-48d5-4735-b71a-b606df9aca7b.png",
+                            "assets/img/Stone Torque Cargo Jogger/4198ab3b-409c-470e-8f57-8e513887d030.png",
+                            "assets/img/Stone Torque Cargo Jogger/50d6990e-6374-494c-abd2-81bb63ae5744.png",
+                            "assets/img/Stone Torque Cargo Jogger/532d3ec2-dc50-4798-8d01-d93b0d86c55e.png",
+                            "assets/img/Stone Torque Cargo Jogger/ab20b67b-10fe-498e-bb41-29bf9026b04f.png",
+                            "assets/img/Stone Torque Cargo Jogger/b57108d0-5814-490a-a681-64b79c6906d5.png"
+                      ]
+                }
+          },
+          {
+                "name": "Tokyo Ghost Hoodie",
+                "price": "₺1799",
+                "series": "Araba Serisi",
+                "category": "Araba",
+                "page": "araba.html",
+                "badge": "YENİ",
+                "img": "assets/img/Tokyo Ghost Hoodie/3a481cfc-3490-44ce-8daa-9c80b808b558.png",
+                "gallery": [
+                      "assets/img/Tokyo Ghost Hoodie/3a481cfc-3490-44ce-8daa-9c80b808b558.png",
+                      "assets/img/Tokyo Ghost Hoodie/54a6003b-c327-4695-80b7-d07c4f797b0e.png",
+                      "assets/img/Tokyo Ghost Hoodie/5a44082c-927a-4341-853e-59912c56d74c.png",
+                      "assets/img/Tokyo Ghost Hoodie/6d9a9231-d1b3-4472-a571-4d5a0aead70d.png",
+                      "assets/img/Tokyo Ghost Hoodie/ade976f1-59e7-488c-b96e-59f2f51ff8cd.png",
+                      "assets/img/Tokyo Ghost Hoodie/db18ac75-841b-493d-93ff-16a462dc65a9.png"
+                ],
+                "colors": {
+                      "standart": [
+                            "assets/img/Tokyo Ghost Hoodie/3a481cfc-3490-44ce-8daa-9c80b808b558.png",
+                            "assets/img/Tokyo Ghost Hoodie/54a6003b-c327-4695-80b7-d07c4f797b0e.png",
+                            "assets/img/Tokyo Ghost Hoodie/5a44082c-927a-4341-853e-59912c56d74c.png",
+                            "assets/img/Tokyo Ghost Hoodie/6d9a9231-d1b3-4472-a571-4d5a0aead70d.png",
+                            "assets/img/Tokyo Ghost Hoodie/ade976f1-59e7-488c-b96e-59f2f51ff8cd.png",
+                            "assets/img/Tokyo Ghost Hoodie/db18ac75-841b-493d-93ff-16a462dc65a9.png"
+                      ]
+                }
+          },
+          {
+                "name": "WILD HEART TEE",
+                "price": "₺749",
+                "series": "Motosiklet Serisi",
+                "category": "Motor",
+                "page": "motor.html",
+                "badge": "",
+                "img": "assets/img/WILD HEART TEE/0cf02c8f-6089-48c2-803b-e9d64479e509.png",
+                "gallery": [
+                      "assets/img/WILD HEART TEE/0cf02c8f-6089-48c2-803b-e9d64479e509.png",
+                      "assets/img/WILD HEART TEE/1a916856-300d-4d97-887d-b54242080834.png",
+                      "assets/img/WILD HEART TEE/9b5d29fe-424d-4d5f-9a1a-56676445f05b.png",
+                      "assets/img/WILD HEART TEE/be159ef0-ced0-475d-b573-997dfa2aad4d.png",
+                      "assets/img/WILD HEART TEE/d8a67832-9684-45a3-b374-c6ba050bb094.png",
+                      "assets/img/WILD HEART TEE/fe6493e3-d855-495d-bfd9-053119d573c1.png"
+                ],
+                "colors": {
+                      "standart": [
+                            "assets/img/WILD HEART TEE/0cf02c8f-6089-48c2-803b-e9d64479e509.png",
+                            "assets/img/WILD HEART TEE/1a916856-300d-4d97-887d-b54242080834.png",
+                            "assets/img/WILD HEART TEE/9b5d29fe-424d-4d5f-9a1a-56676445f05b.png",
+                            "assets/img/WILD HEART TEE/be159ef0-ced0-475d-b573-997dfa2aad4d.png",
+                            "assets/img/WILD HEART TEE/d8a67832-9684-45a3-b374-c6ba050bb094.png",
+                            "assets/img/WILD HEART TEE/fe6493e3-d855-495d-bfd9-053119d573c1.png"
+                      ]
+                }
           }
     ];

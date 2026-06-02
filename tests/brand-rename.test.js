@@ -12,15 +12,22 @@ function assert(condition, message) {
 }
 
 [
-  '<span class="brand-logo__n">N</span><span class="brand-logo__name">MAGANDA</span>',
-  'aria-label="NMAGANDA"',
+  '<span class="navbar__logo-text"><span class="navbar__logo-initial">N</span>MAGANDA</span>',
+  '<span class="footer-brand-band__text">NMAGANDA</span>',
+  '<span class="footer__logo">NMAGANDA</span>',
   '© 2026 NMAGANDA. Tüm hakları saklıdır.'
 ].forEach((needle) => assert(mainJs.includes(needle), `visible brand text missing: ${needle}`));
 
 [
-  '.brand-logo__n',
-  'html[data-theme="light"] body .navbar.navbar--scrolled .brand-logo__n',
-  'html body .navbar:not(.navbar--scrolled) .brand-logo__n'
-].forEach((needle) => assert(styleCss.includes(needle), `brand logo color rule missing: ${needle}`));
+  'brand-logo',
+  'brand-logo__n',
+  'brand-logo__name',
+  'brand-logo-n',
+  'paint-order: stroke fill',
+  '-webkit-text-stroke: 0.055em currentColor'
+].forEach((needle) => {
+  assert(!styleCss.includes(needle), `brand logo CSS should be plain text, remove: ${needle}`);
+  assert(!mainJs.includes(needle), `brand logo markup should be plain text, remove: ${needle}`);
+});
 
-console.log('brand rename visible text and logo color treatment verified');
+console.log('brand rename visible text is plain NMAGANDA');
